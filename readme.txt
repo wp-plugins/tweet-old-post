@@ -42,10 +42,7 @@ for screenshots you can check out http://www.ajaymatharu.com/wordpress-plugin-tw
 
 == Changelog ==
 
-== Arbitrary section ==
-
-
-== A brief Markdown Example ==
+== Other Notes ==
 
 Some of the options you can configure for the Tweet Old Posts plugins are,
 
