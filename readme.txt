@@ -1,4 +1,4 @@
-=== Plugin Name ===
+=== Tweet Old Post ===
 Contributors: Ajay Matharu
 Tags: Tweet old post, Tweets, Promote old post by tweeting about them
 Requires at least: 2.0.2
