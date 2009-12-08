@@ -4,7 +4,7 @@
 #     Plugin URI: http://www.ajaymatharu.com
 #     Description: Plugin for tweeting your old posts randomly 
 #     Author: Ajay Matharu 
-#     Version: 1.1 
+#     Version: 1.2
 #     Author URI: http://www.ajaymatharu.com
 #     */  
  
