@@ -3,7 +3,7 @@ Contributors: Ajay Matharu
 Tags: Tweet old post, Tweets, Promote old post by tweeting about them
 Requires at least: 2.0.2
 Tested up to: 2.8.6
-Stable tag: 4.3
+Stable tag: 1.2
 
 Plugin to tweet about your old posts to get more hits for them and keep them alive.
 
@@ -63,6 +63,16 @@ for screenshots you can check out
 http://www.ajaymatharu.com/wordpress-plugin-tweet-old-posts/
 
 == Changelog ==
+
+
+Added two options
+
+Tweet Prefix - Allows you to set prefix to the tweets.
+
+Add Data - Allows you to add post data to the tweets
+
+Tweet now - Button that will tweet at that moment without wanting you to wait for scheduled tweet
+
 
 == Other Notes ==
 

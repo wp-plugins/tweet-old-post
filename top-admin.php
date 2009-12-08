@@ -26,7 +26,7 @@ function top_admin() {
 			$save=true;
 	}
 
-	if (!empty($_POST['top_opt_action']) && $save ) {
+	if (isset($_POST['submit']) && $save ) {
 		$message = $message_updated;
 		if (isset($_POST['top_opt_twitter_username'])) {
 			update_option('top_opt_twitter_username',$_POST['top_opt_twitter_username']);
@@ -43,7 +43,12 @@ function top_admin() {
 		if (isset($_POST['top_opt_age_limit'])) {
 			update_option('top_opt_age_limit',$_POST['top_opt_age_limit']);
 		}
-
+		if (isset($_POST['top_opt_tweet_prefix'])) {
+			update_option('top_opt_tweet_prefix',$_POST['top_opt_tweet_prefix']);
+		}
+		if (isset($_POST['top_opt_add_data'])) {
+			update_option('top_opt_add_data',$_POST['top_opt_add_data']);
+		}
 		if (isset($_POST['post_category'])) {
 			update_option('top_opt_omit_cats',implode(',',$_POST['post_category']));
 		}
@@ -54,6 +59,15 @@ function top_admin() {
 		print('
 			<div id="message" class="updated fade">
 				<p>'.__('Tweet Old Post Options Updated.', 'TweetOldPost').'</p>
+			</div>');
+	}
+	
+	elseif (isset($_POST['tweet']))
+	{
+		top_opt_tweet_old_post();
+		print('
+			<div id="message" class="updated fade">
+				<p>'.__('Tweet posted successfully.', 'TweetOldPost').'</p>
 			</div>');
 	}
 	$omitCats = get_option('top_opt_omit_cats');
@@ -73,6 +87,11 @@ function top_admin() {
 	if (!(isset($slop) && is_numeric($slop))) {
 		$slop = top_opt_INTERVAL_SLOP;
 	}
+	$tweet_prefix = get_option('top_opt_tweet_prefix');
+	if(!isset($tweet_prefix)){
+		$tweet_prefix = top_opt_TWEET_PREFIX;
+	}
+	$add_data = get_option('top_opt_add_data');
 	$twitter_username = get_option('top_opt_twitter_username');
 	$twitter_password = get_option('top_opt_twitter_password');
 
@@ -90,6 +109,20 @@ function top_admin() {
 							<label for="top_opt_twitter_password">'.__('Twitter Password', 'TweetOldPost').':</label>
 							<input type="password" size="25" name="top_opt_twitter_password" id="top_opt_twitter_password" value="'.$twitter_password.'" autocomplete="off" />
 						</div>
+						<div class="option">
+							<label for="top_opt_tweet_prefix">'.__('Tweet Prefix', 'TweetOldPost').':</label>
+							<input type="text" size="25" name="top_opt_tweet_prefix" id="top_opt_tweet_prefix" value="'.$tweet_prefix.'" autocomplete="off" />
+							<b>If set, it will show as: "{tweet prefix}: {post title}... {url}</b>
+						</div>
+						<div class="option">
+							<label for="top_opt_add_data">'.__('Add post data to tweet', 'TweetOldPost').':</label>
+							<select id="top_opt_add_data" name="top_opt_add_data">
+								<option value="false" '.top_opt_optionselected("false",$add_data).'>'.__(' No ', 'TweetOldPost').'</option>
+								<option value="true" '.top_opt_optionselected("true",$add_data).'>'.__(' Yes ', 'TweetOldPost').'</option>
+							</select>
+							<b>If set, it will show as: "{tweet prefix}: {post title}- {content}... {url}</b>
+						</div>
+						
 						<div class="option">
 							<label for="top_opt_interval">'.__('Minimum interval between tweets: ', 'TweetOldPost').'</label>
 							<select name="top_opt_interval" id="top_opt_interval">
@@ -116,6 +149,8 @@ function top_admin() {
 						<div class="option">
 							<label for="top_opt_age_limit">'.__('Minimum age of post to be eligible for tweet: ', 'TweetOldPost').'</label>
 							<select name="top_opt_age_limit" id="top_opt_age_limit">
+									<option value="7" '.top_opt_optionselected(7,$ageLimit).'>'.__('7 Days', 'TweetOldPost').'</option>
+									<option value="15" '.top_opt_optionselected(15,$ageLimit).'>'.__('15 Days', 'TweetOldPost').'</option>
 									<option value="30" '.top_opt_optionselected(30,$ageLimit).'>'.__('30 Days', 'TweetOldPost').'</option>
 									<option value="60" '.top_opt_optionselected(60,$ageLimit).'>'.__('60 Days', 'TweetOldPost').'</option>
 									<option value="90" '.top_opt_optionselected(90,$ageLimit).'>'.__('90 Days', 'TweetOldPost').'</option>
@@ -137,6 +172,7 @@ function top_admin() {
 					</fieldset>
 					<p class="submit">
 						<input type="submit" name="submit" value="'.__('Update Tweet Old Post Options', 'TweetOldPost').'" />
+						<input type="submit" name="tweet" value="'.__('Tweet Now', 'TweetOldPost').'" />
 					</p>
 						
 				</form>' );

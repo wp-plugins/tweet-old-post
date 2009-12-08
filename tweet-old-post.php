@@ -24,6 +24,9 @@ define ('top_opt_INTERVAL', top_opt_12_HOURS);
 define ('top_opt_INTERVAL_SLOP', top_opt_4_HOURS); 
 define ('top_opt_AGE_LIMIT', 120); // 120 days
 define ('top_opt_OMIT_CATS', "");
+define('top_opt_TWEET_PREFIX',"");
+define('top_opt_ADD_DATA',"false");
+
 
    function top_admin_actions() {  
         add_options_page("Tweet Old Post", "Tweet Old Post", 1, "TweetOldPost", "top_admin");  

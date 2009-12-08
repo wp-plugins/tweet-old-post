@@ -48,15 +48,35 @@ function top_opt_tweet_old_post()
 function top_opt_tweet_post($oldest_post)
 {
 	$post = get_post($oldest_post);
-
+	$content=null;
 	$permalink = get_permalink($oldest_post);
+	$add_data = get_option("top_opt_add_data");
 	$shorturl = shorten_url($permalink);
-	$content = stripslashes($post->post_content);
-	$content = strip_tags($content);
-	$content = preg_replace('/\s\s+/', ' ', $content);
+	$prefix=get_option('top_opt_tweet_prefix');
+
+	if($add_data == "true")
+	{
+		$content = stripslashes($post->post_content);
+		$content = strip_tags($content);
+		$content = preg_replace('/\s\s+/', ' ', $content);
+		$content = " - ".$content;
+	}
+	else {
+		$content="";
+	}
+
 	if(!is_numeric($shorturl))
 	{
-		$message = set_tweet_length($post->post_title. ": ". $content,$shorturl);
+		if($prefix)
+		{
+			$message = $prefix.": ".$post->post_title;
+		}
+		else {
+			$message = $post->post_title;
+		}
+
+		$message = set_tweet_length($message.$content,$shorturl);
+
 		$username = get_option('top_opt_twitter_username');
 		$password = get_option('top_opt_twitter_password');
 
@@ -71,20 +91,14 @@ function top_opt_tweet_post($oldest_post)
 			curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 2);
 			curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
 			curl_setopt($curl, CURLOPT_POST, 1);
-			curl_setopt($curl, CURLOPT_POSTFIELDS, "status=$status&source=Tweet Old Post");
+			curl_setopt($curl, CURLOPT_POSTFIELDS, "status=$status&source=TweetOldPost");
 			curl_setopt($curl, CURLOPT_USERPWD, "$username:$password");
 
 			$result = curl_exec($curl);
 			$resultArray = curl_getinfo($curl);
 
-			if ($resultArray['http_code'] == 200)
-			echo 'Tweet Posted';
-			else
-			echo 'Could not post Tweet to Twitter right now. Try again later.';
-
 			curl_close($curl);
 		}
-
 	}
 }
 
