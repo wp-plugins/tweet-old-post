@@ -27,6 +27,12 @@ Minimum age of post to be eligible for tweet – This allows you to set how old yo
 
 Categories to omit from tweets – This will protect posts from the selected categories from being tweeted.
 
+Tweet Prefix - Allows you to set prefix to the tweets.
+
+Add Data - Allows you to add post data to the tweets
+
+Tweet now - Button that will tweet at that moment without wanting you to wait for scheduled tweet
+
 
 
 == Installation ==
@@ -87,3 +93,9 @@ Randomness interval – This is a contributing factor in minimum interval so that 
 Minimum age of post to be eligible for tweet – This allows you to set how old your post should be in order to be eligible for the tweet.
 
 Categories to omit from tweets – This will protect posts from the selected categories from being tweeted.
+
+Tweet Prefix - Allows you to set prefix to the tweets.
+
+Add Data - Allows you to add post data to the tweets
+
+Tweet now - Button that will tweet at that moment without wanting you to wait for scheduled tweet
