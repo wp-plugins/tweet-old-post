@@ -29,7 +29,7 @@ Categories to omit from tweets – This will protect posts from the selected categ
 
 
 
-New in v1.2
+**New in v1.2**
 
 Tweet Prefix - Allows you to set prefix to the tweets.
 
@@ -39,7 +39,7 @@ Tweet now - Button that will tweet at that moment without wanting you to wait fo
 
 
 
-New in v1.3
+**New in v1.3**
 
 URL Shortener Service - allows you to select which URL shortener service you want to use.
 
