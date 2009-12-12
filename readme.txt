@@ -1,6 +1,6 @@
 === Tweet Old Post ===
 Contributors: Ajay Matharu
-Tags: Tweet old post, Tweets, Promote old post by tweeting about them
+Tags: Tweet old post, Tweets, Promote old post by tweeting about them, Twitter, Auto Tweet
 Requires at least: 2.0.2
 Tested up to: 2.8.6
 Stable tag: 1.2
