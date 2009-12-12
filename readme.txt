@@ -27,6 +27,10 @@ Minimum age of post to be eligible for tweet – This allows you to set how old yo
 
 Categories to omit from tweets – This will protect posts from the selected categories from being tweeted.
 
+
+
+New in v1.2
+
 Tweet Prefix - Allows you to set prefix to the tweets.
 
 Add Data - Allows you to add post data to the tweets
@@ -34,6 +38,10 @@ Add Data - Allows you to add post data to the tweets
 Tweet now - Button that will tweet at that moment without wanting you to wait for scheduled tweet
 
 
+
+New in v1.3
+
+URL Shortener Service - allows you to select which URL shortener service you want to use.
 
 == Installation ==
 
@@ -71,13 +79,25 @@ http://www.ajaymatharu.com/wordpress-plugin-tweet-old-posts/
 == Changelog ==
 
 
-Added two options
+v1.2
 
 Tweet Prefix - Allows you to set prefix to the tweets.
 
-Add Data - Allows you to add post data to the tweets
+Add Data - Allows you to add post data to the tweets.
 
-Tweet now - Button that will tweet at that moment without wanting you to wait for scheduled tweet
+Tweet now - Button that will tweet at that moment without wanting you to wait for scheduled tweet.
+
+
+
+v1.3
+
+URL Shortener Service - allows you to select which URL shortener service you want to use.
+
+
+
+Next version
+
+Provision to add hashtags to tweets.
 
 
 == Other Notes ==
@@ -94,8 +114,16 @@ Minimum age of post to be eligible for tweet – This allows you to set how old yo
 
 Categories to omit from tweets – This will protect posts from the selected categories from being tweeted.
 
+
+v1.2
+
 Tweet Prefix - Allows you to set prefix to the tweets.
 
-Add Data - Allows you to add post data to the tweets
+Add Data - Allows you to add post data to the tweets.
 
-Tweet now - Button that will tweet at that moment without wanting you to wait for scheduled tweet
+Tweet now - Button that will tweet at that moment without wanting you to wait for scheduled tweet.
+
+
+v1.3
+
+URL Shortener Service - allows you to select which URL shortener service you want to use.

@@ -51,7 +51,18 @@ function top_opt_tweet_post($oldest_post)
 	$content=null;
 	$permalink = get_permalink($oldest_post);
 	$add_data = get_option("top_opt_add_data");
-	$shorturl = shorten_url($permalink);
+	
+	$url_shortener=get_option('top_opt_url_shortener');
+	if($url_shortener=="bit.ly")
+	{
+		$bitly_key=get_option('top_opt_bitly_key');
+		$bitly_user=get_option('top_opt_bitly_user');
+		$shorturl=shorten_url($permalink,$url_shortener,$bitly_key,$bitly_user);
+	}
+	else 
+	{
+			$shorturl = shorten_url($permalink,$url_shortener);
+	}
 	$prefix=get_option('top_opt_tweet_prefix');
 
 	if($add_data == "true")

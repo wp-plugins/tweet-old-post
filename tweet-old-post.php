@@ -4,7 +4,7 @@
 #     Plugin URI: http://www.ajaymatharu.com
 #     Description: Plugin for tweeting your old posts randomly 
 #     Author: Ajay Matharu 
-#     Version: 1.2
+#     Version: 1.3
 #     Author URI: http://www.ajaymatharu.com
 #     */  
  
@@ -26,7 +26,7 @@ define ('top_opt_AGE_LIMIT', 120); // 120 days
 define ('top_opt_OMIT_CATS', "");
 define('top_opt_TWEET_PREFIX',"");
 define('top_opt_ADD_DATA',"false");
-
+define('top_opt_URL_SHORTENER',"is.gd");
 
    function top_admin_actions() {  
         add_options_page("Tweet Old Post", "Tweet Old Post", 1, "TweetOldPost", "top_admin");  

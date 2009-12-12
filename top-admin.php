@@ -16,14 +16,44 @@ function top_admin() {
 		if($response != 200 && $response == 401)
 		{
 			$message = __("Incorrect Twitter Username & Password. Please verify your credentials.", 'TweetOldPost');
-				print('
+			print('
 			<div id="message" class="updated fade">
 				<p>'.__('Incorrect Twitter Username & Password. Please verify your credentials.', 'TweetOldPost').'</p>
 			</div>');
 			$save=false;
 		}
-		else 
-			$save=true;
+		else
+		$save=true;
+	}
+
+	if(isset($_POST['top_opt_url_shortener']))
+	{
+		if($_POST['top_opt_url_shortener']=="bit.ly")
+		{
+			if($save)
+			{
+				if(!isset($_POST['top_opt_bitly_user']))
+				{
+					print('
+			<div id="message" class="updated fade">
+				<p>'.__('Please enter bit.ly username.', 'TweetOldPost').'</p>
+			</div>');
+					$save=false;
+				}
+				elseif(!isset($_POST['top_opt_bitly_key']))
+				{
+					print('
+			<div id="message" class="updated fade">
+				<p>'.__('Please enter bit.ly API Key.', 'TweetOldPost').'</p>
+			</div>');
+					$save=false;
+				}
+				else
+				{
+					$save=true;
+				}
+			}
+		}
 	}
 
 	if (isset($_POST['submit']) && $save ) {
@@ -56,12 +86,26 @@ function top_admin() {
 			update_option('top_opt_omit_cats','');
 		}
 
+		if(isset($_POST['top_opt_url_shortener']))
+		{
+			update_option('top_opt_url_shortener',$_POST['top_opt_url_shortener']);
+			if($_POST['top_opt_url_shortener']=="bit.ly")
+			{
+				if(isset($_POST['top_opt_bitly_user']))
+				{
+					update_option('top_opt_bitly_user',$_POST['top_opt_bitly_user']);
+				}
+				if(isset($_POST['top_opt_bitly_key']))
+				{
+					update_option('top_opt_bitly_key',$_POST['top_opt_bitly_key']);
+				}
+			}
+		}
 		print('
 			<div id="message" class="updated fade">
 				<p>'.__('Tweet Old Post Options Updated.', 'TweetOldPost').'</p>
 			</div>');
 	}
-	
 	elseif (isset($_POST['tweet']))
 	{
 		top_opt_tweet_old_post();
@@ -91,6 +135,18 @@ function top_admin() {
 	if(!isset($tweet_prefix)){
 		$tweet_prefix = top_opt_TWEET_PREFIX;
 	}
+	$url_shortener=get_option('top_opt_url_shortener');
+	if(!isset($url_shortener)){
+		$url_shortener=top_opt_URL_SHORTENER;
+	}
+	$bitly_api=get_option('top_opt_bitly_key');
+	if(!isset($bitly_api)){
+		$bitly_api="";
+	}
+	$bitly_username=get_option('top_opt_bitly_user');
+	if(!isset($bitly_username)){
+		$bitly_username="";
+	}
 	$add_data = get_option('top_opt_add_data');
 	$twitter_username = get_option('top_opt_twitter_username');
 	$twitter_password = get_option('top_opt_twitter_password');
@@ -116,13 +172,34 @@ function top_admin() {
 						</div>
 						<div class="option">
 							<label for="top_opt_add_data">'.__('Add post data to tweet', 'TweetOldPost').':</label>
-							<select id="top_opt_add_data" name="top_opt_add_data">
+							<select id="top_opt_add_data" name="top_opt_add_data" style="width:100px;">
 								<option value="false" '.top_opt_optionselected("false",$add_data).'>'.__(' No ', 'TweetOldPost').'</option>
 								<option value="true" '.top_opt_optionselected("true",$add_data).'>'.__(' Yes ', 'TweetOldPost').'</option>
 							</select>
 							<b>If set, it will show as: "{tweet prefix}: {post title}- {content}... {url}</b>
 						</div>
-						
+						<div class="option">
+							<label for="top_opt_url_shortener">'.__('URL Shortener Service', 'TweetOldPost').':</label>
+							<select name="top_opt_url_shortener" id="top_opt_url_shortener" onchange="javascript:showURLAPI()" style="width:100px;">
+									<option value="is.gd" '.top_opt_optionselected('is.gd',$url_shortener).'>'.__('is.gd', 'TweetOldPost').'</option>
+									<option value="su.pr" '.top_opt_optionselected('su.pr',$url_shortener).'>'.__('su.pr', 'TweetOldPost').'</option>
+									<option value="bit.ly" '.top_opt_optionselected('bit.ly',$url_shortener).'>'.__('bit.ly', 'TweetOldPost').'</option>
+									<option value="tr.im" '.top_opt_optionselected('tr.im',$url_shortener).'>'.__('tr.im', 'TweetOldPost').'</option>
+									<option value="3.ly" '.top_opt_optionselected('3.ly',$url_shortener).'>'.__('3.ly', 'TweetOldPost').'</option>
+									<option value="tinyurl" '.top_opt_optionselected('tinyurl',$url_shortener).'>'.__('tinyurl', 'TweetOldPost').'</option>
+							</select>
+						</div>
+						<div id="showDetail" style="display:none">
+							<div class="option">
+								<label for="top_opt_bitly_user">'.__('bit.ly Username', 'TweetOldPost').':</label>
+								<input type="text" size="25" name="top_opt_bitly_user" id="top_opt_bitly_user" value="'.$bitly_username.'" autocomplete="off" />
+							</div>
+							
+							<div class="option">
+								<label for="top_opt_bitly_key">'.__('bit.ly API Key', 'TweetOldPost').':</label>
+								<input type="text" size="25" name="top_opt_bitly_key" id="top_opt_bitly_key" value="'.$bitly_api.'" autocomplete="off" />
+							</div>
+						</div>
 						<div class="option">
 							<label for="top_opt_interval">'.__('Minimum interval between tweets: ', 'TweetOldPost').'</label>
 							<select name="top_opt_interval" id="top_opt_interval">
@@ -171,11 +248,51 @@ function top_admin() {
 								</div>
 					</fieldset>
 					<p class="submit">
-						<input type="submit" name="submit" value="'.__('Update Tweet Old Post Options', 'TweetOldPost').'" />
+						<input type="submit" name="submit" onclick="javascript:return validate()" value="'.__('Update Tweet Old Post Options', 'TweetOldPost').'" />
 						<input type="submit" name="tweet" value="'.__('Tweet Now', 'TweetOldPost').'" />
 					</p>
 						
-				</form>' );
+				</form><script language="javascript" type="text/javascript">
+function showURLAPI()
+{
+	var urlShortener=document.getElementById("top_opt_url_shortener").value;
+	if(urlShortener=="bit.ly")
+	{
+		document.getElementById("showDetail").style.display="block";
+	}
+	else
+	{
+		document.getElementById("showDetail").style.display="none";
+	}
+}
+
+function validate()
+{
+
+	if(document.getElementById("showDetail").style.display=="block" && document.getElementById("top_opt_url_shortener").value=="bit.ly")
+	{
+		if(trim(document.getElementById("top_opt_bitly_user").value)=="")
+		{
+			alert("Please enter bit.ly username.");
+			document.getElementById("top_opt_bitly_user").focus();
+			return false;
+		}
+
+		if(trim(document.getElementById("top_opt_bitly_key").value)=="")
+		{
+			alert("Please enter bit.ly API key.");
+			document.getElementById("top_opt_bitly_key").focus();
+			return false;
+		}
+	}
+}
+
+function trim(stringToTrim) {
+	return stringToTrim.replace(/^\s+|\s+$/g,"");
+}
+
+showURLAPI();
+</script>' );
 
 }
 
