@@ -17,15 +17,17 @@ Tweet Old Posts randomly picks your older post based on the interval specified b
 
 Some of the options you can configure for the Tweet Old Posts plugins are,
 
-Twitter Username & Password – Using this twitter account credentials plugin will tweet.
+**v1.1**
 
-Minimum interval between tweets – allows you to determine how often the plugin will automatically choose and tweet a blog post for you.
+Twitter Username & Password - Using this twitter account credentials plugin will tweet.
 
-Randomness interval – This is a contributing factor in minimum interval so that posts are randomly chosen and tweeted from your blog.
+Minimum interval between tweets - allows you to determine how often the plugin will automatically choose and tweet a blog post for you.
 
-Minimum age of post to be eligible for tweet – This allows you to set how old your post should be in order to be eligible for the tweet.
+Randomness interval - This is a contributing factor in minimum interval so that posts are randomly chosen and tweeted from your blog.
 
-Categories to omit from tweets – This will protect posts from the selected categories from being tweeted.
+Minimum age of post to be eligible for tweet - This allows you to set how old your post should be in order to be eligible for the tweet.
+
+Categories to omit from tweets - This will protect posts from the selected categories from being tweeted.
 
 
 
@@ -79,7 +81,7 @@ http://www.ajaymatharu.com/wordpress-plugin-tweet-old-posts/
 == Changelog ==
 
 
-v1.2
+**v1.2**
 
 Tweet Prefix - Allows you to set prefix to the tweets.
 
@@ -89,13 +91,13 @@ Tweet now - Button that will tweet at that moment without wanting you to wait fo
 
 
 
-v1.3
+**v1.3**
 
 URL Shortener Service - allows you to select which URL shortener service you want to use.
 
 
 
-Next version
+**Next version**
 
 Provision to add hashtags to tweets.
 
@@ -104,18 +106,20 @@ Provision to add hashtags to tweets.
 
 Some of the options you can configure for the Tweet Old Posts plugins are,
 
-Twitter Username & Password – Using this twitter account credentials plugin will tweet.
+**v1.1**
 
-Minimum interval between tweets – allows you to determine how often the plugin will automatically choose and tweet a blog post for you.
+Twitter Username & Password - Using this twitter account credentials plugin will tweet.
 
-Randomness interval – This is a contributing factor in minimum interval so that posts are randomly chosen and tweeted from your blog.
+Minimum interval between tweets - allows you to determine how often the plugin will automatically choose and tweet a blog post for you.
 
-Minimum age of post to be eligible for tweet – This allows you to set how old your post should be in order to be eligible for the tweet.
+Randomness interval - This is a contributing factor in minimum interval so that posts are randomly chosen and tweeted from your blog.
 
-Categories to omit from tweets – This will protect posts from the selected categories from being tweeted.
+Minimum age of post to be eligible for tweet - This allows you to set how old your post should be in order to be eligible for the tweet.
+
+Categories to omit from tweets - This will protect posts from the selected categories from being tweeted.
 
 
-v1.2
+**v1.2**
 
 Tweet Prefix - Allows you to set prefix to the tweets.
 
@@ -124,6 +128,6 @@ Add Data - Allows you to add post data to the tweets.
 Tweet now - Button that will tweet at that moment without wanting you to wait for scheduled tweet.
 
 
-v1.3
+**v1.3**
 
 URL Shortener Service - allows you to select which URL shortener service you want to use.
