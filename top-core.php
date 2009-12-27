@@ -51,7 +51,7 @@ function top_opt_tweet_post($oldest_post)
 	$content=null;
 	$permalink = get_permalink($oldest_post);
 	$add_data = get_option("top_opt_add_data");
-	
+	$twitter_hashtags = get_option('top_opt_hashtags');
 	$url_shortener=get_option('top_opt_url_shortener');
 	if($url_shortener=="bit.ly")
 	{
@@ -63,6 +63,7 @@ function top_opt_tweet_post($oldest_post)
 	{
 			$shorturl = shorten_url($permalink,$url_shortener);
 	}
+
 	$prefix=get_option('top_opt_tweet_prefix');
 
 	if($add_data == "true")
@@ -86,7 +87,7 @@ function top_opt_tweet_post($oldest_post)
 			$message = $post->post_title;
 		}
 
-		$message = set_tweet_length($message.$content,$shorturl);
+		$message = set_tweet_length($message.$content,$shorturl,$twitter_hashtags);
 
 		$username = get_option('top_opt_twitter_username');
 		$password = get_option('top_opt_twitter_password');
@@ -175,19 +176,20 @@ function shorten_url($the_url, $shortener='is.gd', $api_key='', $user='') {
 
 
 //Shrink a tweet and accompanying URL down to 140 chars.
-function set_tweet_length($message, $url) {
+function set_tweet_length($message, $url, $twitter_hashtags="") {
 
 	$message_length = strlen($message);
 	$url_length = strlen($url);
-	if ($message_length + $url_length > 140) {
-		$shorten_message_to = 140 - $url_length;
+	$hashtags_length = strlen($twitter_hashtags);
+	if ($message_length + $url_length + $hashtags_length > 140) {
+		$shorten_message_to = 140 - $url_length - $hashtags_length;
 		$shorten_message_to = $shorten_message_to - 4;
-		$message = $message." ";
+		//$message = $message." ";
 		$message = substr($message, 0, $shorten_message_to);
 		$message = substr($message, 0, strrpos($message,' '));
 		$message = $message."...";
 	}
-	return $message." ".$url;
+	return $message." ".$url." ".$twitter_hashtags;
 
 }
 

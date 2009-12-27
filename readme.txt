@@ -1,9 +1,9 @@
 === Tweet Old Post ===
 Contributors: Ajay Matharu
-Tags: Tweet old post, Tweets, Promote old post by tweeting about them, Twitter, Auto Tweet
+Tags: Tweet old post, Tweets, Promote old post by tweeting about them, Twitter, Auto Tweet, Hashtags, Twitter Hashtags, Tweet Posts
 Requires at least: 2.0.2
-Tested up to: 2.8.6
-Stable tag: 1.2
+Tested up to: 2.9
+Stable tag: 1.4
 
 Plugin to tweet about your old posts to get more hits for them and keep them alive.
 
@@ -44,6 +44,11 @@ Tweet now - Button that will tweet at that moment without wanting you to wait fo
 **New in v1.3**
 
 URL Shortener Service - allows you to select which URL shortener service you want to use.
+
+
+**New in v1.4**
+
+Hashtags - allows you to set default hashtags for your tweets
 
 == Installation ==
 
@@ -96,10 +101,9 @@ Tweet now - Button that will tweet at that moment without wanting you to wait fo
 URL Shortener Service - allows you to select which URL shortener service you want to use.
 
 
+**v1.4**
 
-**Next version**
-
-Provision to add hashtags to tweets.
+Hashtags - allows you to set default hashtags for your tweets
 
 
 == Other Notes ==
@@ -131,3 +135,8 @@ Tweet now - Button that will tweet at that moment without wanting you to wait fo
 **v1.3**
 
 URL Shortener Service - allows you to select which URL shortener service you want to use.
+
+
+**v1.4**
+
+Hashtags - allows you to set default hashtags for your tweets

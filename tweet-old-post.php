@@ -1,10 +1,10 @@
 <?php   
 #     /* 
 #     Plugin Name: Tweet old post
-#     Plugin URI: http://www.ajaymatharu.com
+#     Plugin URI: http://www.ajaymatharu.com/wordpress-plugin-tweet-old-posts/
 #     Description: Plugin for tweeting your old posts randomly 
 #     Author: Ajay Matharu 
-#     Version: 1.3
+#     Version: 1.4
 #     Author URI: http://www.ajaymatharu.com
 #     */  
  
@@ -27,6 +27,7 @@ define ('top_opt_OMIT_CATS', "");
 define('top_opt_TWEET_PREFIX',"");
 define('top_opt_ADD_DATA',"false");
 define('top_opt_URL_SHORTENER',"is.gd");
+define('top_opt_HASHTAGS',"");
 
    function top_admin_actions() {  
         add_options_page("Tweet Old Post", "Tweet Old Post", 1, "TweetOldPost", "top_admin");  

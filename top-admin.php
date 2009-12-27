@@ -85,7 +85,14 @@ function top_admin() {
 		else {
 			update_option('top_opt_omit_cats','');
 		}
-
+		
+        if (isset($_POST['top_opt_hashtags'])) {
+			update_option('top_opt_hashtags',$_POST['top_opt_hashtags']);
+		}
+		else {
+			update_option('top_opt_hashtags','');
+		}
+		
 		if(isset($_POST['top_opt_url_shortener']))
 		{
 			update_option('top_opt_url_shortener',$_POST['top_opt_url_shortener']);
@@ -139,6 +146,12 @@ function top_admin() {
 	if(!isset($url_shortener)){
 		$url_shortener=top_opt_URL_SHORTENER;
 	}
+	
+	$twitter_hashtags=get_option('top_opt_hashtags');
+	if(!isset($twitter_hashtags)){
+		$twitter_hashtags=top_opt_HASHTAGS;
+	}
+	
 	$bitly_api=get_option('top_opt_bitly_key');
 	if(!isset($bitly_api)){
 		$bitly_api="";
@@ -200,6 +213,13 @@ function top_admin() {
 								<input type="text" size="25" name="top_opt_bitly_key" id="top_opt_bitly_key" value="'.$bitly_api.'" autocomplete="off" />
 							</div>
 						</div>
+						
+						<div class="option">
+							<label for="top_opt_hashtags">'.__('Default #hashtags for your tweets', 'TweetOldPost').':</label>
+							<input type="text" size="25" name="top_opt_hashtags" id="top_opt_hashtags" value="'.$twitter_hashtags.'" autocomplete="off" />
+							<b>Include #, like #thoughts</b>
+						</div>
+						
 						<div class="option">
 							<label for="top_opt_interval">'.__('Minimum interval between tweets: ', 'TweetOldPost').'</label>
 							<select name="top_opt_interval" id="top_opt_interval">
