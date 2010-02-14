@@ -15,20 +15,29 @@ function top_opt_tweet_old_post()
 	global $wpdb;
 	$omitCats = get_option('top_opt_omit_cats');
 	$ageLimit = get_option('top_opt_age_limit');
+	$maxAgeLimit = get_option('top_opt_max_age_limit');
 	if (!isset($omitCats)) {
 		$omitCats = top_opt_OMIT_CATS;
 	}
 	if (!isset($ageLimit)) {
 		$ageLimit = top_opt_AGE_LIMIT;
 	}
+	if (!isset($maxAgeLimit)) {
+		$maxAgeLimit = top_opt_MAX_AGE_LIMIT;
+	}
 	$sql = "SELECT ID
             FROM $wpdb->posts
             WHERE post_type = 'post'
                   AND post_status = 'publish'
-                  AND post_date < curdate( ) - INTERVAL ".$ageLimit." DAY 
-                  ";
+                  AND post_date < curdate( ) - INTERVAL ".$ageLimit. " day";
+
+	if($maxAgeLimit != "None")
+	{
+		$sql = $sql." AND post_date > curdate( ) - INTERVAL ".$maxAgeLimit." day";
+	}
+
 	if ($omitCats!='') {
-		$sql = $sql."AND NOT(ID IN (SELECT tr.object_id
+		$sql = $sql." AND NOT(ID IN (SELECT tr.object_id
                                     FROM $wpdb->terms  t 
                                           inner join $wpdb->term_taxonomy tax on t.term_id=tax.term_id and tax.taxonomy='category' 
                                           inner join $wpdb->term_relationships tr on tr.term_taxonomy_id=tax.term_taxonomy_id 
@@ -59,11 +68,11 @@ function top_opt_tweet_post($oldest_post)
 		$bitly_user=get_option('top_opt_bitly_user');
 		$shorturl=shorten_url($permalink,$url_shortener,$bitly_key,$bitly_user);
 	}
-	else 
+	else
 	{
-			$shorturl = shorten_url($permalink,$url_shortener);
+		$shorturl = shorten_url($permalink,$url_shortener);
 	}
-
+	
 	$prefix=get_option('top_opt_tweet_prefix');
 
 	if($add_data == "true")
@@ -144,7 +153,7 @@ function send_request($url, $method='GET', $data='', $auth_user='', $auth_pass='
 //Shorten long URLs with is.gd or bit.ly.
 function shorten_url($the_url, $shortener='is.gd', $api_key='', $user='') {
 
-	if ($shortener=="bit.ly" && isset($api_key) && isset($user)) {
+	if (($shortener=="bit.ly") && isset($api_key) && isset($user)) {
 		$url = "http://api.bit.ly/shorten?version=2.0.1&longUrl={$the_url}&login={$user}&apiKey={$api_key}&format=xml";
 		$response = send_request($url, 'GET');
 		$the_results = new SimpleXmlElement($response);
@@ -153,7 +162,7 @@ function shorten_url($the_url, $shortener='is.gd', $api_key='', $user='') {
 		} else {
 			$response = "";
 		}
-	} elseif ($shortener=="su.pr") {
+	}elseif ($shortener=="su.pr") {
 		$url = "http://su.pr/api/simpleshorten?url={$the_url}";
 		$response = send_request($url, 'GET');
 	} elseif ($shortener=="tr.im") {
@@ -164,6 +173,9 @@ function shorten_url($the_url, $shortener='is.gd', $api_key='', $user='') {
 		$response = send_request($url, 'GET');
 	} elseif ($shortener=="tinyurl") {
 		$url = "http://tinyurl.com/api-create.php?url={$the_url}";
+		$response = send_request($url, 'GET');
+	}elseif ($shortener=="u.nu") {
+		$url = "http://u.nu/unu-api-simple?url={$the_url}";
 		$response = send_request($url, 'GET');
 	} else {
 		$url = "http://is.gd/api.php?longurl={$the_url}";

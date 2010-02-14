@@ -73,6 +73,9 @@ function top_admin() {
 		if (isset($_POST['top_opt_age_limit'])) {
 			update_option('top_opt_age_limit',$_POST['top_opt_age_limit']);
 		}
+		if (isset($_POST['top_opt_max_age_limit'])) {
+			update_option('top_opt_max_age_limit',$_POST['top_opt_max_age_limit']);
+		}
 		if (isset($_POST['top_opt_tweet_prefix'])) {
 			update_option('top_opt_tweet_prefix',$_POST['top_opt_tweet_prefix']);
 		}
@@ -130,6 +133,11 @@ function top_admin() {
 		$ageLimit = top_opt_AGE_LIMIT;
 	}
 
+	$maxAgeLimit = get_option('top_opt_max_age_limit');
+	if (!isset($maxAgeLimit)) {
+		$maxAgeLimit = top_opt_MAX_AGE_LIMIT;
+	}
+	
 	$interval = get_option('top_opt_interval');
 	if (!(isset($interval) && is_numeric($interval))) {
 		$interval = top_opt_INTERVAL;
@@ -199,6 +207,8 @@ function top_admin() {
 									<option value="bit.ly" '.top_opt_optionselected('bit.ly',$url_shortener).'>'.__('bit.ly', 'TweetOldPost').'</option>
 									<option value="tr.im" '.top_opt_optionselected('tr.im',$url_shortener).'>'.__('tr.im', 'TweetOldPost').'</option>
 									<option value="3.ly" '.top_opt_optionselected('3.ly',$url_shortener).'>'.__('3.ly', 'TweetOldPost').'</option>
+									<option value="u.nu" '.top_opt_optionselected('u.nu',$url_shortener).'>'.__('u.nu', 'TweetOldPost').'</option>
+									
 									<option value="tinyurl" '.top_opt_optionselected('tinyurl',$url_shortener).'>'.__('tinyurl', 'TweetOldPost').'</option>
 							</select>
 						</div>
@@ -227,7 +237,7 @@ function top_admin() {
 									<option value="'.top_opt_4_HOURS.'" '.top_opt_optionselected(top_opt_4_HOURS,$interval).'>'.__('4 Hours', 'TweetOldPost').'</option>
 									<option value="'.top_opt_6_HOURS.'" '.top_opt_optionselected(top_opt_6_HOURS,$interval).'>'.__('6 Hours', 'TweetOldPost').'</option>
 									<option value="'.top_opt_12_HOURS.'" '.top_opt_optionselected(top_opt_12_HOURS,$interval).'>'.__('12 Hours', 'TweetOldPost').'</option>
-									<option value="'.top_opt_24_HOURS.'" '.top_opt_optionselected(top_opt_24_HOURS,$interval).'>'.__('24 Hours (1 day)', 'TweetOldPost').'</option>
+									<option value="'.top_opt_24_HOURS.'" '.top_opt_optionselected(top_opt_24_HOURS,$interval).'>'.__('24 Hours (1)', 'TweetOldPost').'</option>
 									<option value="'.top_opt_48_HOURS.'" '.top_opt_optionselected(top_opt_48_HOURS,$interval).'>'.__('48 Hours (2 days)', 'TweetOldPost').'</option>
 									<option value="'.top_opt_72_HOURS.'" '.top_opt_optionselected(top_opt_72_HOURS,$interval).'>'.__('72 Hours (3 days)', 'TweetOldPost').'</option>
 									<option value="'.top_opt_168_HOURS.'" '.top_opt_optionselected(top_opt_168_HOURS,$interval).'>'.__('168 Hours (7 days)', 'TweetOldPost').'</option>
@@ -240,22 +250,38 @@ function top_admin() {
 									<option value="'.top_opt_4_HOURS.'" '.top_opt_optionselected(top_opt_4_HOURS,$slop).'>'.__('Upto 4 Hours', 'TweetOldPost').'</option>
 									<option value="'.top_opt_6_HOURS.'" '.top_opt_optionselected(top_opt_6_HOURS,$slop).'>'.__('Upto 6 Hours', 'TweetOldPost').'</option>
 									<option value="'.top_opt_12_HOURS.'" '.top_opt_optionselected(top_opt_12_HOURS,$slop).'>'.__('Upto 12 Hours', 'TweetOldPost').'</option>
-									<option value="'.top_opt_24_HOURS.'" '.top_opt_optionselected(top_opt_24_HOURS,$slop).'>'.__('Upto 24 Hours (1 day)', 'TweetOldPost').'</option>
+									<option value="'.top_opt_24_HOURS.'" '.top_opt_optionselected(top_opt_24_HOURS,$slop).'>'.__('Upto 24 Hours (1)', 'TweetOldPost').'</option>
 							</select>
 						</div>
 						<div class="option">
 							<label for="top_opt_age_limit">'.__('Minimum age of post to be eligible for tweet: ', 'TweetOldPost').'</label>
 							<select name="top_opt_age_limit" id="top_opt_age_limit">
-									<option value="7" '.top_opt_optionselected(7,$ageLimit).'>'.__('7 Days', 'TweetOldPost').'</option>
-									<option value="15" '.top_opt_optionselected(15,$ageLimit).'>'.__('15 Days', 'TweetOldPost').'</option>
-									<option value="30" '.top_opt_optionselected(30,$ageLimit).'>'.__('30 Days', 'TweetOldPost').'</option>
-									<option value="60" '.top_opt_optionselected(60,$ageLimit).'>'.__('60 Days', 'TweetOldPost').'</option>
-									<option value="90" '.top_opt_optionselected(90,$ageLimit).'>'.__('90 Days', 'TweetOldPost').'</option>
-									<option value="120" '.top_opt_optionselected(120,$ageLimit).'>'.__('120 Days', 'TweetOldPost').'</option>
-									<option value="240" '.top_opt_optionselected(240,$ageLimit).'>'.__('240 Days', 'TweetOldPost').'</option>
-									<option value="365" '.top_opt_optionselected(365,$ageLimit).'>'.__('365 Days', 'TweetOldPost').'</option>
+									<option value="7" '.top_opt_optionselected('7',$ageLimit).'>'.__('7 Days', 'TweetOldPost').'</option>
+									<option value="15" '.top_opt_optionselected('15',$ageLimit).'>'.__('15 Days', 'TweetOldPost').'</option>
+									<option value="30" '.top_opt_optionselected('30',$ageLimit).'>'.__('30 Days', 'TweetOldPost').'</option>
+									<option value="60" '.top_opt_optionselected('60',$ageLimit).'>'.__('60 Days', 'TweetOldPost').'</option>
+									<option value="90" '.top_opt_optionselected('90',$ageLimit).'>'.__('90 Days', 'TweetOldPost').'</option>
+									<option value="120" '.top_opt_optionselected('120',$ageLimit).'>'.__('120 Days', 'TweetOldPost').'</option>
+									<option value="240" '.top_opt_optionselected('240',$ageLimit).'>'.__('240 Days', 'TweetOldPost').'</option>
+									<option value="365" '.top_opt_optionselected('365',$ageLimit).'>'.__('365 Days', 'TweetOldPost').'</option>
 							</select>
 						</div>
+						
+						<div class="option">
+							<label for="top_opt_max_age_limit">'.__('Maximum age of post to be eligible for tweet: ', 'TweetOldPost').'</label>
+							<select name="top_opt_max_age_limit" id="top_opt_max_age_limit">
+									<option value="None" '.top_opt_optionselected('None',$maxAgeLimit).'>'.__('None', 'TweetOldPost').'</option>
+									<option value="15" '.top_opt_optionselected('15',$maxAgeLimit).'>'.__('15 Days', 'TweetOldPost').'</option>
+									<option value="30" '.top_opt_optionselected('30',$maxAgeLimit).'>'.__('30 Days', 'TweetOldPost').'</option>
+									<option value="60" '.top_opt_optionselected('60',$maxAgeLimit).'>'.__('60 Days', 'TweetOldPost').'</option>
+									<option value="90" '.top_opt_optionselected('90',$maxAgeLimit).'>'.__('90 Days', 'TweetOldPost').'</option>
+									<option value="120" '.top_opt_optionselected('120',$maxAgeLimit).'>'.__('120 Days', 'TweetOldPost').'</option>
+									<option value="240" '.top_opt_optionselected('240',$maxAgeLimit).'>'.__('240 Days', 'TweetOldPost').'</option>
+									<option value="365" '.top_opt_optionselected('365',$maxAgeLimit).'>'.__('365 Days', 'TweetOldPost').'</option>
+							</select>
+							<b>If set, it will not fetch posts which are older than specified day.</b>
+						</div>
+						
 				    	<div class="option category">
 				    	<div style="float:left">
 						    	<label class="catlabel">'.__('Categories to Omit from tweets: ', 'TweetOldPost').'</label> </div>
@@ -304,6 +330,12 @@ function validate()
 			document.getElementById("top_opt_bitly_key").focus();
 			return false;
 		}
+	}
+	if(eval(document.getElementById("top_opt_age_limit").value) > eval(document.getElementById("top_opt_max_age_limit").value))
+	{
+		alert("Post max age limit cannot be less than Post min age iimit");
+		document.getElementById("top_opt_age_limit").focus();
+		return false;
 	}
 }
 

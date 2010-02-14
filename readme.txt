@@ -2,8 +2,8 @@
 Contributors: Ajay Matharu
 Tags: Tweet old post, Tweets, Promote old post by tweeting about them, Twitter, Auto Tweet, Hashtags, Twitter Hashtags, Tweet Posts
 Requires at least: 2.0.2
-Tested up to: 2.9
-Stable tag: 1.4
+Tested up to: 2.9.1
+Stable tag: 1.5
 
 Plugin to tweet about your old posts to get more hits for them and keep them alive.
 
@@ -49,6 +49,13 @@ URL Shortener Service - allows you to select which URL shortener service you wan
 **New in v1.4**
 
 Hashtags - allows you to set default hashtags for your tweets
+
+**New in v1.5**
+
+Maximum age of post to be eligible for tweet - allows you to set Maximum age of the post to be eligible for tweet
+
+Added one more shortner service was looking for j.mp but they dont have the api yet.
+
 
 == Installation ==
 
@@ -106,6 +113,13 @@ URL Shortener Service - allows you to select which URL shortener service you wan
 Hashtags - allows you to set default hashtags for your tweets
 
 
+**v1.5**
+
+Maximum age of post to be eligible for tweet - allows you to set Maximum age of the post to be eligible for tweet
+
+Added one more shortner service was looking for j.mp but they dont have the api yet.
+
+
 == Other Notes ==
 
 Some of the options you can configure for the Tweet Old Posts plugins are,
@@ -140,3 +154,10 @@ URL Shortener Service - allows you to select which URL shortener service you wan
 **v1.4**
 
 Hashtags - allows you to set default hashtags for your tweets
+
+
+**v1.5**
+
+Maximum age of post to be eligible for tweet - allows you to set Maximum age of the post to be eligible for tweet
+
+Added one more shortner service was looking for j.mp but they dont have the api yet.
