@@ -84,6 +84,17 @@ Alternatively you can also follow the following steps to install the Tweet Old P
 If you have any questions please mail me at,
 ajay@ajaymatharu.com or matharuajay@yahoo.co.in
 
+**Tweet Old post does not posts any tweets?**
+
+- If its not tweeting any tweets try playing around with the options. Try setting maxtweetage to none and try again.
+
+
+**Tweet old post giving SimpleXmlElement error?**
+
+- If it is giving SimpleXmlElement error, check with your hosting provider on which version of PHP are they supporting. 
+Tweet Old Post supports PHP 5 onwards. It will give SimpleXmlElement error if your hosting provider supports PHP 4
+or PHP less than 5
+
 == Screenshots ==
 
 for screenshots you can check out 
