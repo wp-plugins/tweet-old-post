@@ -68,11 +68,6 @@ function top_opt_tweet_post($oldest_post)
 		$bitly_user=get_option('top_opt_bitly_user');
 		$shorturl=shorten_url($permalink,$url_shortener,$bitly_key,$bitly_user);
 	}
-	elseif ($url_shortener=="1click.at")
-	{
-		$clikat_api=get_option('top_opt_1click_api');
-		$shorturl=shorten_url($permalink,$url_shortener,$clikat_api);
-	}
 	else
 	{
 		$shorturl = shorten_url($permalink,$url_shortener);
@@ -188,24 +183,8 @@ function shorten_url($the_url, $shortener='is.gd', $api_key='', $user='') {
 		$url = "http://u.nu/unu-api-simple?url={$the_url}";
 		$response = send_request($url, 'GET');
 	}elseif ($shortener=="1click.at") {
-		$data = "request=<easyapi_wrapper>
-   <login>
-      <apikey>{$api_key}</apikey>
-   </login>
-   <search>
-      <service>shorten_1clickat</service>
-      <criteria>
-         <url>{$the_url}</url>
-      </criteria>
-   </search>
-</easyapi_wrapper>";
-		$url = "http://xmlfeed.theeasyapi.com";
-		$response = send_request($url, 'POST',$data);
-		$pos      = strripos($response, "<error");
-		if($pos===false)
-		{
-			$response = parseXML($response,"element","shorturl");
-		}
+		$url = "http://1click.at/api.php?action=shorturl&url={$the_url}&format=simple";
+ 		$response = send_request($url, 'GET');
 	} else {
 		$url = "http://is.gd/api.php?longurl={$the_url}";
 		$response = send_request($url, 'GET');

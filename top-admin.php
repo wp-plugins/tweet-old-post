@@ -54,25 +54,7 @@ function top_admin() {
 				}
 			}
 		}
-		elseif($_POST['top_opt_url_shortener']=="1click.at")
-		{
-			if($save)
-			{
-				if(!isset($_POST['top_opt_1click_api']))
-				{
-					print('
-			<div id="message" class="updated fade">
-				<p>'.__('Please enter 1click.at api key. You can get the API by registring at http://theeasyapi.com/', 'TweetOldPost').'</p>
-			</div>');
-					$save=false;
-				}
-				
-				else
-				{
-					$save=true;
-				}
-			}
-		}
+		
 		
 	}
 
@@ -130,13 +112,7 @@ function top_admin() {
 					update_option('top_opt_bitly_key',$_POST['top_opt_bitly_key']);
 				}
 			}
-			if($_POST['top_opt_url_shortener']=="1click.at")
-			{
-				if(isset($_POST['top_opt_1click_api']))
-				{
-					update_option('top_opt_1click_api',$_POST['top_opt_1click_api']);
-				}				
-			}
+			
 		}
 		print('
 			<div id="message" class="updated fade">
@@ -195,10 +171,7 @@ function top_admin() {
 	if(!isset($bitly_username)){
 		$bitly_username="";
 	}
-	$clickat_api=get_option('top_opt_1click_api');
-	if(!isset($clickat_api)){
-		$clickat_api="";
-	}
+	
 	$add_data = get_option('top_opt_add_data');
 	$twitter_username = get_option('top_opt_twitter_username');
 	$twitter_password = get_option('top_opt_twitter_password');
@@ -254,12 +227,7 @@ function top_admin() {
 								<input type="text" size="25" name="top_opt_bitly_key" id="top_opt_bitly_key" value="'.$bitly_api.'" autocomplete="off" />
 							</div>
 						</div>
-						<div id="clickapi" style="display:none;">
-							<div class="option">
-								<label for="top_opt_1click_api">'.__('Easy API Key', 'TweetOldPost').':</label>
-								<input type="text" size="25" name="top_opt_1click_api" id="top_opt_1click_api" value="'.$clickat_api.'" autocomplete="off" />
-							</div>
-						</div>
+					
 						<div class="option">
 							<label for="top_opt_hashtags">'.__('Default #hashtags for your tweets', 'TweetOldPost').':</label>
 							<input type="text" size="25" name="top_opt_hashtags" id="top_opt_hashtags" value="'.$twitter_hashtags.'" autocomplete="off" />
@@ -340,20 +308,12 @@ function showURLAPI()
 	var urlShortener=document.getElementById("top_opt_url_shortener").value;
 	if(urlShortener=="bit.ly")
 	{
-		document.getElementById("clickapi").style.display="none"
 		document.getElementById("showDetail").style.display="block";
-		
-	}
-	else if(urlShortener=="1click.at")
-	{
-		document.getElementById("showDetail").style.display="none";	
-		document.getElementById("clickapi").style.display="block";
 		
 	}
 	else
 	{
 		document.getElementById("showDetail").style.display="none";
-		document.getElementById("clickapi").style.display="none";
 		
 	}
 	
@@ -378,15 +338,7 @@ function validate()
 			return false;
 		}
 	}
-	if(document.getElementById("clickapi").style.display=="block" && document.getElementById("top_opt_url_shortener").value=="1click.at")
-	{
-		if(trim(document.getElementById("top_opt_1click_api").value)=="")
-		{
-			alert("Please enter 1click.at api key. You can get the API by registring at http://theeasyapi.com/");
-			document.getElementById("top_opt_1click_api").focus();
-			return false;
-		}	
-	}
+	
 	if(document.getElementById("top_opt_max_age_limit").value != "None")
 	{
 	if(eval(document.getElementById("top_opt_age_limit").value) > eval(document.getElementById("top_opt_max_age_limit").value))

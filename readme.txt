@@ -45,9 +45,11 @@ Tweet now - Button that will tweet at that moment without wanting you to wait fo
 
 URL Shortener Service - allows you to select which URL shortener service you want to use.
 
+
 **New in v1.4**
 
 Hashtags - allows you to set default hashtags for your tweets
+
 
 **New in v1.5**
 
@@ -55,11 +57,12 @@ Maximum age of post to be eligible for tweet - allows you to set Maximum age of 
 
 Added one more shortner service was looking for j.mp but they dont have the api yet.
 
+
 **New in v1.6**
 
 - Made the plugin PHP 4 compatible. Guys try it out and please let me know if that worked.
 - Better error prompting. If your tweets are not appearing on twitter. Try "Tweet Now" button you'll see if there is any problem in tweeting.
-- Added 1click.at shortning service you need to get the api key from http://theeasyapi.com/ you need to add your machine IP address in the server of http://theeasyapi.com/ for this api key to work. 
+- Added 1click.at shortning service. 
 
 == Installation ==
 
@@ -99,6 +102,10 @@ ajay@ajaymatharu.com or matharuajay@yahoo.co.in
 Tweet Old Post supports PHP 5 onwards. It will give SimpleXmlElement error if your hosting provider supports PHP 4
 or PHP less than 5
 
+**Update**
+
+Tweet Old Post v1.6 supports PHP 4 as well.
+
 == Screenshots ==
 
 for screenshots you can check out 
@@ -134,11 +141,12 @@ Maximum age of post to be eligible for tweet - allows you to set Maximum age of 
 
 Added one more shortner service was looking for j.mp but they dont have the api yet.
 
+
 **New in v1.6**
 
 - Made the plugin PHP 4 compatible. Guys try it out and please let me know if that worked.
 - Better error prompting. If your tweets are not appearing on twitter. Try "Tweet Now" button you'll see if there is any problem in tweeting.
-- Added 1click.at shortning service you need to get the api key from http://theeasyapi.com/ you need to add your machine IP address in the server of http://theeasyapi.com/ for this api key to work. 
+- Added 1click.at shortning service.
 
 == Other Notes ==
 
@@ -182,8 +190,9 @@ Maximum age of post to be eligible for tweet - allows you to set Maximum age of 
 
 Added one more shortner service was looking for j.mp but they dont have the api yet.
 
+
 **New in v1.6**
 
 - Made the plugin PHP 4 compatible. Guys try it out and please let me know if that worked.
 - Better error prompting. If your tweets are not appearing on twitter. Try "Tweet Now" button you'll see if there is any problem in tweeting.
-- Added 1click.at shortning service you need to get the api key from http://theeasyapi.com/ you need to add your machine IP address in the server of http://theeasyapi.com/ for this api key to work. 
+- Added 1click.at shortning service. 
