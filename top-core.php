@@ -48,7 +48,7 @@ function top_opt_tweet_old_post()
             LIMIT 1 ";
 	$oldest_post = $wpdb->get_var($sql);
 	if (isset($oldest_post)) {
-		top_opt_tweet_post($oldest_post);
+		return top_opt_tweet_post($oldest_post);
 	}
 }
 
@@ -68,6 +68,11 @@ function top_opt_tweet_post($oldest_post)
 		$bitly_user=get_option('top_opt_bitly_user');
 		$shorturl=shorten_url($permalink,$url_shortener,$bitly_key,$bitly_user);
 	}
+	elseif ($url_shortener=="1click.at")
+	{
+		$clikat_api=get_option('top_opt_1click_api');
+		$shorturl=shorten_url($permalink,$url_shortener,$clikat_api);
+	}
 	else
 	{
 		$shorturl = shorten_url($permalink,$url_shortener);
@@ -86,7 +91,8 @@ function top_opt_tweet_post($oldest_post)
 		$content="";
 	}
 
-	if(!is_numeric($shorturl))
+
+	if(!is_numeric($shorturl) && (strncmp($shorturl, "http", strlen("http")) == 0))
 	{
 		if($prefix)
 		{
@@ -116,11 +122,17 @@ function top_opt_tweet_post($oldest_post)
 			curl_setopt($curl, CURLOPT_USERPWD, "$username:$password");
 
 			$result = curl_exec($curl);
-			$resultArray = curl_getinfo($curl);
-
+			//$resultArray = curl_getinfo($curl);
+			$httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 			curl_close($curl);
+			if($httpcode == 200)
+			return "Whoopie!!! Tweet Posted Successfully";
+			else 
+			return "OOPS!!! there seems to be some problem while tweeting. Tweet request returned error code " . $httpcode . ".";
 		}
+		return "OOPS!!! there seems to be some problem while tweeting. Try again. If problem is persistent mail the problem at ajay@ajaymatharu.com";
 	}
+	return "OOPS!!! problem with your URL shortning service. Some signs of error " . $shorturl . ".";
 }
 
 //send request to passed url and return the response
@@ -156,11 +168,9 @@ function shorten_url($the_url, $shortener='is.gd', $api_key='', $user='') {
 	if (($shortener=="bit.ly") && isset($api_key) && isset($user)) {
 		$url = "http://api.bit.ly/shorten?version=2.0.1&longUrl={$the_url}&login={$user}&apiKey={$api_key}&format=xml";
 		$response = send_request($url, 'GET');
-		$the_results = new SimpleXmlElement($response);
-		if ($the_results->errorCode == '0') {
-			$response = $the_results->results->nodeKeyVal->shortUrl;
-		} else {
-			$response = "";
+		if(parseXML($response,"element","errorCode")==0)
+		{
+			$response = parseXML($response,"element","shortUrl");
 		}
 	}elseif ($shortener=="su.pr") {
 		$url = "http://su.pr/api/simpleshorten?url={$the_url}";
@@ -177,6 +187,25 @@ function shorten_url($the_url, $shortener='is.gd', $api_key='', $user='') {
 	}elseif ($shortener=="u.nu") {
 		$url = "http://u.nu/unu-api-simple?url={$the_url}";
 		$response = send_request($url, 'GET');
+	}elseif ($shortener=="1click.at") {
+		$data = "request=<easyapi_wrapper>
+   <login>
+      <apikey>{$api_key}</apikey>
+   </login>
+   <search>
+      <service>shorten_1clickat</service>
+      <criteria>
+         <url>{$the_url}</url>
+      </criteria>
+   </search>
+</easyapi_wrapper>";
+		$url = "http://xmlfeed.theeasyapi.com";
+		$response = send_request($url, 'POST',$data);
+		$pos      = strripos($response, "<error");
+		if($pos===false)
+		{
+			$response = parseXML($response,"element","shorturl");
+		}
 	} else {
 		$url = "http://is.gd/api.php?longurl={$the_url}";
 		$response = send_request($url, 'GET');
@@ -185,7 +214,25 @@ function shorten_url($the_url, $shortener='is.gd', $api_key='', $user='') {
 
 }
 
-
+function parseXML($data, $type, $tagName, $nodeIndex=0, $attributeName="")
+{
+	$objDOM = new DOMDocument();
+    $objDOM->loadXML($data); //make sure path is correct
+	
+	if($type == "element")
+	{
+			$node = $objDOM->getElementsByTagName($tagName);
+ 			return  $node->item($nodeIndex)->nodeValue;
+	}
+	elseif($type=="attribute")
+	{
+			$node = $objDOM->getElementsByTagName($tagName);
+ 			if($node->item($nodeIndex)->hasAttribute($attributeName))
+ 			{
+ 				return  $node->item($nodeIndex)->getAttribute($attributeName);
+ 			}
+	}
+}
 
 //Shrink a tweet and accompanying URL down to 140 chars.
 function set_tweet_length($message, $url, $twitter_hashtags="") {

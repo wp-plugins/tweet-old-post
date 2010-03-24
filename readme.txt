@@ -1,9 +1,9 @@
 === Tweet Old Post ===
 Contributors: Ajay Matharu
 Tags: Tweet old post, Tweets, Promote old post by tweeting about them, Twitter, Auto Tweet, Hashtags, Twitter Hashtags, Tweet Posts
-Requires at least: 2.0.2
-Tested up to: 2.9.1
-Stable tag: 1.5
+Requires at least: 2.7
+Tested up to: 2.9.2
+Stable tag: 1.6
 
 Plugin to tweet about your old posts to get more hits for them and keep them alive.
 
@@ -45,7 +45,6 @@ Tweet now - Button that will tweet at that moment without wanting you to wait fo
 
 URL Shortener Service - allows you to select which URL shortener service you want to use.
 
-
 **New in v1.4**
 
 Hashtags - allows you to set default hashtags for your tweets
@@ -56,6 +55,11 @@ Maximum age of post to be eligible for tweet - allows you to set Maximum age of 
 
 Added one more shortner service was looking for j.mp but they dont have the api yet.
 
+**New in v1.6**
+
+- Made the plugin PHP 4 compatible. Guys try it out and please let me know if that worked.
+- Better error prompting. If your tweets are not appearing on twitter. Try "Tweet Now" button you'll see if there is any problem in tweeting.
+- Added 1click.at shortning service you need to get the api key from http://theeasyapi.com/ you need to add your machine IP address in the server of http://theeasyapi.com/ for this api key to work. 
 
 == Installation ==
 
@@ -130,6 +134,11 @@ Maximum age of post to be eligible for tweet - allows you to set Maximum age of 
 
 Added one more shortner service was looking for j.mp but they dont have the api yet.
 
+**New in v1.6**
+
+- Made the plugin PHP 4 compatible. Guys try it out and please let me know if that worked.
+- Better error prompting. If your tweets are not appearing on twitter. Try "Tweet Now" button you'll see if there is any problem in tweeting.
+- Added 1click.at shortning service you need to get the api key from http://theeasyapi.com/ you need to add your machine IP address in the server of http://theeasyapi.com/ for this api key to work. 
 
 == Other Notes ==
 
@@ -172,3 +181,9 @@ Hashtags - allows you to set default hashtags for your tweets
 Maximum age of post to be eligible for tweet - allows you to set Maximum age of the post to be eligible for tweet
 
 Added one more shortner service was looking for j.mp but they dont have the api yet.
+
+**New in v1.6**
+
+- Made the plugin PHP 4 compatible. Guys try it out and please let me know if that worked.
+- Better error prompting. If your tweets are not appearing on twitter. Try "Tweet Now" button you'll see if there is any problem in tweeting.
+- Added 1click.at shortning service you need to get the api key from http://theeasyapi.com/ you need to add your machine IP address in the server of http://theeasyapi.com/ for this api key to work. 

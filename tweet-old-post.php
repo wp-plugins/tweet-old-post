@@ -4,7 +4,7 @@
 #     Plugin URI: http://www.ajaymatharu.com/wordpress-plugin-tweet-old-posts/
 #     Description: Plugin for tweeting your old posts randomly 
 #     Author: Ajay Matharu 
-#     Version: 1.5
+#     Version: 1.6
 #     Author URI: http://www.ajaymatharu.com
 #     */  
  
