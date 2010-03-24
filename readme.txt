@@ -62,7 +62,11 @@ Added one more shortner service was looking for j.mp but they dont have the api 
 
 - Made the plugin PHP 4 compatible. Guys try it out and please let me know if that worked.
 - Better error prompting. If your tweets are not appearing on twitter. Try "Tweet Now" button you'll see if there is any problem in tweeting.
-- Added 1click.at shortning service. 
+- Added 1click.at shortning service you need to get the api key from http://theeasyapi.com/ you need to add your machine IP address in the server of http://theeasyapi.com/ for this api key to work. 
+
+
+**New in v1.7**
+- Removed api option from 1click.at not needed api key
 
 == Installation ==
 
@@ -146,7 +150,11 @@ Added one more shortner service was looking for j.mp but they dont have the api 
 
 - Made the plugin PHP 4 compatible. Guys try it out and please let me know if that worked.
 - Better error prompting. If your tweets are not appearing on twitter. Try "Tweet Now" button you'll see if there is any problem in tweeting.
-- Added 1click.at shortning service.
+- Added 1click.at shortning service you need to get the api key from http://theeasyapi.com/ you need to add your machine IP address in the server of http://theeasyapi.com/ for this api key to work. 
+
+
+**New in v1.7**
+- Removed api option from 1click.at not needed api key
 
 == Other Notes ==
 
@@ -195,4 +203,8 @@ Added one more shortner service was looking for j.mp but they dont have the api 
 
 - Made the plugin PHP 4 compatible. Guys try it out and please let me know if that worked.
 - Better error prompting. If your tweets are not appearing on twitter. Try "Tweet Now" button you'll see if there is any problem in tweeting.
-- Added 1click.at shortning service. 
+- Added 1click.at shortning service you need to get the api key from http://theeasyapi.com/ you need to add your machine IP address in the server of http://theeasyapi.com/ for this api key to work. 
+
+
+**New in v1.7**
+- Removed api option from 1click.at not needed api key
