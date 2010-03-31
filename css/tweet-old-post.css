@@ -1,0 +1,47 @@
+.wrap h2 {
+	margin-top: 32px;
+}
+#top_opt .options {
+	overflow: hidden;
+	border: none;
+}
+#top_opt .option {
+	overflow: hidden;
+	border-bottom: dashed 1px #ccc;
+	padding-bottom: 9px;
+	padding-top: 9px;
+}
+#top_opt .option label {
+	display: block;
+	float: left;
+	width: 200px;
+	margin-right: 24px;
+	text-align: right;
+}
+#top_opt .option span {
+	display: block;
+	float: left;
+	margin-left: 230px;
+	margin-top: 6px;
+	clear: left;
+}
+
+#top_opt p.submit {
+	overflow: hidden;
+}
+#top_opt .option span {
+	color: #666;
+	display: block;
+}
+
+#top_opt .category label
+{
+	float:left;
+	text-align:left;
+	
+}
+
+#top_opt .category .catlabel
+{
+	text-align:right;
+}
