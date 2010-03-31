@@ -66,10 +66,12 @@ Added one more shortner service was looking for j.mp but they dont have the api 
 
 
 **New in v1.7**
+
 - Removed api option from 1click.at not needed api key
 
 
 **New in v1.8**
+
 - Bug Fixes
 - Provision to fetch tweet url from custom field
 
@@ -159,10 +161,12 @@ Added one more shortner service was looking for j.mp but they dont have the api 
 
 
 **v1.7**
+
 - Removed api option from 1click.at not needed api key
 
 
 **v1.8**
+
 - Bug Fixes
 - Provision to fetch tweet url from custom field
 
@@ -217,9 +221,11 @@ Added one more shortner service was looking for j.mp but they dont have the api 
 
 
 **v1.7**
+
 - Removed api option from 1click.at not needed api key
 
 
 **v1.8**
+
 - Bug Fixes
 - Provision to fetch tweet url from custom field
