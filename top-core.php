@@ -62,17 +62,42 @@ function top_opt_tweet_post($oldest_post)
 	$add_data = get_option("top_opt_add_data");
 	$twitter_hashtags = get_option('top_opt_hashtags');
 	$url_shortener=get_option('top_opt_url_shortener');
-	if($url_shortener=="bit.ly")
-	{
-		$bitly_key=get_option('top_opt_bitly_key');
-		$bitly_user=get_option('top_opt_bitly_user');
-		$shorturl=shorten_url($permalink,$url_shortener,$bitly_key,$bitly_user);
-	}
-	else
-	{
-		$shorturl = shorten_url($permalink,$url_shortener);
-	}
+	$to_short_url=true;
+
 	
+	
+	
+	$custom_url_option=get_option('top_opt_custom_url_option');
+
+	if($custom_url_option)
+	{
+		$custom_url_field = get_option('top_opt_custom_url_field');
+		if(trim($custom_url_field) != "")
+		{
+			$permalink = trim(get_post_meta($post->ID, $custom_url_field, true));
+			$to_short_url = get_option('top_opt_custom_url_shorten');
+			
+		}
+	}
+
+	if($to_short_url)
+	{
+		
+		if($url_shortener=="bit.ly")
+		{
+			$bitly_key=get_option('top_opt_bitly_key');
+			$bitly_user=get_option('top_opt_bitly_user');
+			$shorturl=shorten_url($permalink,$url_shortener,$bitly_key,$bitly_user);
+		}
+		else
+		{
+			$shorturl = shorten_url($permalink,$url_shortener);
+		}
+	}
+	else 
+	{
+		$shorturl = $permalink;
+	}
 	$prefix=get_option('top_opt_tweet_prefix');
 
 	if($add_data == "true")
@@ -117,12 +142,13 @@ function top_opt_tweet_post($oldest_post)
 			curl_setopt($curl, CURLOPT_USERPWD, "$username:$password");
 
 			$result = curl_exec($curl);
-			//$resultArray = curl_getinfo($curl);
+			$resultArray = curl_getinfo($curl);
 			$httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 			curl_close($curl);
+			
 			if($httpcode == 200)
 			return "Whoopie!!! Tweet Posted Successfully";
-			else 
+			else
 			return "OOPS!!! there seems to be some problem while tweeting. Tweet request returned error code " . $httpcode . ".";
 		}
 		return "OOPS!!! there seems to be some problem while tweeting. Try again. If problem is persistent mail the problem at ajay@ajaymatharu.com";
@@ -184,33 +210,58 @@ function shorten_url($the_url, $shortener='is.gd', $api_key='', $user='') {
 		$response = send_request($url, 'GET');
 	}elseif ($shortener=="1click.at") {
 		$url = "http://1click.at/api.php?action=shorturl&url={$the_url}&format=simple";
- 		$response = send_request($url, 'GET');
+		$response = send_request($url, 'GET');
 	} else {
 		$url = "http://is.gd/api.php?longurl={$the_url}";
 		$response = send_request($url, 'GET');
 	}
+	
 	return $response;
 
 }
 
 function parseXML($data, $type, $tagName, $nodeIndex=0, $attributeName="")
 {
-	$objDOM = new DOMDocument();
-    $objDOM->loadXML($data); //make sure path is correct
-	
-	if($type == "element")
+	if(PHP_VERSION >= 5)
 	{
+		
+		$objDOM = new DOMDocument();
+		$objDOM->loadXML($data);
+
+		if($type == "element")
+		{
 			$node = $objDOM->getElementsByTagName($tagName);
- 			return  $node->item($nodeIndex)->nodeValue;
+			
+			return  $node->item($nodeIndex)->nodeValue;
+		}
+		elseif($type=="attribute")
+		{
+			$node = $objDOM->getElementsByTagName($tagName);
+			if($node->item($nodeIndex)->hasAttribute($attributeName))
+			{
+				
+				return  $node->item($nodeIndex)->getAttribute($attributeName);
+			}
+		}
 	}
-	elseif($type=="attribute")
+	else
 	{
-			$node = $objDOM->getElementsByTagName($tagName);
- 			if($node->item($nodeIndex)->hasAttribute($attributeName))
- 			{
- 				return  $node->item($nodeIndex)->getAttribute($attributeName);
- 			}
+		$objDOM = domxml_open_mem($data);
+		if($type == "element")
+		{
+			$node = $objDOM->get_elements_by_tagname($tagName);
+			return  $node->item($nodeIndex)->node_value;
+		}
+		elseif($type=="attribute")
+		{
+			$node = $objDOM->get_elements_by_tagname($tagName);
+			if($node->item($nodeIndex)->has_attribute($attributeName))
+			{
+				return  $node->item($nodeIndex)->get_attribute($attributeName);
+			}
+		}
 	}
+
 }
 
 //Shrink a tweet and accompanying URL down to 140 chars.

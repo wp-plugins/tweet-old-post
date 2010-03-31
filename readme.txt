@@ -3,7 +3,7 @@ Contributors: Ajay Matharu
 Tags: Tweet old post, Tweets, Promote old post by tweeting about them, Twitter, Auto Tweet, Hashtags, Twitter Hashtags, Tweet Posts
 Requires at least: 2.7
 Tested up to: 2.9.2
-Stable tag: 1.6
+Stable tag: trunk
 
 Plugin to tweet about your old posts to get more hits for them and keep them alive.
 
@@ -67,6 +67,11 @@ Added one more shortner service was looking for j.mp but they dont have the api 
 
 **New in v1.7**
 - Removed api option from 1click.at not needed api key
+
+
+**New in v1.8**
+- Bug Fixes
+- Provision to fetch tweet url from custom field
 
 == Installation ==
 
@@ -146,15 +151,20 @@ Maximum age of post to be eligible for tweet - allows you to set Maximum age of 
 Added one more shortner service was looking for j.mp but they dont have the api yet.
 
 
-**New in v1.6**
+**v1.6**
 
 - Made the plugin PHP 4 compatible. Guys try it out and please let me know if that worked.
 - Better error prompting. If your tweets are not appearing on twitter. Try "Tweet Now" button you'll see if there is any problem in tweeting.
 - Added 1click.at shortning service you need to get the api key from http://theeasyapi.com/ you need to add your machine IP address in the server of http://theeasyapi.com/ for this api key to work. 
 
 
-**New in v1.7**
+**v1.7**
 - Removed api option from 1click.at not needed api key
+
+
+**v1.8**
+- Bug Fixes
+- Provision to fetch tweet url from custom field
 
 == Other Notes ==
 
@@ -199,12 +209,17 @@ Maximum age of post to be eligible for tweet - allows you to set Maximum age of 
 Added one more shortner service was looking for j.mp but they dont have the api yet.
 
 
-**New in v1.6**
+**v1.6**
 
 - Made the plugin PHP 4 compatible. Guys try it out and please let me know if that worked.
 - Better error prompting. If your tweets are not appearing on twitter. Try "Tweet Now" button you'll see if there is any problem in tweeting.
 - Added 1click.at shortning service you need to get the api key from http://theeasyapi.com/ you need to add your machine IP address in the server of http://theeasyapi.com/ for this api key to work. 
 
 
-**New in v1.7**
+**v1.7**
 - Removed api option from 1click.at not needed api key
+
+
+**v1.8**
+- Bug Fixes
+- Provision to fetch tweet url from custom field

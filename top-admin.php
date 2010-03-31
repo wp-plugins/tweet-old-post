@@ -5,6 +5,7 @@ require_once('top-core.php');
 
 
 function top_admin() {
+	if ( current_user_can('manage_options') ) { 
 	$message = null;
 	$message_updated = __("Tweet Old Post Options Updated.", 'TweetOldPost');
 	$response=null;
@@ -91,6 +92,32 @@ function top_admin() {
 			update_option('top_opt_omit_cats','');
 		}
 		
+			
+        if (isset($_POST['top_opt_custom_url_option'])) {
+			update_option('top_opt_custom_url_option',true);
+			
+		}
+		else {
+			
+			update_option('top_opt_custom_url_option',false);
+		}
+		
+		if (isset($_POST['top_opt_custom_url_field'])) {
+			update_option('top_opt_custom_url_field',$_POST['top_opt_custom_url_field']);
+		}
+		else {
+			
+			update_option('top_opt_custom_url_field','');
+		}
+		
+		if (isset($_POST['top_opt_custom_url_shorten'])) {
+			update_option('top_opt_custom_url_shorten',true);
+		}
+		else {
+			
+			update_option('top_opt_custom_url_shorten',false);
+		}
+		
         if (isset($_POST['top_opt_hashtags'])) {
 			update_option('top_opt_hashtags',$_POST['top_opt_hashtags']);
 		}
@@ -158,6 +185,7 @@ function top_admin() {
 		$url_shortener=top_opt_URL_SHORTENER;
 	}
 	
+	
 	$twitter_hashtags=get_option('top_opt_hashtags');
 	if(!isset($twitter_hashtags)){
 		$twitter_hashtags=top_opt_HASHTAGS;
@@ -172,6 +200,29 @@ function top_admin() {
 		$bitly_username="";
 	}
 	
+	$custom_url_option=get_option('top_opt_custom_url_option');
+	
+	if(!isset($custom_url_option)){
+		$custom_url_option="";
+	}
+	elseif ($custom_url_option)
+		$custom_url_option="checked";
+	else 
+		$custom_url_option="";
+	
+	$custom_url_field=get_option('top_opt_custom_url_field');
+	if(!isset($custom_url_field)){
+		$custom_url_field="";
+	}
+	
+	$custom_url_shorten=get_option('top_opt_custom_url_shorten');
+	if(!isset($custom_url_shorten)){
+		$custom_url_shorten="";
+	}
+	elseif($custom_url_shorten) 
+		$custom_url_shorten="checked";
+	else 
+		$custom_url_shorten="";
 	$add_data = get_option('top_opt_add_data');
 	$twitter_username = get_option('top_opt_twitter_username');
 	$twitter_password = get_option('top_opt_twitter_password');
@@ -203,6 +254,25 @@ function top_admin() {
 							</select>
 							<b>If set, it will show as: "{tweet prefix}: {post title}- {content}... {url}</b>
 						</div>
+						
+						<div class="option">
+							<label for="top_opt_custom_url_option">'.__('Fetch URL from custom field', 'TweetOldPost').':</label>
+							<input onchange="return showCustomField();" type="checkbox" name="top_opt_custom_url_option" '.$custom_url_option.' id="top_opt_custom_url_option" />
+							<b>If checked URL will be fetched from custom field. If not plugin will generate shortened URL from post link.</b>
+						</div>
+						<div id="customurl" style="display:none;">
+						<div class="option">
+							<label for="top_opt_custom_url_field">'.__('Custom field name to fetch URL to be tweeted with post', 'TweetOldPost').':</label>
+							<input type="text" size="25" name="top_opt_custom_url_field" id="top_opt_custom_url_field" value="'.$custom_url_field.'" autocomplete="off" />
+							<b>If set this will fetch the URL from specified custom field</b>
+						</div>
+						<div class="option">
+							<label for="top_opt_custom_url_shorten">'.__('Custom field name to fetch URL to be tweeted with post', 'TweetOldPost').':</label>
+							<input onchange="return showshortener()" type="checkbox" name="top_opt_custom_url_shorten" id="top_opt_custom_url_shorten" '.$custom_url_shorten.' />
+							<b>If set it will shorten the URL fetched from custom field, else it will show the url fetched from custom field</b>
+						</div>
+						</div>
+						<div  id="urlshortener">
 						<div class="option">
 							<label for="top_opt_url_shortener">'.__('URL Shortener Service', 'TweetOldPost').':</label>
 							<select name="top_opt_url_shortener" id="top_opt_url_shortener" onchange="javascript:showURLAPI()" style="width:100px;">
@@ -227,7 +297,9 @@ function top_admin() {
 								<input type="text" size="25" name="top_opt_bitly_key" id="top_opt_bitly_key" value="'.$bitly_api.'" autocomplete="off" />
 							</div>
 						</div>
+					</div>
 					
+						
 						<div class="option">
 							<label for="top_opt_hashtags">'.__('Default #hashtags for your tweets', 'TweetOldPost').':</label>
 							<input type="text" size="25" name="top_opt_hashtags" id="top_opt_hashtags" value="'.$twitter_hashtags.'" autocomplete="off" />
@@ -354,9 +426,46 @@ function trim(stringToTrim) {
 	return stringToTrim.replace(/^\s+|\s+$/g,"");
 }
 
+function showCustomField()
+{
+	if(document.getElementById("top_opt_custom_url_option").checked)
+	{
+		document.getElementById("customurl").style.display="block";
+		document.getElementById("urlshortener").style.display="none";
+		showshortener();
+	}
+	else
+	{
+		document.getElementById("customurl").style.display="none";
+		document.getElementById("urlshortener").style.display="block";
+		document.getElementById("top_opt_custom_url_shorten").checked=false;
+	}
+}
+
+function showshortener()
+{
+	if((document.getElementById("top_opt_custom_url_shorten").checked))
+		{
+			document.getElementById("urlshortener").style.display="block";
+		}
+		else
+		{
+			document.getElementById("urlshortener").style.display="none";
+		}
+}
 showURLAPI();
+showshortener();
+showCustomField();
 </script>' );
 
+}
+else 
+{
+	print('
+			<div id="message" class="updated fade">
+				<p>'.__('You do not have enough permission to set the option. Please contact your admin.', 'TweetOldPost').'</p>
+			</div>');
+}
 }
 
 function top_opt_optionselected($opValue, $value) {
