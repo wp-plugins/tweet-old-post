@@ -3,7 +3,7 @@ Contributors: Ajay Matharu
 Tags: Tweet old post, Tweets, Promote old post by tweeting about them, Twitter, Auto Tweet, Hashtags, Twitter Hashtags, Tweet Posts
 Requires at least: 2.7
 Tested up to: 2.9.2
-Stable tag: 1.8 
+Stable tag: trunk
 
 Plugin to tweet about your old posts to get more hits for them and keep them alive.
 
@@ -66,14 +66,17 @@ Added one more shortner service was looking for j.mp but they dont have the api 
 
 
 **New in v1.7**
-
 - Removed api option from 1click.at not needed api key
 
 
 **New in v1.8**
-
 - Bug Fixes
 - Provision to fetch tweet url from custom field
+
+
+**New in v1.9**
+- Removed PHP 4 support as it was creating problem for lot of people
+
 
 == Installation ==
 
@@ -161,14 +164,18 @@ Added one more shortner service was looking for j.mp but they dont have the api 
 
 
 **v1.7**
-
 - Removed api option from 1click.at not needed api key
 
 
 **v1.8**
-
 - Bug Fixes
 - Provision to fetch tweet url from custom field
+
+
+**v1.9**
+- Removed PHP 4 support as it was creating problem for lot of people
+
+
 
 == Other Notes ==
 
@@ -221,11 +228,14 @@ Added one more shortner service was looking for j.mp but they dont have the api 
 
 
 **v1.7**
-
 - Removed api option from 1click.at not needed api key
 
 
 **v1.8**
-
 - Bug Fixes
 - Provision to fetch tweet url from custom field
+
+
+**v1.9**
+- Removed PHP 4 support as it was creating problem for lot of people
+

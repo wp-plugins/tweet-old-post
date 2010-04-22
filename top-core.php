@@ -189,10 +189,14 @@ function shorten_url($the_url, $shortener='is.gd', $api_key='', $user='') {
 	if (($shortener=="bit.ly") && isset($api_key) && isset($user)) {
 		$url = "http://api.bit.ly/shorten?version=2.0.1&longUrl={$the_url}&login={$user}&apiKey={$api_key}&format=xml";
 		$response = send_request($url, 'GET');
-		if(parseXML($response,"element","errorCode")==0)
-		{
-			$response = parseXML($response,"element","shortUrl");
+		
+		$the_results = new SimpleXmlElement($response);
+		if ($the_results->errorCode == '0') {
+			$response = $the_results->results->nodeKeyVal->shortUrl;
+		} else {
+			$response = "";
 		}
+		
 	}elseif ($shortener=="su.pr") {
 		$url = "http://su.pr/api/simpleshorten?url={$the_url}";
 		$response = send_request($url, 'GET');
@@ -217,50 +221,6 @@ function shorten_url($the_url, $shortener='is.gd', $api_key='', $user='') {
 	}
 	
 	return $response;
-
-}
-
-function parseXML($data, $type, $tagName, $nodeIndex=0, $attributeName="")
-{
-	if(PHP_VERSION >= 5)
-	{
-		
-		$objDOM = new DOMDocument();
-		$objDOM->loadXML($data);
-
-		if($type == "element")
-		{
-			$node = $objDOM->getElementsByTagName($tagName);
-			
-			return  $node->item($nodeIndex)->nodeValue;
-		}
-		elseif($type=="attribute")
-		{
-			$node = $objDOM->getElementsByTagName($tagName);
-			if($node->item($nodeIndex)->hasAttribute($attributeName))
-			{
-				
-				return  $node->item($nodeIndex)->getAttribute($attributeName);
-			}
-		}
-	}
-	else
-	{
-		$objDOM = domxml_open_mem($data);
-		if($type == "element")
-		{
-			$node = $objDOM->get_elements_by_tagname($tagName);
-			return  $node->item($nodeIndex)->node_value;
-		}
-		elseif($type=="attribute")
-		{
-			$node = $objDOM->get_elements_by_tagname($tagName);
-			if($node->item($nodeIndex)->has_attribute($attributeName))
-			{
-				return  $node->item($nodeIndex)->get_attribute($attributeName);
-			}
-		}
-	}
 
 }
 
