@@ -78,6 +78,11 @@ Added one more shortner service was looking for j.mp but they dont have the api 
 - Removed PHP 4 support as it was creating problem for lot of people
 
 
+**New in v2.0**
+- added provision to select if you want to shorten the URL or not. 
+- Cleaned other options.
+
+
 == Installation ==
 
 Following are the steps to install the Tweet Old Post plugin
@@ -176,6 +181,9 @@ Added one more shortner service was looking for j.mp but they dont have the api 
 - Removed PHP 4 support as it was creating problem for lot of people
 
 
+**v2.0**
+- added provision to select if you want to shorten the URL or not. 
+- Cleaned other options.
 
 == Other Notes ==
 
@@ -239,3 +247,7 @@ Added one more shortner service was looking for j.mp but they dont have the api 
 **v1.9**
 - Removed PHP 4 support as it was creating problem for lot of people
 
+
+**v2.0**
+- added provision to select if you want to shorten the URL or not. 
+- Cleaned other options.

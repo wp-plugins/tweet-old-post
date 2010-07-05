@@ -110,12 +110,12 @@ function top_admin() {
 			update_option('top_opt_custom_url_field','');
 		}
 		
-		if (isset($_POST['top_opt_custom_url_shorten'])) {
-			update_option('top_opt_custom_url_shorten',true);
+		if (isset($_POST['top_opt_use_url_shortner'])) {
+			update_option('top_opt_use_url_shortner',true);
 		}
 		else {
 			
-			update_option('top_opt_custom_url_shorten',false);
+			update_option('top_opt_use_url_shortner',false);
 		}
 		
         if (isset($_POST['top_opt_hashtags'])) {
@@ -215,14 +215,14 @@ function top_admin() {
 		$custom_url_field="";
 	}
 	
-	$custom_url_shorten=get_option('top_opt_custom_url_shorten');
-	if(!isset($custom_url_shorten)){
-		$custom_url_shorten="";
+	$use_url_shortner=get_option('top_opt_use_url_shortner');
+	if(!isset($use_url_shortner)){
+		$use_url_shortner="";
 	}
-	elseif($custom_url_shorten) 
-		$custom_url_shorten="checked";
+	elseif($use_url_shortner) 
+		$use_url_shortner="checked";
 	else 
-		$custom_url_shorten="";
+		$use_url_shortner="";
 	$add_data = get_option('top_opt_add_data');
 	$twitter_username = get_option('top_opt_twitter_username');
 	$twitter_password = get_option('top_opt_twitter_password');
@@ -260,18 +260,24 @@ function top_admin() {
 							<input onchange="return showCustomField();" type="checkbox" name="top_opt_custom_url_option" '.$custom_url_option.' id="top_opt_custom_url_option" />
 							<b>If checked URL will be fetched from custom field. If not plugin will generate shortened URL from post link.</b>
 						</div>
+						
+						
+						
 						<div id="customurl" style="display:none;">
 						<div class="option">
 							<label for="top_opt_custom_url_field">'.__('Custom field name to fetch URL to be tweeted with post', 'TweetOldPost').':</label>
 							<input type="text" size="25" name="top_opt_custom_url_field" id="top_opt_custom_url_field" value="'.$custom_url_field.'" autocomplete="off" />
 							<b>If set this will fetch the URL from specified custom field</b>
 						</div>
+						
+						</div>
+						
 						<div class="option">
-							<label for="top_opt_custom_url_shorten">'.__('Custom field name to fetch URL to be tweeted with post', 'TweetOldPost').':</label>
-							<input onchange="return showshortener()" type="checkbox" name="top_opt_custom_url_shorten" id="top_opt_custom_url_shorten" '.$custom_url_shorten.' />
-							<b>If set it will shorten the URL fetched from custom field, else it will show the url fetched from custom field</b>
+							<label for="top_opt_use_url_shortner">'.__('Use URL shortner?', 'TweetOldPost').':</label>
+							<input onchange="return showshortener()" type="checkbox" name="top_opt_use_url_shortner" id="top_opt_use_url_shortner" '.$use_url_shortner.' />
+							
 						</div>
-						</div>
+						
 						<div  id="urlshortener">
 						<div class="option">
 							<label for="top_opt_url_shortener">'.__('URL Shortener Service', 'TweetOldPost').':</label>
@@ -431,20 +437,18 @@ function showCustomField()
 	if(document.getElementById("top_opt_custom_url_option").checked)
 	{
 		document.getElementById("customurl").style.display="block";
-		document.getElementById("urlshortener").style.display="none";
-		showshortener();
 	}
 	else
 	{
 		document.getElementById("customurl").style.display="none";
-		document.getElementById("urlshortener").style.display="block";
-		document.getElementById("top_opt_custom_url_shorten").checked=false;
 	}
 }
 
 function showshortener()
 {
-	if((document.getElementById("top_opt_custom_url_shorten").checked))
+						
+
+	if((document.getElementById("top_opt_use_url_shortner").checked))
 		{
 			document.getElementById("urlshortener").style.display="block";
 		}

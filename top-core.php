@@ -64,19 +64,15 @@ function top_opt_tweet_post($oldest_post)
 	$url_shortener=get_option('top_opt_url_shortener');
 	$to_short_url=true;
 
-	
-	
-	
 	$custom_url_option=get_option('top_opt_custom_url_option');
-
+	$to_short_url = get_option('top_opt_use_url_shortner');
+	
 	if($custom_url_option)
 	{
 		$custom_url_field = get_option('top_opt_custom_url_field');
 		if(trim($custom_url_field) != "")
 		{
 			$permalink = trim(get_post_meta($post->ID, $custom_url_field, true));
-			$to_short_url = get_option('top_opt_custom_url_shorten');
-			
 		}
 	}
 
