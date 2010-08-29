@@ -66,23 +66,29 @@ Added one more shortner service was looking for j.mp but they dont have the api 
 
 
 **New in v1.7**
+
 - Removed api option from 1click.at not needed api key
 
 
 **New in v1.8**
+
 - Bug Fixes
 - Provision to fetch tweet url from custom field
 
 
 **New in v1.9**
+
 - Removed PHP 4 support as it was creating problem for lot of people
 
 
 **New in v2.0**
+
 - added provision to select if you want to shorten the URL or not. 
 - Cleaned other options.
 
+
 **New in v3.0**
+
 - added OAuth authentication 
 - user defined intervals
 - may not work under php 4 requires php 5
@@ -173,24 +179,29 @@ Added one more shortner service was looking for j.mp but they dont have the api 
 
 
 **v1.7**
+
 - Removed api option from 1click.at not needed api key
 
 
 **v1.8**
+
 - Bug Fixes
 - Provision to fetch tweet url from custom field
 
 
 **v1.9**
+
 - Removed PHP 4 support as it was creating problem for lot of people
 
 
 **v2.0**
+
 - added provision to select if you want to shorten the URL or not. 
 - Cleaned other options.
 
 
 **v3.0**
+
 - added OAuth authentication 
 - user defined intervals
 - may not work under php 4 requires php 5
@@ -246,23 +257,29 @@ Added one more shortner service was looking for j.mp but they dont have the api 
 
 
 **v1.7**
+
 - Removed api option from 1click.at not needed api key
 
 
 **v1.8**
+
 - Bug Fixes
 - Provision to fetch tweet url from custom field
 
 
 **v1.9**
+
 - Removed PHP 4 support as it was creating problem for lot of people
 
 
 **v2.0**
+
 - added provision to select if you want to shorten the URL or not. 
 - Cleaned other options.
 
+
 **v3.0**
+
 - added OAuth authentication 
 - user defined intervals
 - may not work under php 4 requires php 5
