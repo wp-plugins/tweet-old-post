@@ -4,7 +4,7 @@
 #     Plugin URI: http://www.ajaymatharu.com/wordpress-plugin-tweet-old-posts/
 #     Description: Plugin for tweeting your old posts randomly 
 #     Author: Ajay Matharu 
-#     Version: 2.0
+#     Version: 3.0
 #     Author URI: http://www.ajaymatharu.com
 #     */  
  
@@ -12,18 +12,20 @@
 require_once('top-admin.php');
 require_once('top-core.php');
 
-define ('top_opt_1_HOUR', 60*60); 
-define ('top_opt_4_HOURS', 4*top_opt_1_HOUR); 
+define ('top_opt_1_HOUR', 60*60);
+define ('top_opt_2_HOURS', 2*top_opt_1_HOUR);
+define ('top_opt_4_HOURS', 4*top_opt_1_HOUR);
+define ('top_opt_8_HOURS', 8*top_opt_1_HOUR);
 define ('top_opt_6_HOURS', 6*top_opt_1_HOUR); 
 define ('top_opt_12_HOURS', 12*top_opt_1_HOUR); 
 define ('top_opt_24_HOURS', 24*top_opt_1_HOUR); 
 define ('top_opt_48_HOURS', 48*top_opt_1_HOUR); 
 define ('top_opt_72_HOURS', 72*top_opt_1_HOUR); 
 define ('top_opt_168_HOURS', 168*top_opt_1_HOUR); 
-define ('top_opt_INTERVAL', top_opt_12_HOURS); 
-define ('top_opt_INTERVAL_SLOP', top_opt_4_HOURS); 
+define ('top_opt_INTERVAL', 4);
+define ('top_opt_INTERVAL_SLOP', 4);
 define ('top_opt_AGE_LIMIT', 30); // 120 days
-define ('top_opt_MAX_AGE_LIMIT', "None"); // 120 days
+define ('top_opt_MAX_AGE_LIMIT', 0); // 120 days
 define ('top_opt_OMIT_CATS', "");
 define('top_opt_TWEET_PREFIX',"");
 define('top_opt_ADD_DATA',"false");

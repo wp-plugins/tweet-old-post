@@ -1,8 +1,8 @@
 === Tweet Old Post ===
 Contributors: Ajay Matharu
-Tags: Tweet old post, Tweets, Promote old post by tweeting about them, Twitter, Auto Tweet, Hashtags, Twitter Hashtags, Tweet Posts
+Tags: Tweet old post, Tweets, Promote old post by tweeting about them, Twitter, Auto Tweet, Hashtags, Twitter Hashtags, Tweet Posts, Tweet
 Requires at least: 2.7
-Tested up to: 2.9.2
+Tested up to: 3.0.1
 Stable tag: trunk
 
 Plugin to tweet about your old posts to get more hits for them and keep them alive.
@@ -82,6 +82,10 @@ Added one more shortner service was looking for j.mp but they dont have the api 
 - added provision to select if you want to shorten the URL or not. 
 - Cleaned other options.
 
+**New in v3.0**
+- added OAuth authentication 
+- user defined intervals
+- may not work under php 4 requires php 5
 
 == Installation ==
 
@@ -185,6 +189,12 @@ Added one more shortner service was looking for j.mp but they dont have the api 
 - added provision to select if you want to shorten the URL or not. 
 - Cleaned other options.
 
+
+**v3.0**
+- added OAuth authentication 
+- user defined intervals
+- may not work under php 4 requires php 5
+
 == Other Notes ==
 
 Some of the options you can configure for the Tweet Old Posts plugins are,
@@ -251,3 +261,8 @@ Added one more shortner service was looking for j.mp but they dont have the api 
 **v2.0**
 - added provision to select if you want to shorten the URL or not. 
 - Cleaned other options.
+
+**v3.0**
+- added OAuth authentication 
+- user defined intervals
+- may not work under php 4 requires php 5

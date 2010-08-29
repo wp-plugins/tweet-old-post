@@ -1,4 +1,7 @@
 <?php
+require_once( 'Include/oauth.php' );
+global $top_oauth;
+$top_oauth = new TOPOAuth;
 
 function top_tweet_old_post()
 {
@@ -14,26 +17,28 @@ function top_opt_tweet_old_post()
 {
 	global $wpdb;
 	$omitCats = get_option('top_opt_omit_cats');
-	$ageLimit = get_option('top_opt_age_limit');
-	$maxAgeLimit = get_option('top_opt_max_age_limit');
+        $maxAgeLimit = get_option('top_opt_max_age_limit');
+        $ageLimit = get_option('top_opt_age_limit');
+	if (!(isset($ageLimit) && is_numeric($ageLimit))) {
+		$ageLimit = top_opt_AGE_LIMIT;
+	}
+
+	if (!(isset($maxAgeLimit) && is_numeric($maxAgeLimit))) {
+		$maxAgeLimit = top_opt_MAX_AGE_LIMIT;
+	}
 	if (!isset($omitCats)) {
 		$omitCats = top_opt_OMIT_CATS;
 	}
-	if (!isset($ageLimit)) {
-		$ageLimit = top_opt_AGE_LIMIT;
-	}
-	if (!isset($maxAgeLimit)) {
-		$maxAgeLimit = top_opt_MAX_AGE_LIMIT;
-	}
+	
 	$sql = "SELECT ID
             FROM $wpdb->posts
             WHERE post_type = 'post'
                   AND post_status = 'publish'
-                  AND post_date < curdate( ) - INTERVAL ".$ageLimit. " day";
+                  AND post_date <= curdate( ) - INTERVAL ".$ageLimit. " day";
 
-	if($maxAgeLimit != "None")
+	if($maxAgeLimit != 0)
 	{
-		$sql = $sql." AND post_date > curdate( ) - INTERVAL ".$maxAgeLimit." day";
+		$sql = $sql." AND post_date >= curdate( ) - INTERVAL ".$maxAgeLimit." day";
 	}
 
 	if ($omitCats!='') {
@@ -46,6 +51,7 @@ function top_opt_tweet_old_post()
 	$sql = $sql."
             ORDER BY RAND() 
             LIMIT 1 ";
+        
 	$oldest_post = $wpdb->get_var($sql);
 	if (isset($oldest_post)) {
 		return top_opt_tweet_post($oldest_post);
@@ -127,7 +133,7 @@ function top_opt_tweet_post($oldest_post)
 		$status = urlencode(stripslashes(urldecode($message)));
 
 		if ($status) {
-			$tweetUrl = 'http://www.twitter.com/statuses/update.xml';
+			/*$tweetUrl = 'http://www.twitter.com/statuses/update.xml';
 
 			$curl = curl_init();
 			curl_setopt($curl, CURLOPT_URL, "$tweetUrl");
@@ -140,9 +146,10 @@ function top_opt_tweet_post($oldest_post)
 			$result = curl_exec($curl);
 			$resultArray = curl_getinfo($curl);
 			$httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-			curl_close($curl);
+			curl_close($curl);*/
+                   $poststatus= top_update_status($message);
 			
-			if($httpcode == 200)
+			if($poststatus == true)
 			return "Whoopie!!! Tweet Posted Successfully";
 			else
 			return "OOPS!!! there seems to be some problem while tweeting. Tweet request returned error code " . $httpcode . ".";
@@ -241,12 +248,16 @@ function set_tweet_length($message, $url, $twitter_hashtags="") {
 //check time and update the last tweet time
 function top_opt_update_time () {
 	$last = get_option('top_opt_last_update');
-	$interval = get_option('top_opt_interval');
-	if (!(isset($interval) && is_numeric($interval))) {
+        $interval = get_option('top_opt_interval');
+        $slop = get_option('top_opt_interval_slop');
+        if(is_numeric($interval)){$interval = $interval * 60 * 60;}
+        if(is_numeric($slop)){$slop = $slop * 60 * 60;}
+
+        if (!(isset($interval) && is_numeric($interval))) {
 		$interval = top_opt_INTERVAL;
 	}
-	$slop = get_option('top_opt_interval_slop');
-	if (!(isset($slop) && is_numeric($slop))) {
+
+        if (!(isset($slop) && is_numeric($slop))) {
 		$slop = top_opt_INTERVAL_SLOP;
 	}
 	if (false === $last) {
@@ -257,4 +268,76 @@ function top_opt_update_time () {
 	return $ret;
 }
 
+function top_get_auth_url() {
+	global $top_oauth;
+	$settings = top_get_settings();
+
+	$token = $top_oauth->get_request_token();
+	if ( $token ) {
+		$settings['oauth_request_token'] = $token['oauth_token'];
+		$settings['oauth_request_token_secret'] = $token['oauth_token_secret'];
+
+		top_save_settings( $settings );
+
+		return $top_oauth->get_auth_url( $token['oauth_token'] );
+	}
+
+}
+
+
+function top_update_status( $new_status ) {
+	global $top_oauth;
+	$settings = top_get_settings();
+
+	if ( isset( $settings['oauth_access_token'] ) && isset( $settings['oauth_access_token_secret'] ) ) {
+		return $top_oauth->update_status( $settings['oauth_access_token'], $settings['oauth_access_token_secret'], $new_status );
+	}
+
+	return false;
+}
+
+function top_has_tokens() {
+	$settings = top_get_settings();
+
+	return ( $settings[ 'oauth_access_token' ] && $settings['oauth_access_token_secret'] );
+}
+
+function top_is_valid() {
+	return twit_has_tokens();
+}
+
+function top_do_tweet( $post_id ) {
+	$settings = top_get_settings();
+
+	$message = top_get_message( $post_id );
+
+	// If we have a valid message, Tweet it
+	// this will fail if the Tiny URL service is done
+	if ( $message ) {
+		// If we successfully posted this to Twitter, then we can remove it from the queue eventually
+		if ( twit_update_status( $message ) ) {
+			return true;
+		}
+	}
+
+	return false;
+}
+function top_get_settings() {
+	global $top_defaults;
+
+	$settings = $top_defaults;
+
+	$wordpress_settings = get_option( 'top_settings' );
+	if ( $wordpress_settings ) {
+		foreach( $wordpress_settings as $key => $value ) {
+			$settings[ $key ] = $value;
+		}
+	}
+
+	return $settings;
+}
+
+function top_save_settings( $settings ) {
+	update_option( 'top_settings', $settings );
+}
 ?>

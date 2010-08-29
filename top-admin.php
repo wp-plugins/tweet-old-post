@@ -1,38 +1,60 @@
 <?php
-
 require_once('tweet-old-post.php');
 require_once('top-core.php');
-
-
+require_once( 'Include/oauth.php' );
+require_once('xml.php');
 function top_admin() {
 	if ( current_user_can('manage_options') ) { 
 	$message = null;
 	$message_updated = __("Tweet Old Post Options Updated.", 'TweetOldPost');
 	$response=null;
-	$save=null;
+	$save=true;
+$settings = top_get_settings();
+	if ( isset( $_GET['TOP_oauth'] ) ) {
+		global $top_oauth;
 
-	if(isset($_POST['top_opt_twitter_password']) && isset($_POST['top_opt_twitter_username']))
-	{
-		$response=verify_credentials($_POST['top_opt_twitter_username'],$_POST['top_opt_twitter_password']);
-		if($response != 200 && $response == 401)
-		{
-			$message = __("Incorrect Twitter Username & Password. Please verify your credentials.", 'TweetOldPost');
-			print('
-			<div id="message" class="updated fade">
-				<p>'.__('Incorrect Twitter Username & Password. Please verify your credentials.', 'TweetOldPost').'</p>
-			</div>');
-			$save=false;
+		
+		$result = $top_oauth->get_access_token( $settings['oauth_request_token'], $settings['oauth_request_token_secret'], $_GET['oauth_verifier'] );
+		
+                if ( $result ) {
+			$settings['oauth_access_token'] = $result['oauth_token'];
+			$settings['oauth_access_token_secret'] = $result['oauth_token_secret'];
+			$settings['user_id'] = $result['user_id'];
+
+			$result = $top_oauth->get_user_info( $result['user_id'] );
+			if ( $result ) {
+				$settings['profile_image_url'] = $result['user']['profile_image_url'];
+				$settings['screen_name'] = $result['user']['screen_name'];
+				if ( isset( $result['user']['location'] ) ) {
+					$settings['location'] = $result['user']['location'];
+				} else {
+					$settings['location'] = false;
+				}
+			}
+
+			top_save_settings( $settings );
+echo '<script language="javascript">window.open ("'.get_bloginfo('wpurl') . '/wp-admin/options-general.php?page=TweetOldPost","_self")</script>';
+			//header( 'Location: ' . get_bloginfo('wpurl') . '/wp-admin/options-general.php?page=TweetOldPost' );
+			die;
 		}
-		else
-		$save=true;
+	} else if ( isset( $_GET['top'] ) && $_GET['top'] == 'deauthorize' ) {
+		$settings = top_get_settings();
+		$settings['oauth_access_token'] = '';
+		$settings['oauth_access_token_secret'] = '';
+		$settings['user_id'] = '';
+		$settings['tweet_queue'] = array();
+
+		top_save_settings( $settings );
+echo '<script language="javascript">window.open ("'.get_bloginfo('wpurl') . '/wp-admin/options-general.php?page=TweetOldPost","_self")</script>';
+		//header( 'Location: ' . get_bloginfo('wpurl') . '/wp-admin/options-general.php?page=TweetOldPost' );
+		die;
 	}
 
 	if(isset($_POST['top_opt_url_shortener']))
 	{
 		if($_POST['top_opt_url_shortener']=="bit.ly")
 		{
-			if($save)
-			{
+			
 				if(!isset($_POST['top_opt_bitly_user']))
 				{
 					print('
@@ -53,20 +75,14 @@ function top_admin() {
 				{
 					$save=true;
 				}
-			}
+			
 		}
-		
 		
 	}
 
 	if (isset($_POST['submit']) && $save ) {
 		$message = $message_updated;
-		if (isset($_POST['top_opt_twitter_username'])) {
-			update_option('top_opt_twitter_username',$_POST['top_opt_twitter_username']);
-		}
-		if (isset($_POST['top_opt_twitter_password'])) {
-			update_option('top_opt_twitter_password',$_POST['top_opt_twitter_password']);
-		}
+		
 		if (isset($_POST['top_opt_interval'])) {
 			update_option('top_opt_interval',$_POST['top_opt_interval']);
 		}
@@ -159,12 +175,12 @@ function top_admin() {
 		$omitCats = top_opt_OMIT_CATS;
 	}
 	$ageLimit = get_option('top_opt_age_limit');
-	if (!isset($ageLimit)) {
+	if (!(isset($ageLimit) && is_numeric($ageLimit))) {
 		$ageLimit = top_opt_AGE_LIMIT;
 	}
 
 	$maxAgeLimit = get_option('top_opt_max_age_limit');
-	if (!isset($maxAgeLimit)) {
+	if (!(isset($maxAgeLimit) && is_numeric($maxAgeLimit))) {
 		$maxAgeLimit = top_opt_MAX_AGE_LIMIT;
 	}
 	
@@ -234,13 +250,28 @@ function top_admin() {
 					<input type="hidden" name="top_opt_action" value="top_opt_update_settings" />
 					<fieldset class="options">
 						<div class="option">
-							<label for="top_opt_twitter_username">'.__('Twitter Username', 'TweetOldPost').':</label>
-							<input type="text" size="25" name="top_opt_twitter_username" id="top_opt_twitter_username" value="'.$twitter_username.'" autocomplete="off" />
+							<label for="top_opt_twitter_username">'.__('Account Login', 'TweetOldPost').':</label>
+
+<div id="profile-box">');
+					if ( !$settings["oauth_access_token"] ) {
+						echo '<a href="'. top_get_auth_url() .'"><img src="http://apiwiki.twitter.com/f/1242697607/Sign-in-with-Twitter-lighter-small.png" /></a>';
+					 } else {
+							echo '<img class="avatar" src="'. $settings["profile_image_url"] .'" alt="" />
+							<h4>'. $settings["screen_name"] .'</h4>';
+							 if ( $settings["location"] ) {
+							echo '<h5>'.  $settings["location"].'</h5>';
+							 }
+							echo '<p>
+
+								Your account has  been authorized. <a href="'.  $_SERVER["REQUEST_URI"] .'&top=deauthorize" onclick=\'return confirm("Are you sure you want to deauthorize your Twitter account?");\'>Click to deauthorize</a>.<br />
+
+							</p>
+
+							<div class="retweet-clear"></div>
+					'; }
+					print('</div>
 						</div>
-						<div class="option">
-							<label for="top_opt_twitter_password">'.__('Twitter Password', 'TweetOldPost').':</label>
-							<input type="password" size="25" name="top_opt_twitter_password" id="top_opt_twitter_password" value="'.$twitter_password.'" autocomplete="off" />
-						</div>
+						
 						<div class="option">
 							<label for="top_opt_tweet_prefix">'.__('Tweet Prefix', 'TweetOldPost').':</label>
 							<input type="text" size="25" name="top_opt_tweet_prefix" id="top_opt_tweet_prefix" value="'.$tweet_prefix.'" autocomplete="off" />
@@ -314,54 +345,26 @@ function top_admin() {
 						
 						<div class="option">
 							<label for="top_opt_interval">'.__('Minimum interval between tweets: ', 'TweetOldPost').'</label>
-							<select name="top_opt_interval" id="top_opt_interval">
-									<option value="'.top_opt_1_HOUR.'" '.top_opt_optionselected(top_opt_1_HOUR,$interval).'>'.__('1 Hour', 'TweetOldPost').'</option>
-									<option value="'.top_opt_4_HOURS.'" '.top_opt_optionselected(top_opt_4_HOURS,$interval).'>'.__('4 Hours', 'TweetOldPost').'</option>
-									<option value="'.top_opt_6_HOURS.'" '.top_opt_optionselected(top_opt_6_HOURS,$interval).'>'.__('6 Hours', 'TweetOldPost').'</option>
-									<option value="'.top_opt_12_HOURS.'" '.top_opt_optionselected(top_opt_12_HOURS,$interval).'>'.__('12 Hours', 'TweetOldPost').'</option>
-									<option value="'.top_opt_24_HOURS.'" '.top_opt_optionselected(top_opt_24_HOURS,$interval).'>'.__('24 Hours (1)', 'TweetOldPost').'</option>
-									<option value="'.top_opt_48_HOURS.'" '.top_opt_optionselected(top_opt_48_HOURS,$interval).'>'.__('48 Hours (2 days)', 'TweetOldPost').'</option>
-									<option value="'.top_opt_72_HOURS.'" '.top_opt_optionselected(top_opt_72_HOURS,$interval).'>'.__('72 Hours (3 days)', 'TweetOldPost').'</option>
-									<option value="'.top_opt_168_HOURS.'" '.top_opt_optionselected(top_opt_168_HOURS,$interval).'>'.__('168 Hours (7 days)', 'TweetOldPost').'</option>
-							</select>
+							<input type="text" id="top_opt_interval" maxlength="5" value="' . $interval .'" name="top_opt_interval" /> Hour / Hours
+                                                       
 						</div>
 						<div class="option">
 							<label for="top_opt_interval_slop">'.__('Random Interval (added to minimum interval): ', 'TweetOldPost').'</label>
-							<select name="top_opt_interval_slop" id="top_opt_interval_slop">
-									<option value="'.top_opt_1_HOUR.'" '.top_opt_optionselected(top_opt_1_HOUR,$slop).'>'.__('Upto 1 Hour', 'TweetOldPost').'</option>
-									<option value="'.top_opt_4_HOURS.'" '.top_opt_optionselected(top_opt_4_HOURS,$slop).'>'.__('Upto 4 Hours', 'TweetOldPost').'</option>
-									<option value="'.top_opt_6_HOURS.'" '.top_opt_optionselected(top_opt_6_HOURS,$slop).'>'.__('Upto 6 Hours', 'TweetOldPost').'</option>
-									<option value="'.top_opt_12_HOURS.'" '.top_opt_optionselected(top_opt_12_HOURS,$slop).'>'.__('Upto 12 Hours', 'TweetOldPost').'</option>
-									<option value="'.top_opt_24_HOURS.'" '.top_opt_optionselected(top_opt_24_HOURS,$slop).'>'.__('Upto 24 Hours (1)', 'TweetOldPost').'</option>
-							</select>
+							<input type="text" id="top_opt_interval_slop" maxlength="5" value="' . $slop .'" name="top_opt_interval_slop" /> Hour / Hours
+                                                            
 						</div>
 						<div class="option">
 							<label for="top_opt_age_limit">'.__('Minimum age of post to be eligible for tweet: ', 'TweetOldPost').'</label>
-							<select name="top_opt_age_limit" id="top_opt_age_limit">
-									<option value="7" '.top_opt_optionselected('7',$ageLimit).'>'.__('7 Days', 'TweetOldPost').'</option>
-									<option value="15" '.top_opt_optionselected('15',$ageLimit).'>'.__('15 Days', 'TweetOldPost').'</option>
-									<option value="30" '.top_opt_optionselected('30',$ageLimit).'>'.__('30 Days', 'TweetOldPost').'</option>
-									<option value="60" '.top_opt_optionselected('60',$ageLimit).'>'.__('60 Days', 'TweetOldPost').'</option>
-									<option value="90" '.top_opt_optionselected('90',$ageLimit).'>'.__('90 Days', 'TweetOldPost').'</option>
-									<option value="120" '.top_opt_optionselected('120',$ageLimit).'>'.__('120 Days', 'TweetOldPost').'</option>
-									<option value="240" '.top_opt_optionselected('240',$ageLimit).'>'.__('240 Days', 'TweetOldPost').'</option>
-									<option value="365" '.top_opt_optionselected('365',$ageLimit).'>'.__('365 Days', 'TweetOldPost').'</option>
-							</select>
+							<input type="text" id="top_opt_age_limit" maxlength="5" value="' . $ageLimit .'" name="top_opt_age_limit" /> Day / Days
+							<b> (enter 0 for today)</b>
+                                                           
 						</div>
 						
 						<div class="option">
 							<label for="top_opt_max_age_limit">'.__('Maximum age of post to be eligible for tweet: ', 'TweetOldPost').'</label>
-							<select name="top_opt_max_age_limit" id="top_opt_max_age_limit">
-									<option value="None" '.top_opt_optionselected('None',$maxAgeLimit).'>'.__('None', 'TweetOldPost').'</option>
-									<option value="15" '.top_opt_optionselected('15',$maxAgeLimit).'>'.__('15 Days', 'TweetOldPost').'</option>
-									<option value="30" '.top_opt_optionselected('30',$maxAgeLimit).'>'.__('30 Days', 'TweetOldPost').'</option>
-									<option value="60" '.top_opt_optionselected('60',$maxAgeLimit).'>'.__('60 Days', 'TweetOldPost').'</option>
-									<option value="90" '.top_opt_optionselected('90',$maxAgeLimit).'>'.__('90 Days', 'TweetOldPost').'</option>
-									<option value="120" '.top_opt_optionselected('120',$maxAgeLimit).'>'.__('120 Days', 'TweetOldPost').'</option>
-									<option value="240" '.top_opt_optionselected('240',$maxAgeLimit).'>'.__('240 Days', 'TweetOldPost').'</option>
-									<option value="365" '.top_opt_optionselected('365',$maxAgeLimit).'>'.__('365 Days', 'TweetOldPost').'</option>
-							</select>
-							<b>If set, it will not fetch posts which are older than specified day.</b>
+                                                        <input type="text" id="top_opt_max_age_limit" maxlength="5" value="' . $maxAgeLimit .'" name="top_opt_max_age_limit" /> Day / Days
+                                                       <b>(If you dont want to use this option enter 0 or leave blank)</b><br/>
+							<b>If set, it will fetch posts which are "NOT" older than specified day / days</b>
 						</div>
 						
 				    	<div class="option category">
@@ -416,8 +419,31 @@ function validate()
 			return false;
 		}
 	}
-	
-	if(document.getElementById("top_opt_max_age_limit").value != "None")
+ if(trim(document.getElementById("top_opt_interval").value) != "" && !isNumber(trim(document.getElementById("top_opt_interval").value)))
+        {
+            alert("Enter only numeric in Minimum interval between tweet");
+		document.getElementById("top_opt_interval").focus();
+		return false;
+        }
+         if(trim(document.getElementById("top_opt_interval_slop").value) != "" && !isNumber(trim(document.getElementById("top_opt_interval_slop").value)))
+        {
+            alert("Enter only numeric in Random interval");
+		document.getElementById("top_opt_interval_slop").focus();
+		return false;
+        }
+        if(trim(document.getElementById("top_opt_age_limit").value) != "" && !isNumber(trim(document.getElementById("top_opt_age_limit").value)))
+        {
+            alert("Enter only numeric in Minimum age of post");
+		document.getElementById("top_opt_age_limit").focus();
+		return false;
+        }
+ if(trim(document.getElementById("top_opt_max_age_limit").value) != "" && !isNumber(trim(document.getElementById("top_opt_max_age_limit").value)))
+        {
+            alert("Enter only numeric in Maximum age of post");
+		document.getElementById("top_opt_max_age_limit").focus();
+		return false;
+        }
+	if(trim(document.getElementById("top_opt_max_age_limit").value) != "")
 	{
 	if(eval(document.getElementById("top_opt_age_limit").value) > eval(document.getElementById("top_opt_max_age_limit").value))
 	{
@@ -442,6 +468,16 @@ function showCustomField()
 	{
 		document.getElementById("customurl").style.display="none";
 	}
+}
+
+function isNumber(val)
+{
+    if(isNaN(val)){
+        return false;
+    }
+    else{
+        return true;
+    }
 }
 
 function showshortener()
@@ -488,17 +524,5 @@ function top_opt_head_admin()
 }
 
 
-//Verify a user's credentials
-function verify_credentials($auth_user, $auth_pass) {
 
-	$url = "http://twitter.com/account/verify_credentials.xml";
-	$response = send_request($url, 'GET', '', $auth_user, $auth_pass);
-	if(is_numeric($response))
-	{
-		return $response;
-	}
-	else {
-		return $response;}
-
-}
 ?>
