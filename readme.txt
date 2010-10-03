@@ -1,6 +1,6 @@
 === Tweet Old Post ===
 Contributors: Ajay Matharu
-Tags: Tweet old post, Tweets, Promote old post by tweeting about them, Twitter, Auto Tweet, Hashtags, Twitter Hashtags, Tweet Posts, Tweet
+Tags: Tweet old post, Tweets, Promote old post by tweeting about them, Twitter, Auto Tweet, Hashtags, Twitter Hashtags, Tweet Posts, Tweet, Post Tweets, Wordpress Twitter Plugin, Twitter Plugin, Tweet Selected Posts
 Requires at least: 2.7
 Tested up to: 3.0.1
 Stable tag: trunk
@@ -15,76 +15,13 @@ Tweet Old Posts randomly picks your older post based on the interval specified b
 
 
 
-Some of the options you can configure for the Tweet Old Posts plugins are,
+New
 
-**v1.1**
+**New in v3.1**
 
-Twitter Username & Password - Using this twitter account credentials plugin will tweet.
+- Resolved issue of plugin flooding twitter account with tweets.
+- added provision to exclude some post from selected categories
 
-Minimum interval between tweets - allows you to determine how often the plugin will automatically choose and tweet a blog post for you.
-
-Randomness interval - This is a contributing factor in minimum interval so that posts are randomly chosen and tweeted from your blog.
-
-Minimum age of post to be eligible for tweet - This allows you to set how old your post should be in order to be eligible for the tweet.
-
-Categories to omit from tweets - This will protect posts from the selected categories from being tweeted.
-
-
-
-**New in v1.2**
-
-Tweet Prefix - Allows you to set prefix to the tweets.
-
-Add Data - Allows you to add post data to the tweets
-
-Tweet now - Button that will tweet at that moment without wanting you to wait for scheduled tweet
-
-
-
-**New in v1.3**
-
-URL Shortener Service - allows you to select which URL shortener service you want to use.
-
-
-**New in v1.4**
-
-Hashtags - allows you to set default hashtags for your tweets
-
-
-**New in v1.5**
-
-Maximum age of post to be eligible for tweet - allows you to set Maximum age of the post to be eligible for tweet
-
-Added one more shortner service was looking for j.mp but they dont have the api yet.
-
-
-**New in v1.6**
-
-- Made the plugin PHP 4 compatible. Guys try it out and please let me know if that worked.
-- Better error prompting. If your tweets are not appearing on twitter. Try "Tweet Now" button you'll see if there is any problem in tweeting.
-- Added 1click.at shortning service you need to get the api key from http://theeasyapi.com/ you need to add your machine IP address in the server of http://theeasyapi.com/ for this api key to work. 
-
-
-**New in v1.7**
-
-- Removed api option from 1click.at not needed api key
-
-
-**New in v1.8**
-
-- Bug Fixes
-- Provision to fetch tweet url from custom field
-
-
-**New in v1.9**
-
-- Removed PHP 4 support as it was creating problem for lot of people
-
-
-**New in v2.0**
-
-- added provision to select if you want to shorten the URL or not. 
-- Cleaned other options.
 
 
 **New in v3.0**
@@ -93,15 +30,86 @@ Added one more shortner service was looking for j.mp but they dont have the api 
 - user defined intervals
 - may not work under php 4 requires php 5
 
+
+
+**New in v2.0**
+
+- added provision to select if you want to shorten the URL or not.
+- Cleaned other options.
+
+
+
+**New in v1.9**
+
+- Removed PHP 4 support as it was creating problem for lot of people
+
+
+
+**New in v1.8**
+
+- Bug Fixes
+- Provision to fetch tweet url from custom field
+
+
+
+**New in v1.7**
+
+- Removed api option from 1click.at not needed api key
+
+
+
+**New in v1.6**
+
+- Made the plugin PHP 4 compatible. Guys try it out and please let me know if that worked.
+- Better error prompting. If your tweets are not appearing on twitter. Try "Tweet Now" button you'll see if there is any problem in tweeting.
+- Added 1click.at shortning service you need to get the api key from http://theeasyapi.com/ you need to add your machine IP address in the server of http://theeasyapi.com/ for this api key to work.
+
+
+
+**New in v1.5**
+
+- Maximum age of post to be eligible for tweet - allows you to set Maximum age of the post to be eligible for tweet
+- Added one more shortner service was looking for j.mp but they dont have the api yet.
+
+
+
+**New in v1.4**
+
+- Hashtags - allows you to set default hashtags for your tweets
+
+
+
+**New in v1.3**
+
+- URL Shortener Service - allows you to select which URL shortener service you want to use.
+
+
+
+**New in v1.2**
+
+- Tweet Prefix - Allows you to set prefix to the tweets.
+- Add Data - Allows you to add post data to the tweets
+- Tweet now - Button that will tweet at that moment without wanting you to wait for scheduled tweet
+
+
+
+**v1.1**
+
+- Twitter Username & Password - Using this twitter account credentials plugin will tweet.
+- Minimum interval between tweets - allows you to determine how often the plugin will automatically choose and tweet a blog post for you.
+- Randomness interval - This is a contributing factor in minimum interval so that posts are randomly chosen and tweeted from your blog.
+- Minimum age of post to be eligible for tweet - This allows you to set how old your post should be in order to be eligible for the tweet.
+- Categories to omit from tweets - This will protect posts from the selected categories from being tweeted.
+
 == Installation ==
 
 Following are the steps to install the Tweet Old Post plugin
 
 1. Download the latest version of the Tweet Old Posts Plugin to your computer from here.
-2. With an FTP program, access your site’s server.
+2. With an FTP program, access your siteï¿½s server.
 3. Upload (copy) the Plugin file(s) or folder to the /wp-content/plugins folder.
 4. In your WordPress Administration Panels, click on Plugins from the menu.
-5. You should see Tweet Old Posts Plugin listed. If not, with your FTP program, check the folder to see if it is installed. If it isn’t, upload the file(s) again. If it is, delete the files and upload them again.
+5. You should see Tweet Old Posts Plugin listed. If not, with your FTP program, check the folder to see if it is installed. If it isnï¿½t, upload the file(s) again. If it is, delete the files and upload them again.
 6. To turn the Tweet Old Posts Plugin on, click Activate.
 7. Check your Administration Panels or WordPress blog to see if the Plugin is working.
 8. You can change the plugin options from Tweet Old Posts under settings menu.
@@ -131,9 +139,17 @@ ajay@ajaymatharu.com or matharuajay@yahoo.co.in
 Tweet Old Post supports PHP 5 onwards. It will give SimpleXmlElement error if your hosting provider supports PHP 4
 or PHP less than 5
 
-**Update**
 
-Tweet Old Post v1.6 supports PHP 4 as well.
+**Tweets not getting posted?**
+
+- If your tweets are not getting posted, try deauthorizing and again authorizing your twitter account with
+plugin.
+
+
+**Plugin flooded your tweeter account with tweets?**
+
+- please check your setting increase the minimum interval between tweets. If your plugin is not updated please update your plugin to latest version.
+
 
 == Screenshots ==
 
@@ -143,143 +159,177 @@ http://www.ajaymatharu.com/wordpress-plugin-tweet-old-posts/
 
 == Changelog ==
 
+**New in v3.1**
 
-**v1.2**
-
-Tweet Prefix - Allows you to set prefix to the tweets.
-
-Add Data - Allows you to add post data to the tweets.
-
-Tweet now - Button that will tweet at that moment without wanting you to wait for scheduled tweet.
+- Resolved issue of plugin flooding twitter account with tweets.
+- added provision to exclude some post from selected categories
 
 
 
-**v1.3**
+**New in v3.0**
 
-URL Shortener Service - allows you to select which URL shortener service you want to use.
-
-
-**v1.4**
-
-Hashtags - allows you to set default hashtags for your tweets
+- added OAuth authentication
+- user defined intervals
+- may not work under php 4 requires php 5
 
 
-**v1.5**
 
-Maximum age of post to be eligible for tweet - allows you to set Maximum age of the post to be eligible for tweet
+**New in v2.0**
 
-Added one more shortner service was looking for j.mp but they dont have the api yet.
-
-
-**v1.6**
-
-- Made the plugin PHP 4 compatible. Guys try it out and please let me know if that worked.
-- Better error prompting. If your tweets are not appearing on twitter. Try "Tweet Now" button you'll see if there is any problem in tweeting.
-- Added 1click.at shortning service you need to get the api key from http://theeasyapi.com/ you need to add your machine IP address in the server of http://theeasyapi.com/ for this api key to work. 
+- added provision to select if you want to shorten the URL or not.
+- Cleaned other options.
 
 
-**v1.7**
 
-- Removed api option from 1click.at not needed api key
+**New in v1.9**
+
+- Removed PHP 4 support as it was creating problem for lot of people
 
 
-**v1.8**
+
+**New in v1.8**
 
 - Bug Fixes
 - Provision to fetch tweet url from custom field
 
 
-**v1.9**
 
-- Removed PHP 4 support as it was creating problem for lot of people
+**New in v1.7**
 
-
-**v2.0**
-
-- added provision to select if you want to shorten the URL or not. 
-- Cleaned other options.
+- Removed api option from 1click.at not needed api key
 
 
-**v3.0**
 
-- added OAuth authentication 
-- user defined intervals
-- may not work under php 4 requires php 5
+**New in v1.6**
+
+- Made the plugin PHP 4 compatible. Guys try it out and please let me know if that worked.
+- Better error prompting. If your tweets are not appearing on twitter. Try "Tweet Now" button you'll see if there is any problem in tweeting.
+- Added 1click.at shortning service you need to get the api key from http://theeasyapi.com/ you need to add your machine IP address in the server of http://theeasyapi.com/ for this api key to work.
+
+
+
+**New in v1.5**
+
+- Maximum age of post to be eligible for tweet - allows you to set Maximum age of the post to be eligible for tweet
+- Added one more shortner service was looking for j.mp but they dont have the api yet.
+
+
+
+**New in v1.4**
+
+- Hashtags - allows you to set default hashtags for your tweets
+
+
+
+**New in v1.3**
+
+- URL Shortener Service - allows you to select which URL shortener service you want to use.
+
+
+
+**New in v1.2**
+
+- Tweet Prefix - Allows you to set prefix to the tweets.
+- Add Data - Allows you to add post data to the tweets
+- Tweet now - Button that will tweet at that moment without wanting you to wait for scheduled tweet
+
+
+
+**v1.1**
+
+- Twitter Username & Password - Using this twitter account credentials plugin will tweet.
+- Minimum interval between tweets - allows you to determine how often the plugin will automatically choose and tweet a blog post for you.
+- Randomness interval - This is a contributing factor in minimum interval so that posts are randomly chosen and tweeted from your blog.
+- Minimum age of post to be eligible for tweet - This allows you to set how old your post should be in order to be eligible for the tweet.
+- Categories to omit from tweets - This will protect posts from the selected categories from being tweeted.
+
 
 == Other Notes ==
 
 Some of the options you can configure for the Tweet Old Posts plugins are,
 
-**v1.1**
 
-Twitter Username & Password - Using this twitter account credentials plugin will tweet.
+**New in v3.1**
 
-Minimum interval between tweets - allows you to determine how often the plugin will automatically choose and tweet a blog post for you.
-
-Randomness interval - This is a contributing factor in minimum interval so that posts are randomly chosen and tweeted from your blog.
-
-Minimum age of post to be eligible for tweet - This allows you to set how old your post should be in order to be eligible for the tweet.
-
-Categories to omit from tweets - This will protect posts from the selected categories from being tweeted.
+- Resolved issue of plugin flooding twitter account with tweets.
+- added provision to exclude some post from selected categories
 
 
-**v1.2**
 
-Tweet Prefix - Allows you to set prefix to the tweets.
+**New in v3.0**
 
-Add Data - Allows you to add post data to the tweets.
-
-Tweet now - Button that will tweet at that moment without wanting you to wait for scheduled tweet.
-
-
-**v1.3**
-
-URL Shortener Service - allows you to select which URL shortener service you want to use.
+- added OAuth authentication
+- user defined intervals
+- may not work under php 4 requires php 5
 
 
-**v1.4**
 
-Hashtags - allows you to set default hashtags for your tweets
+**New in v2.0**
 
-
-**v1.5**
-
-Maximum age of post to be eligible for tweet - allows you to set Maximum age of the post to be eligible for tweet
-
-Added one more shortner service was looking for j.mp but they dont have the api yet.
+- added provision to select if you want to shorten the URL or not.
+- Cleaned other options.
 
 
-**v1.6**
 
-- Made the plugin PHP 4 compatible. Guys try it out and please let me know if that worked.
-- Better error prompting. If your tweets are not appearing on twitter. Try "Tweet Now" button you'll see if there is any problem in tweeting.
-- Added 1click.at shortning service you need to get the api key from http://theeasyapi.com/ you need to add your machine IP address in the server of http://theeasyapi.com/ for this api key to work. 
+**New in v1.9**
 
-
-**v1.7**
-
-- Removed api option from 1click.at not needed api key
+- Removed PHP 4 support as it was creating problem for lot of people
 
 
-**v1.8**
+
+**New in v1.8**
 
 - Bug Fixes
 - Provision to fetch tweet url from custom field
 
 
-**v1.9**
 
-- Removed PHP 4 support as it was creating problem for lot of people
+**New in v1.7**
 
-
-**v2.0**
-
-- added provision to select if you want to shorten the URL or not. 
-- Cleaned other options.
+- Removed api option from 1click.at not needed api key
 
 
-**v3.0**
 
-- added OAuth authentication 
-- user defined intervals
-- may not work under php 4 requires php 5
+**New in v1.6**
+
+- Made the plugin PHP 4 compatible. Guys try it out and please let me know if that worked.
+- Better error prompting. If your tweets are not appearing on twitter. Try "Tweet Now" button you'll see if there is any problem in tweeting.
+- Added 1click.at shortning service you need to get the api key from http://theeasyapi.com/ you need to add your machine IP address in the server of http://theeasyapi.com/ for this api key to work.
+
+
+
+**New in v1.5**
+
+- Maximum age of post to be eligible for tweet - allows you to set Maximum age of the post to be eligible for tweet
+- Added one more shortner service was looking for j.mp but they dont have the api yet.
+
+
+
+**New in v1.4**
+
+- Hashtags - allows you to set default hashtags for your tweets
+
+
+
+**New in v1.3**
+
+- URL Shortener Service - allows you to select which URL shortener service you want to use.
+
+
+
+**New in v1.2**
+
+- Tweet Prefix - Allows you to set prefix to the tweets.
+- Add Data - Allows you to add post data to the tweets
+- Tweet now - Button that will tweet at that moment without wanting you to wait for scheduled tweet
+
+
+
+**v1.1**
+
+- Twitter Username & Password - Using this twitter account credentials plugin will tweet.
+- Minimum interval between tweets - allows you to determine how often the plugin will automatically choose and tweet a blog post for you.
+- Randomness interval - This is a contributing factor in minimum interval so that posts are randomly chosen and tweeted from your blog.
+- Minimum age of post to be eligible for tweet - This allows you to set how old your post should be in order to be eligible for the tweet.
+- Categories to omit from tweets - This will protect posts from the selected categories from being tweeted.
+

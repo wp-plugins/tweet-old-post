@@ -4,14 +4,14 @@
 #     Plugin URI: http://www.ajaymatharu.com/wordpress-plugin-tweet-old-posts/
 #     Description: Plugin for tweeting your old posts randomly 
 #     Author: Ajay Matharu 
-#     Version: 3.0
+#     Version: 3.1
 #     Author URI: http://www.ajaymatharu.com
 #     */  
  
 
 require_once('top-admin.php');
 require_once('top-core.php');
-
+require_once ('top-excludepost.php');
 define ('top_opt_1_HOUR', 60*60);
 define ('top_opt_2_HOURS', 2*top_opt_1_HOUR);
 define ('top_opt_4_HOURS', 4*top_opt_1_HOUR);
@@ -33,11 +33,20 @@ define('top_opt_URL_SHORTENER',"is.gd");
 define('top_opt_HASHTAGS',"");
 
    function top_admin_actions() {  
-        add_options_page("Tweet Old Post", "Tweet Old Post", 1, "TweetOldPost", "top_admin");  
+        add_menu_page("Tweet Old Post", "Tweet Old Post", 1, "TweetOldPost", "top_admin");
+        add_submenu_page("TweetOldPost", __('Exclude Posts','TweetOldPost'), __('Exclude Posts','TweetOldPost'), 1, __('ExcludePosts','TweetOldPost'), 'top_exclude');
     }  
     
   	add_action('admin_menu', 'top_admin_actions');  
 	add_action('admin_head', 'top_opt_head_admin');
- 	add_action('init','top_tweet_old_post')
+ 	add_action('init','top_tweet_old_post');
+        register_activation_hook(__FILE__, "top_on_activation");
 
+     function top_on_activation()
+        {
+            update_option('top_opt_interval', "4");
+            update_option('top_opt_interval_slop', "4");
+            update_option('top_opt_age_limit', "30");
+            update_option('top_opt_max_age_limit', "0");
+        }
 ?>
