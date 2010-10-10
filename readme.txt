@@ -17,6 +17,12 @@ Tweet Old Posts randomly picks your older post based on the interval specified b
 
 New
 
+**New in v3.1.1**
+
+- Resolved tweets not getting posted issue. Sorry guys :(
+
+
+
 **New in v3.1**
 
 - Resolved issue of plugin flooding twitter account with tweets.
