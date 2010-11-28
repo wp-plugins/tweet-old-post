@@ -17,6 +17,13 @@ Tweet Old Posts randomly picks your older post based on the interval specified b
 
 New
 
+**New in v3.1.2**
+
+- Resolved tweets not getting posted when categories are excluded.
+- If you are not able to authorise your twitter account set you blog URL in Administration → Settings → General.
+
+
+
 **New in v3.1.1**
 
 - Resolved tweets not getting posted issue. Sorry guys :(
@@ -137,6 +144,7 @@ ajay@ajaymatharu.com or matharuajay@yahoo.co.in
 **Tweet Old post does not posts any tweets?**
 
 - If its not tweeting any tweets try playing around with the options. Try setting maxtweetage to none and try again.
+- Try removing categories from excluded option. Some of them have posted issues of tweet not getting post when categories are selected in exclued category section.
 
 
 **Tweet old post giving SimpleXmlElement error?**
@@ -157,6 +165,11 @@ plugin.
 - please check your setting increase the minimum interval between tweets. If your plugin is not updated please update your plugin to latest version.
 
 
+**Not able to authorize your twitter account with Tweet Old Post**
+
+- If you are not able to authorise your twitter account set you blog URL in Administration → Settings → General.
+
+
 == Screenshots ==
 
 for screenshots you can check out 
@@ -164,6 +177,13 @@ for screenshots you can check out
 http://www.ajaymatharu.com/wordpress-plugin-tweet-old-posts/
 
 == Changelog ==
+
+**New in v3.1.2**
+
+- Resolved tweets not getting posted when categories are excluded.
+- If you are not able to authorise your twitter account set you blog URL in Administration → Settings → General.
+
+
 
 **New in v3.1**
 
@@ -253,6 +273,13 @@ http://www.ajaymatharu.com/wordpress-plugin-tweet-old-posts/
 == Other Notes ==
 
 Some of the options you can configure for the Tweet Old Posts plugins are,
+
+
+**New in v3.1.2**
+
+- Resolved tweets not getting posted when categories are excluded.
+- If you are not able to authorise your twitter account set you blog URL in Administration → Settings → General.
+
 
 
 **New in v3.1**

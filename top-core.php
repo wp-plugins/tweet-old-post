@@ -53,9 +53,12 @@ function top_opt_tweet_old_post() {
         $sql = $sql . " AND ID Not IN (" . $exposts . ") ";
         }
     }
-    if ($omitCats != '') {
+    /*if ($omitCats != '') {
         $sql = $sql . " AND NOT (ID IN (SELECT tr.object_id FROM wp_term_relationships AS tr INNER JOIN wp_term_taxonomy AS tt ON tr.term_taxonomy_id = tt.term_taxonomy_id WHERE tt.taxonomy = 'category' AND tt.term_id IN (" . $omitCats . ")))";
-    }
+    }*/
+if ($omitCats != '') {
+$sql = $sql . " AND NOT (ID IN (SELECT tr.object_id FROM ".$wpdb->prefix."term_relationships AS tr INNER JOIN ".$wpdb->prefix."term_taxonomy AS tt ON tr.term_taxonomy_id = tt.term_taxonomy_id WHERE tt.taxonomy = 'category' AND tt.term_id IN (" . $omitCats . ")))";
+}
     $sql = $sql . "
             ORDER BY RAND() 
             LIMIT 1 ";
