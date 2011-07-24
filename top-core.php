@@ -154,6 +154,14 @@ function top_opt_tweet_post($oldest_post) {
             $content = $title . " - " . $body;
         }
     }
+    elseif($tweet_type == "title")
+    {
+        $content = $title;
+    }
+    elseif($tweet_type == "body")
+    {
+        $content = $body;
+    }
 
     if ($additional_text != "") {
         if ($additional_text_at == "end") {
@@ -188,7 +196,7 @@ function top_opt_tweet_post($oldest_post) {
         if ($poststatus == true)
             return "Whoopie!!! Tweet Posted Successfully";
         else
-            return "OOPS!!! there seems to be some problem while tweeting. If problem continues please try re-authorizing your acount again.<br/> First Deauthorize and then authorize again and check.";
+            return "OOPS!!! there seems to be some problem while tweeting. Twitter returned ". $poststatus;
     }
     return "OOPS!!! there seems to be some problem while tweeting. Try again. If problem is persistent mail the problem at ajay@ajaymatharu.com";
 }
