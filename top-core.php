@@ -1,6 +1,6 @@
 <?php
 
-require_once('Include/oauth.php');
+require_once( 'Include/oauth.php' );
 global $top_oauth;
 $top_oauth = new TOPOAuth;
 
@@ -12,7 +12,7 @@ function top_tweet_old_post() {
     }
 }
 
-function curPageURL() {
+function top_currentPageURL() {
     $pageURL = 'http';
     if ($_SERVER["HTTPS"] == "on") {
         $pageURL .= "s";

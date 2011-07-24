@@ -37,7 +37,7 @@ function top_admin() {
                 }
 
                 top_save_settings($settings);
-                echo '<script language="javascript">window.open ("' . curPageURL() . '","_self")</script>';
+                echo '<script language="javascript">window.open ("' . get_bloginfo('wpurl') . '/wp-admin/admin.php?page=TweetOldPost","_self")</script>';
                 die;
             }
         } 
@@ -50,7 +50,7 @@ function top_admin() {
             $settings['tweet_queue'] = array();
 
             top_save_settings($settings);
-            echo '<script language="javascript">window.open ("' .  curPageURL() . '","_self")</script>';
+            echo '<script language="javascript">window.open ("' .  get_bloginfo('wpurl') . '/wp-admin/admin.php?page=TweetOldPost","_self")</script>';
             die;
         }
         
@@ -355,7 +355,7 @@ function top_admin() {
         print('
 			<div class="wrap">
 				<h2>' . __('Tweet old post by - ', 'TweetOldPost') . ' <a href="http://www.ajaymatharu.com">Ajay Matharu</a></h2>
-				<form id="top_opt" name="top_TweetOldPost" action="' . curPageURL() . '" method="post">
+				<form id="top_opt" name="top_TweetOldPost" action="' . top_currentPageURL() . '" method="post">
 					<input type="hidden" name="top_opt_action" value="top_opt_update_settings" />
 					<fieldset class="options">
 						<div class="option">
