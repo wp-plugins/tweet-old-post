@@ -17,7 +17,7 @@ Tweet Old Posts randomly picks your older post based on the interval specified b
 
 New
 
-**New in v3.1.3**
+**New in v3.1.4**
 
 - Bug fixes
 - Option to choose to include link in post
@@ -187,7 +187,7 @@ http://www.ajaymatharu.com/wordpress-plugin-tweet-old-posts/
 
 == Changelog ==
 
-**New in v3.1.3**
+**New in v3.1.4**
 
 - Bug fixes
 - Option to choose to include link in post
@@ -293,7 +293,7 @@ http://www.ajaymatharu.com/wordpress-plugin-tweet-old-posts/
 
 Some of the options you can configure for the Tweet Old Posts plugins are,
 
-**New in v3.1.3**
+**New in v3.1.4**
 
 - Bug fixes
 - Option to choose to include link in post
