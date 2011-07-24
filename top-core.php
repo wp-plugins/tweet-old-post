@@ -6,10 +6,24 @@ $top_oauth = new TOPOAuth;
 
 function top_tweet_old_post() {
     //check last tweet time against set interval and span
-    if (top_opt_update_time ()) {
+    if (top_opt_update_time()) {
         update_option('top_opt_last_update', time());
         top_opt_tweet_old_post();
     }
+}
+
+function curPageURL() {
+    $pageURL = 'http';
+    if ($_SERVER["HTTPS"] == "on") {
+        $pageURL .= "s";
+    }
+    $pageURL .= "://";
+    if ($_SERVER["SERVER_PORT"] != "80") {
+        $pageURL .= $_SERVER["SERVER_NAME"] . ":" . $_SERVER["SERVER_PORT"] . $_SERVER["REQUEST_URI"];
+    } else {
+        $pageURL .= $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"];
+    }
+    return $pageURL;
 }
 
 //get random post and tweet
@@ -20,6 +34,7 @@ function top_opt_tweet_old_post() {
     $ageLimit = get_option('top_opt_age_limit');
     $exposts = get_option('top_opt_excluded_post');
     $exposts = preg_replace('/,,+/', ',', $exposts);
+
     if (substr($exposts, 0, 1) == ",") {
         $exposts = substr($exposts, 1, strlen($exposts));
     }
@@ -48,21 +63,20 @@ function top_opt_tweet_old_post() {
         $sql = $sql . " AND post_date >= curdate( ) - INTERVAL " . $maxAgeLimit . " day";
     }
     if (isset($exposts)) {
-        if(trim($exposts) != '')
-        {
-        $sql = $sql . " AND ID Not IN (" . $exposts . ") ";
+        if (trim($exposts) != '') {
+            $sql = $sql . " AND ID Not IN (" . $exposts . ") ";
         }
     }
-    /*if ($omitCats != '') {
-        $sql = $sql . " AND NOT (ID IN (SELECT tr.object_id FROM wp_term_relationships AS tr INNER JOIN wp_term_taxonomy AS tt ON tr.term_taxonomy_id = tt.term_taxonomy_id WHERE tt.taxonomy = 'category' AND tt.term_id IN (" . $omitCats . ")))";
-    }*/
-if ($omitCats != '') {
-$sql = $sql . " AND NOT (ID IN (SELECT tr.object_id FROM ".$wpdb->prefix."term_relationships AS tr INNER JOIN ".$wpdb->prefix."term_taxonomy AS tt ON tr.term_taxonomy_id = tt.term_taxonomy_id WHERE tt.taxonomy = 'category' AND tt.term_id IN (" . $omitCats . ")))";
-}
+    /* if ($omitCats != '') {
+      $sql = $sql . " AND NOT (ID IN (SELECT tr.object_id FROM wp_term_relationships AS tr INNER JOIN wp_term_taxonomy AS tt ON tr.term_taxonomy_id = tt.term_taxonomy_id WHERE tt.taxonomy = 'category' AND tt.term_id IN (" . $omitCats . ")))";
+      } */
+    if ($omitCats != '') {
+        $sql = $sql . " AND NOT (ID IN (SELECT tr.object_id FROM " . $wpdb->prefix . "term_relationships AS tr INNER JOIN " . $wpdb->prefix . "term_taxonomy AS tt ON tr.term_taxonomy_id = tt.term_taxonomy_id WHERE tt.taxonomy = 'category' AND tt.term_id IN (" . $omitCats . ")))";
+    }
     $sql = $sql . "
             ORDER BY RAND() 
             LIMIT 1 ";
-    
+
     $oldest_post = $wpdb->get_var($sql);
     if ($oldest_post == null) {
         return "No post found to tweet. Please check your settings and try again.";
@@ -74,67 +88,109 @@ $sql = $sql . " AND NOT (ID IN (SELECT tr.object_id FROM ".$wpdb->prefix."term_r
 
 //tweet for the passed random post
 function top_opt_tweet_post($oldest_post) {
+     global $wpdb;
     $post = get_post($oldest_post);
-    $content = null;
-    $permalink = get_permalink($oldest_post);
-    $add_data = get_option("top_opt_add_data");
+    $content = "";
+    $to_short_url = true;
+    $shorturl = "";
+    $tweet_type = get_option('top_opt_tweet_type');
+    $additional_text = get_option('top_opt_add_text');
+    $additional_text_at = get_option('top_opt_add_text_at');
+    $include_link = get_option('top_opt_include_link');
+    $custom_hashtag_option = get_option('top_opt_custom_hashtag_option');
+    $custom_hashtag_field = get_option('top_opt_custom_hashtag_field');
     $twitter_hashtags = get_option('top_opt_hashtags');
     $url_shortener = get_option('top_opt_url_shortener');
-    $to_short_url = true;
-
     $custom_url_option = get_option('top_opt_custom_url_option');
     $to_short_url = get_option('top_opt_use_url_shortner');
 
-    if ($custom_url_option) {
-        $custom_url_field = get_option('top_opt_custom_url_field');
-        if (trim($custom_url_field) != "") {
-            $permalink = trim(get_post_meta($post->ID, $custom_url_field, true));
+
+    if ($include_link) {
+        $permalink = get_permalink($oldest_post);
+
+        if ($custom_url_option) {
+            $custom_url_field = get_option('top_opt_custom_url_field');
+            if (trim($custom_url_field) != "") {
+                $permalink = trim(get_post_meta($post->ID, $custom_url_field, true));
+            }
         }
-    }
 
-    if ($to_short_url) {
+        if ($to_short_url) {
 
-        if ($url_shortener == "bit.ly") {
-            $bitly_key = get_option('top_opt_bitly_key');
-            $bitly_user = get_option('top_opt_bitly_user');
-            $shorturl = shorten_url($permalink, $url_shortener, $bitly_key, $bitly_user);
+            if ($url_shortener == "bit.ly") {
+                $bitly_key = get_option('top_opt_bitly_key');
+                $bitly_user = get_option('top_opt_bitly_user');
+                $shorturl = shorten_url($permalink, $url_shortener, $bitly_key, $bitly_user);
+            } else {
+                $shorturl = shorten_url($permalink, $url_shortener);
+            }
         } else {
-            $shorturl = shorten_url($permalink, $url_shortener);
+            $shorturl = $permalink;
         }
-    } else {
-        $shorturl = $permalink;
-    }
-    $prefix = get_option('top_opt_tweet_prefix');
-
-    if ($add_data == "true") {
-        $content = stripslashes($post->post_content);
-        $content = strip_tags($content);
-        $content = preg_replace('/\s\s+/', ' ', $content);
-        $content = " - " . $content;
-    } else {
-        $content = "";
     }
 
+    if ($tweet_type == "title" || $tweet_type == "titlenbody") {
+        $title = stripslashes($post->post_title);
+        $title = strip_tags($title);
+        $title = preg_replace('/\s\s+/', ' ', $title);
+    } else {
+        $title = "";
+    }
 
-    if (!is_numeric($shorturl) && (strncmp($shorturl, "http", strlen("http")) == 0)) {
-        if ($prefix) {
-            $message = $prefix . ": " . $post->post_title;
+    if ($tweet_type == "body" || $tweet_type == "titlenbody") {
+        $body = stripslashes($post->post_content);
+        $body = strip_tags($body);
+        $body = preg_replace('/\s\s+/', ' ', $body);
+    } else {
+        $body = "";
+    }
+
+    if ($tweet_type == "titlenbody") {
+        if ($title == null) {
+            $content = $body;
+        } elseif ($body == null) {
+            $content = $title;
         } else {
-            $message = $post->post_title;
+            $content = $title . " - " . $body;
         }
-
-        $message = set_tweet_length($message . $content, $shorturl, $twitter_hashtags);
-        $status = urlencode(stripslashes(urldecode($message)));
-        if ($status) {
-            $poststatus = top_update_status($message);
-            if ($poststatus == true)
-                return "Whoopie!!! Tweet Posted Successfully";
-            else
-                return "OOPS!!! there seems to be some problem while tweeting. If problem continues please try re-authorizing your acount again.<br/> First Deauthorize and then authorize again and check.";
-        }
-        return "OOPS!!! there seems to be some problem while tweeting. Try again. If problem is persistent mail the problem at ajay@ajaymatharu.com";
     }
-    return "OOPS!!! problem with your URL shortning service. Some signs of error " . $shorturl . ".";
+
+    if ($additional_text != "") {
+        if ($additional_text_at == "end") {
+            $content = $content . ". " . $additional_text;
+        } elseif ($additional_text_at == "beginning") {
+            $content = $additional_text . ": " . $content;
+        }
+    }
+
+    //default hashtag
+    $hashtags = $twitter_hashtags;
+
+    //post custom field hashtag
+    if ($custom_hashtag_option) {
+        if (trim($custom_hashtag_field) != "") {
+            $hashtags = trim(get_post_meta($post->ID, $custom_hashtag_field, true));
+        }
+    }
+
+    if ($include_link) {
+        if (!is_numeric($shorturl) && (strncmp($shorturl, "http", strlen("http")) == 0)) {
+            
+        } else {
+            return "OOPS!!! problem with your URL shortning service. Some signs of error " . $shorturl . ".";
+        }
+    }
+
+    $message = set_tweet_length($content, $shorturl, $hashtags);
+    $status = urlencode(stripslashes(urldecode($message)));
+    if ($status) {
+        $poststatus = top_update_status($message);
+        if ($poststatus == true)
+            return "Whoopie!!! Tweet Posted Successfully";
+        else
+            return "OOPS!!! there seems to be some problem while tweeting. If problem continues please try re-authorizing your acount again.<br/> First Deauthorize and then authorize again and check.";
+    }
+    return "OOPS!!! there seems to be some problem while tweeting. Try again. If problem is persistent mail the problem at ajay@ajaymatharu.com";
 }
 
 //send request to passed url and return the response
@@ -223,7 +279,7 @@ function top_opt_update_time() {
     $last = get_option('top_opt_last_update');
     $interval = get_option('top_opt_interval');
     $slop = get_option('top_opt_interval_slop');
-  
+
     if (!(isset($interval) && is_numeric($interval))) {
         $interval = top_opt_INTERVAL;
     }
@@ -231,8 +287,8 @@ function top_opt_update_time() {
     if (!(isset($slop) && is_numeric($slop))) {
         $slop = top_opt_INTERVAL_SLOP;
     }
-     $interval = $interval * 60 * 60;
-      $slop = $slop * 60 * 60;
+    $interval = $interval * 60 * 60;
+    $slop = $slop * 60 * 60;
     if (false === $last) {
         $ret = 1;
     } else if (is_numeric($last)) {

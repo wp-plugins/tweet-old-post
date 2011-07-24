@@ -2,7 +2,7 @@
 Contributors: Ajay Matharu
 Tags: Tweet old post, Tweets, Promote old post by tweeting about them, Twitter, Auto Tweet, Hashtags, Twitter Hashtags, Tweet Posts, Tweet, Post Tweets, Wordpress Twitter Plugin, Twitter Plugin, Tweet Selected Posts
 Requires at least: 2.7
-Tested up to: 3.0.1
+Tested up to: 3.2.1
 Stable tag: trunk
 
 Plugin to tweet about your old posts to get more hits for them and keep them alive.
@@ -16,6 +16,15 @@ Tweet Old Posts randomly picks your older post based on the interval specified b
 
 
 New
+
+**New in v3.1.3**
+
+- Bug fixes
+- Option to choose to include link in post
+- option to post only title or body or both title and body
+- option to set additional text either at beginning or end of tweet
+- option to pick hashtags from custom field
+
 
 **New in v3.1.2**
 
@@ -178,6 +187,16 @@ http://www.ajaymatharu.com/wordpress-plugin-tweet-old-posts/
 
 == Changelog ==
 
+**New in v3.1.3**
+
+- Bug fixes
+- Option to choose to include link in post
+- option to post only title or body or both title and body
+- option to set additional text either at beginning or end of tweet
+- option to pick hashtags from custom field
+
+
+
 **New in v3.1.2**
 
 - Resolved tweets not getting posted when categories are excluded.
@@ -273,6 +292,15 @@ http://www.ajaymatharu.com/wordpress-plugin-tweet-old-posts/
 == Other Notes ==
 
 Some of the options you can configure for the Tweet Old Posts plugins are,
+
+**New in v3.1.3**
+
+- Bug fixes
+- Option to choose to include link in post
+- option to post only title or body or both title and body
+- option to set additional text either at beginning or end of tweet
+- option to pick hashtags from custom field
+
 
 
 **New in v3.1.2**

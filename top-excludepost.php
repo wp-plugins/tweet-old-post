@@ -6,7 +6,6 @@ require_once( 'Include/oauth.php' );
 require_once('xml.php');
 
 function top_exclude() {
-
     $message = null;
     $message_updated = __("Tweet Old Post Options Updated.", 'TweetOldPost');
     $response = null;
@@ -67,17 +66,17 @@ function top_exclude() {
     $sql = "SELECT p.ID,p.post_title,p.post_date,u.user_nicename,p.guid FROM $wpdb->posts p join  $wpdb->users u on p.post_author=u.ID WHERE post_type = 'post'
                   AND post_status = 'publish'";
 
-    //$sql = $sql . " and p.ID NOT IN ( SELECT tr.object_id FROM wp_term_relationships AS tr INNER JOIN wp_term_taxonomy AS tt ON tr.term_taxonomy_id = tt.term_taxonomy_id WHERE tt.taxonomy = 'category' AND tt.term_id IN (" . $omit_cat . "))";
+   
     if(isset($_POST["setFilter"]))
     {
         if($_POST["cat"] != 0)
         {
-            $sql = $sql . " and p.ID IN ( SELECT tr.object_id FROM wp_term_relationships AS tr INNER JOIN wp_term_taxonomy AS tt ON tr.term_taxonomy_id = tt.term_taxonomy_id WHERE tt.taxonomy = 'category' AND tt.term_id=" . $_POST["cat"] . ")";
+            $sql = $sql . " and p.ID IN ( SELECT tr.object_id FROM ".$wpdb->prefix."term_relationships AS tr INNER JOIN ".$wpdb->prefix."term_taxonomy AS tt ON tr.term_taxonomy_id = tt.term_taxonomy_id WHERE tt.taxonomy = 'category' AND tt.term_id=" . $_POST["cat"] . ")";
             $cat_filter = $_POST["cat"];
         }
         else
         {
-            $sql = $sql . " and p.ID NOT IN ( SELECT tr.object_id FROM wp_term_relationships AS tr INNER JOIN wp_term_taxonomy AS tt ON tr.term_taxonomy_id = tt.term_taxonomy_id WHERE tt.taxonomy = 'category' AND tt.term_id IN (" . $omit_cat . "))";
+            $sql = $sql . " and p.ID NOT IN ( SELECT tr.object_id FROM ".$wpdb->prefix."term_relationships AS tr INNER JOIN ".$wpdb->prefix."term_taxonomy AS tt ON tr.term_taxonomy_id = tt.term_taxonomy_id WHERE tt.taxonomy = 'category' AND tt.term_id IN (" . $omit_cat . "))";
             $cat_filter = 0;
         }
 
@@ -91,8 +90,11 @@ function top_exclude() {
     }
     else
     {
-        $sql = $sql . " and p.ID NOT IN ( SELECT tr.object_id FROM wp_term_relationships AS tr INNER JOIN wp_term_taxonomy AS tt ON tr.term_taxonomy_id = tt.term_taxonomy_id WHERE tt.taxonomy = 'category' AND tt.term_id IN (" . $omit_cat . "))";
-    }
+		if($omit_cat !='')
+		{
+        $sql = $sql . " and p.ID NOT IN ( SELECT tr.object_id FROM ".$wpdb->prefix."term_relationships AS tr INNER JOIN ".$wpdb->prefix."term_taxonomy AS tt ON tr.term_taxonomy_id = tt.term_taxonomy_id WHERE tt.taxonomy = 'category' AND tt.term_id IN (" . $omit_cat . "))";
+		}
+	}
 
     if(isset($_POST["s"]))
     {
