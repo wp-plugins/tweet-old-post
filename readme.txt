@@ -13,7 +13,7 @@ Tweet Old Posts is a plugin designed to tweet your older posts to get more traff
 
 Tweet Old Posts randomly picks your older post based on the interval specified by you. The primary function of this plugin is to promote older blog posts by tweeting about them and getting more traffic.
 
-
+For updates follow http://twitter.com/matharuajay
 
 New
 
@@ -189,6 +189,10 @@ plugin.
 **Not able to authorize your twitter account with Tweet Old Post**
 
 - If you are not able to authorise your twitter account set you blog URL in Administration → Settings → General.
+
+**Any more questions or doubts?**
+
+- DM me on http://twitter.com/matharuajay or mail me at ajay(at)ajaymatharu(dot)com 
 
 
 == Screenshots ==
