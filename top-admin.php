@@ -504,7 +504,7 @@ function top_admin() {
 						</div>
                                                 
                                                 <div class="option">
-							<label for="top_opt_hashtag_length">' . __('Total Hashtag lenght: ', 'TweetOldPost') . '</label>
+							<label for="top_opt_hashtag_length">' . __('Total Hashtag length: ', 'TweetOldPost') . '</label>
 							<input type="text" size="25" name="top_opt_hashtag_length" id="top_opt_hashtag_length" value="' . $hashtag_length . '" /> 
                                                        <b>Set this to 0 to include all hashtags</b>
 						</div>
