@@ -13,7 +13,7 @@ function top_admin() {
         $response = null;
         $save = true;
         $settings = top_get_settings();
-        
+
         //on authorize
         if (isset($_GET['TOP_oauth'])) {
             global $top_oauth;
@@ -40,7 +40,7 @@ function top_admin() {
                 echo '<script language="javascript">window.open ("' . get_bloginfo('wpurl') . '/wp-admin/admin.php?page=TweetOldPost","_self")</script>';
                 die;
             }
-        } 
+        }
         //on deauthorize
         else if (isset($_GET['top']) && $_GET['top'] == 'deauthorize') {
             $settings = top_get_settings();
@@ -50,10 +50,10 @@ function top_admin() {
             $settings['tweet_queue'] = array();
 
             top_save_settings($settings);
-            echo '<script language="javascript">window.open ("' .  get_bloginfo('wpurl') . '/wp-admin/admin.php?page=TweetOldPost","_self")</script>';
+            echo '<script language="javascript">window.open ("' . get_bloginfo('wpurl') . '/wp-admin/admin.php?page=TweetOldPost","_self")</script>';
             die;
         }
-        
+
         //check if username and key provided if bitly selected
         if (isset($_POST['top_opt_url_shortener'])) {
             if ($_POST['top_opt_url_shortener'] == "bit.ly") {
@@ -73,7 +73,7 @@ function top_admin() {
 				<p>' . __('Please enter bit.ly API Key.', 'TweetOldPost') . '</p>
 			</div>');
                     $save = false;
-                } 
+                }
                 //if both the good to save
                 else {
                     $save = true;
@@ -89,17 +89,17 @@ function top_admin() {
             if (isset($_POST['top_opt_tweet_type'])) {
                 update_option('top_opt_tweet_type', $_POST['top_opt_tweet_type']);
             }
-            
+
             //additional data
             if (isset($_POST['top_opt_add_text'])) {
                 update_option('top_opt_add_text', $_POST['top_opt_add_text']);
             }
-            
+
             //place of additional data
             if (isset($_POST['top_opt_add_text_at'])) {
                 update_option('top_opt_add_text_at', $_POST['top_opt_add_text_at']);
             }
-            
+
             //include link
             if (isset($_POST['top_opt_include_link'])) {
                 update_option('top_opt_include_link', $_POST['top_opt_include_link']);
@@ -112,7 +112,7 @@ function top_admin() {
 
                 update_option('top_opt_custom_url_option', false);
             }
-            
+
             //custom field to fetch URL from 
             if (isset($_POST['top_opt_custom_url_field'])) {
                 update_option('top_opt_custom_url_field', $_POST['top_opt_custom_url_field']);
@@ -141,15 +141,29 @@ function top_admin() {
                     }
                 }
             }
-            
-             //fetch hashtag from custom field?
+
+            //hashtags option
             if (isset($_POST['top_opt_custom_hashtag_option'])) {
-                update_option('top_opt_custom_hashtag_option', true);
+                update_option('top_opt_custom_hashtag_option', $_POST['top_opt_custom_hashtag_option']);
             } else {
-                update_option('top_opt_custom_hashtag_option', false);
+                update_option('top_opt_custom_hashtag_option', "nohashtag");
             }
 
-             //custom field name to fetch hashtag from 
+            //use inline hashtags
+            if (isset($_POST['top_opt_use_inline_hashtags'])) {
+                update_option('top_opt_use_inline_hashtags', true);
+            } else {
+                update_option('top_opt_use_inline_hashtags', false);
+            }
+
+             //hashtag length
+            if (isset($_POST['top_opt_hashtag_length'])) {
+                update_option('top_opt_hashtag_length', $_POST['top_opt_hashtag_length']);
+            } else {
+                update_option('top_opt_hashtag_length', 0);
+            }
+            
+            //custom field name to fetch hashtag from 
             if (isset($_POST['top_opt_custom_hashtag_field'])) {
                 update_option('top_opt_custom_hashtag_field', $_POST['top_opt_custom_hashtag_field']);
             } else {
@@ -165,56 +179,48 @@ function top_admin() {
 
             //tweet interval 
             if (isset($_POST['top_opt_interval'])) {
-                 if (is_numeric($_POST['top_opt_interval']) && $_POST['top_opt_interval']>0) {
-                     update_option('top_opt_interval', $_POST['top_opt_interval']);
-                 }
-                 else
-                 {
-                    update_option('top_opt_interval',"4");
-                 }
+                if (is_numeric($_POST['top_opt_interval']) && $_POST['top_opt_interval'] > 0) {
+                    update_option('top_opt_interval', $_POST['top_opt_interval']);
+                } else {
+                    update_option('top_opt_interval', "4");
+                }
             }
-            
+
             //random interval
             if (isset($_POST['top_opt_interval_slop'])) {
 
-                 if (is_numeric($_POST['top_opt_interval_slop']) && $_POST['top_opt_interval_slop']>0) {
-                     update_option('top_opt_interval_slop', $_POST['top_opt_interval_slop']);
-                 }
-                 else
-                 {
-                    update_option('top_opt_interval_slop',"4");
-                 }
+                if (is_numeric($_POST['top_opt_interval_slop']) && $_POST['top_opt_interval_slop'] > 0) {
+                    update_option('top_opt_interval_slop', $_POST['top_opt_interval_slop']);
+                } else {
+                    update_option('top_opt_interval_slop', "4");
+                }
             }
-            
+
             //minimum post age to tweet
             if (isset($_POST['top_opt_age_limit'])) {
-                 if (is_numeric($_POST['top_opt_age_limit']) && $_POST['top_opt_age_limit']>0) {
-                     update_option('top_opt_age_limit', $_POST['top_opt_age_limit']);
-                 }
-                 else
-                 {
-                    update_option('top_opt_age_limit',"30");
-                 }
+                if (is_numeric($_POST['top_opt_age_limit']) && $_POST['top_opt_age_limit'] > 0) {
+                    update_option('top_opt_age_limit', $_POST['top_opt_age_limit']);
+                } else {
+                    update_option('top_opt_age_limit', "30");
+                }
             }
-            
+
             //maximum post age to tweet
             if (isset($_POST['top_opt_max_age_limit'])) {
-                 if (is_numeric($_POST['top_opt_max_age_limit']) && $_POST['top_opt_max_age_limit']>0) {
-                     update_option('top_opt_max_age_limit', $_POST['top_opt_max_age_limit']);
-                 }
-                 else
-                 {
-                    update_option('top_opt_max_age_limit',"0");
-                 }
+                if (is_numeric($_POST['top_opt_max_age_limit']) && $_POST['top_opt_max_age_limit'] > 0) {
+                    update_option('top_opt_max_age_limit', $_POST['top_opt_max_age_limit']);
+                } else {
+                    update_option('top_opt_max_age_limit', "0");
+                }
             }
-            
+
             //categories to omit from tweet
             if (isset($_POST['post_category'])) {
                 update_option('top_opt_omit_cats', implode(',', $_POST['post_category']));
             } else {
                 update_option('top_opt_omit_cats', '');
             }
-            
+
             //successful update message
             print('
 			<div id="message" class="updated fade">
@@ -229,28 +235,27 @@ function top_admin() {
 				<p>' . __($tweet_msg, 'TweetOldPost') . '</p>
 			</div>');
         }
-        
-        
-       //set up data into fields from db
-       
+
+
+        //set up data into fields from db
         //what to tweet?
         $tweet_type = get_option('top_opt_tweet_type');
         if (!isset($tweet_type)) {
             $tweet_type = "title";
         }
-       
+
         //additional text
-         $additional_text = get_option('top_opt_add_text');
+        $additional_text = get_option('top_opt_add_text');
         if (!isset($additional_text)) {
             $additional_text = "";
         }
-        
+
         //position of additional text
         $additional_text_at = get_option('top_opt_add_text_at');
         if (!isset($additional_text_at)) {
             $additional_text_at = "beginning";
         }
-        
+
         //include link in tweet
         $include_link = get_option('top_opt_include_link');
         if (!isset($include_link)) {
@@ -280,7 +285,7 @@ function top_admin() {
             $use_url_shortner = "checked";
         else
             $use_url_shortner="";
-        
+
         //url shortner
         $url_shortener = get_option('top_opt_url_shortener');
         if (!isset($url_shortener)) {
@@ -292,46 +297,58 @@ function top_admin() {
         if (!isset($bitly_api)) {
             $bitly_api = "";
         }
-        
+
         //bitly username
         $bitly_username = get_option('top_opt_bitly_user');
         if (!isset($bitly_username)) {
             $bitly_username = "";
         }
-                
-        //fetch hashtag from custom field
+
+        //hashtag option
         $custom_hashtag_option = get_option('top_opt_custom_hashtag_option');
         if (!isset($custom_hashtag_option)) {
-            $custom_hashtag_option = "";
-        } elseif ($custom_hashtag_option)
-            $custom_hashtag_option = "checked";
+            $custom_hashtag_option = "nohashtag";
+        }
+
+        //use inline hashtag
+        $use_inline_hashtags = get_option('top_opt_use_inline_hashtags');
+        if (!isset($use_inline_hashtags)) {
+            $use_inline_hashtags = "";
+        } elseif ($use_inline_hashtags)
+            $use_inline_hashtags = "checked";
         else
-            $custom_hashtag_option="";
+            $use_inline_hashtags="";
+
+         //hashtag length
+        $hashtag_length = get_option('top_opt_hashtag_length');
+        if (!isset($hashtag_length)) {
+            $hashtag_length = "20";
+        }
         
-        //default hashtag
+        //custom field 
         $custom_hashtag_field = get_option('top_opt_custom_hashtag_field');
         if (!isset($custom_hashtag_field)) {
             $custom_hashtag_field = "";
         }
-        
+
         //default hashtag
         $twitter_hashtags = get_option('top_opt_hashtags');
         if (!isset($twitter_hashtags)) {
             $twitter_hashtags = top_opt_HASHTAGS;
         }
-        
+
         //interval
         $interval = get_option('top_opt_interval');
         if (!(isset($interval) && is_numeric($interval))) {
             $interval = top_opt_INTERVAL;
         }
-        
+
         //random interval
         $slop = get_option('top_opt_interval_slop');
         if (!(isset($slop) && is_numeric($slop))) {
             $slop = top_opt_INTERVAL_SLOP;
         }
-        
+
         //min age limit
         $ageLimit = get_option('top_opt_age_limit');
         if (!(isset($ageLimit) && is_numeric($ageLimit))) {
@@ -343,15 +360,15 @@ function top_admin() {
         if (!(isset($maxAgeLimit) && is_numeric($maxAgeLimit))) {
             $maxAgeLimit = top_opt_MAX_AGE_LIMIT;
         }
-        
+
         //set omitted categories
         $omitCats = get_option('top_opt_omit_cats');
         if (!isset($omitCats)) {
             $omitCats = top_opt_OMIT_CATS;
         }
-        
-        $x = WP_PLUGIN_URL.'/'.str_replace(basename( __FILE__),"",plugin_basename(__FILE__));
-        
+
+        $x = WP_PLUGIN_URL . '/' . str_replace(basename(__FILE__), "", plugin_basename(__FILE__));
+
         print('
 			<div class="wrap">
 				<h2>' . __('Tweet old post by - ', 'TweetOldPost') . ' <a href="http://www.ajaymatharu.com">Ajay Matharu</a></h2>
@@ -363,7 +380,7 @@ function top_admin() {
 
 <div id="profile-box">');
         if (!$settings["oauth_access_token"]) {
-           
+
             echo '<a href="' . top_get_auth_url() . '"><img src="' . $x . 'images/twitter.png" /></a>';
         } else {
             echo '<img class="avatar" src="' . $settings["profile_image_url"] . '" alt="" />
@@ -399,8 +416,8 @@ function top_admin() {
 						<div class="option">
 							<label for="top_opt_add_text_at">' . __('Additional Text At', 'TweetOldPost') . ':</label>
 							<select id="top_opt_add_text_at" name="top_opt_add_text_at" style="width:150px">
-								<option value="beginning" ' . top_opt_optionselected("beginning", $additional_text_at ) . '>' . __(' Beginning of tweet ', 'TweetOldPost') . '</option>
-								<option value="end" ' . top_opt_optionselected("end", $additional_text_at ) . '>' . __(' End of tweet ', 'TweetOldPost') . '</option>
+								<option value="beginning" ' . top_opt_optionselected("beginning", $additional_text_at) . '>' . __(' Beginning of tweet ', 'TweetOldPost') . '</option>
+								<option value="end" ' . top_opt_optionselected("end", $additional_text_at) . '>' . __(' End of tweet ', 'TweetOldPost') . '</option>
 							</select>
 						</div>
 						
@@ -467,28 +484,46 @@ function top_admin() {
 						
 
                                                 <div class="option">
-							<label for="top_opt_custom_hashtag_option">' . __('Fetch hashtag from custom field', 'TweetOldPost') . ':</label>
-							<input onchange="return showHashtagCustomField();" type="checkbox" name="top_opt_custom_hashtag_option" ' . $custom_hashtag_option . ' id="top_opt_custom_hashtag_option" />
-							<b>If checked Hashtags will be fetched from custom field.</b>
+							<label for="top_opt_custom_hashtag_option">' . __('Hashtags', 'TweetOldPost') . ':</label>
+                                                        <select name="top_opt_custom_hashtag_option" id="top_opt_custom_hashtag_option" onchange="javascript:return showHashtagCustomField()" style="width:250px;">
+									<option value="nohashtag" ' . top_opt_optionselected('nohashtag', $custom_hashtag_option) . '>' . __('Don`t add any hashtags', 'TweetOldPost') . '</option>
+                                                                        <option value="common" ' . top_opt_optionselected('common', $custom_hashtag_option) . '>' . __('Common hashtag for all tweets', 'TweetOldPost') . '</option>    
+									<option value="categories" ' . top_opt_optionselected('categories', $custom_hashtag_option) . '>' . __('Create hashtags from categories', 'TweetOldPost') . '</option>
+									<option value="tags" ' . top_opt_optionselected('tags', $custom_hashtag_option) . '>' . __('Create hashtags from tags', 'TweetOldPost') . '</option>
+									<option value="custom" ' . top_opt_optionselected('custom', $custom_hashtag_option) . '>' . __('Get hashtags from custom fields', 'TweetOldPost') . '</option>
+									
+							</select>
+							
+                                                        
 						</div>
-						
-						
-						
+						<div id="inlinehashtag" style="display:none;">
+						<div class="option">
+							<label for="top_opt_use_inline_hashtags">' . __('Use inline hashtags: ', 'TweetOldPost') . '</label>
+							<input type="checkbox" name="top_opt_use_inline_hashtags" id="top_opt_use_inline_hashtags" ' . $use_inline_hashtags . ' /> 
+                                                       
+						</div>
+                                                
+                                                <div class="option">
+							<label for="top_opt_hashtag_length">' . __('Total Hashtag lenght: ', 'TweetOldPost') . '</label>
+							<input type="text" size="25" name="top_opt_hashtag_length" id="top_opt_hashtag_length" value="' . $hashtag_length . '" /> 
+                                                       <b>Set this to 0 to include all hashtags</b>
+						</div>
+						</div>
 						<div id="customhashtag" style="display:none;">
 						<div class="option">
-							<label for="top_opt_custom_hashtag_field">' . __('Custom field name to fetch hashtags to be tweeted with post', 'TweetOldPost') . ':</label>
+							<label for="top_opt_custom_hashtag_field">' . __('Custom field name', 'TweetOldPost') . ':</label>
 							<input type="text" size="25" name="top_opt_custom_hashtag_field" id="top_opt_custom_hashtag_field" value="' . $custom_hashtag_field . '" autocomplete="off" />
-							<b>If set this will fetch the hashtags from specified custom field</b>
+							<b>fetch hashtags from this custom field</b>
 						</div>
 						
 						</div>
-
+                                                <div id="commonhashtag" style="display:none;">
 						<div class="option">
-							<label for="top_opt_hashtags">' . __('Default #hashtags for your tweets', 'TweetOldPost') . ':</label>
+							<label for="top_opt_hashtags">' . __('Common #hashtags for your tweets', 'TweetOldPost') . ':</label>
 							<input type="text" size="25" name="top_opt_hashtags" id="top_opt_hashtags" value="' . $twitter_hashtags . '" autocomplete="off" />
 							<b>Include #, like #thoughts</b>
 						</div>
-						
+						</div>
 						<div class="option">
 							<label for="top_opt_interval">' . __('Minimum interval between tweets: ', 'TweetOldPost') . '</label>
 							<input type="text" id="top_opt_interval" maxlength="5" value="' . $interval . '" name="top_opt_interval" /> Hour / Hours <b>(Note: If set to 0 it will take default as 4 hours)</b>
@@ -623,13 +658,29 @@ function showCustomField()
 
 function showHashtagCustomField()
 {
-	if(document.getElementById("top_opt_custom_hashtag_option").checked)
+	if(document.getElementById("top_opt_custom_hashtag_option").value=="custom")
 	{
 		document.getElementById("customhashtag").style.display="block";
+                document.getElementById("commonhashtag").style.display="none";
+                 document.getElementById("inlinehashtag").style.display="block";
+	}
+        else if(document.getElementById("top_opt_custom_hashtag_option").value=="common")
+	{
+		document.getElementById("customhashtag").style.display="none";
+                document.getElementById("commonhashtag").style.display="block";
+                document.getElementById("inlinehashtag").style.display="block";
+	}
+        else if(document.getElementById("top_opt_custom_hashtag_option").value=="nohashtag")
+	{
+		document.getElementById("customhashtag").style.display="none";
+                document.getElementById("commonhashtag").style.display="none";
+                document.getElementById("inlinehashtag").style.display="none";
 	}
 	else
 	{
+                document.getElementById("inlinehashtag").style.display="block";
 		document.getElementById("customhashtag").style.display="none";
+                document.getElementById("commonhashtag").style.display="none";
 	}
 }
 

@@ -5,7 +5,7 @@ global $top_oauth;
 $top_oauth = new TOPOAuth;
 
 function top_tweet_old_post() {
-    //check last tweet time against set interval and span
+//check last tweet time against set interval and span
     if (top_opt_update_time()) {
         update_option('top_opt_last_update', time());
         top_opt_tweet_old_post();
@@ -88,7 +88,7 @@ function top_opt_tweet_old_post() {
 
 //tweet for the passed random post
 function top_opt_tweet_post($oldest_post) {
-     global $wpdb;
+    global $wpdb;
     $post = get_post($oldest_post);
     $content = "";
     $to_short_url = true;
@@ -103,9 +103,10 @@ function top_opt_tweet_post($oldest_post) {
     $url_shortener = get_option('top_opt_url_shortener');
     $custom_url_option = get_option('top_opt_custom_url_option');
     $to_short_url = get_option('top_opt_use_url_shortner');
+    $use_inline_hashtags = get_option('top_opt_use_inline_hashtags');
+    $hashtag_length = get_option('top_opt_hashtag_length');
 
-
-    if ($include_link) {
+    if ($include_link != "false") {
         $permalink = get_permalink($oldest_post);
 
         if ($custom_url_option) {
@@ -153,13 +154,9 @@ function top_opt_tweet_post($oldest_post) {
         } else {
             $content = $title . " - " . $body;
         }
-    }
-    elseif($tweet_type == "title")
-    {
+    } elseif ($tweet_type == "title") {
         $content = $title;
-    }
-    elseif($tweet_type == "body")
-    {
+    } elseif ($tweet_type == "body") {
         $content = $body;
     }
 
@@ -171,17 +168,60 @@ function top_opt_tweet_post($oldest_post) {
         }
     }
 
-    //default hashtag
-    $hashtags = $twitter_hashtags;
-
-    //post custom field hashtag
-    if ($custom_hashtag_option) {
-        if (trim($custom_hashtag_field) != "") {
-            $hashtags = trim(get_post_meta($post->ID, $custom_hashtag_field, true));
+    $hashtags = "";
+    $newcontent = "";
+    if ($custom_hashtag_option != "nohashtag") {
+       
+        if ($custom_hashtag_option == "common") {
+//common hashtag
+            $hashtags = $twitter_hashtags;
         }
+//post custom field hashtag
+        elseif ($custom_hashtag_option == "custom") {
+            if (trim($custom_hashtag_field) != "") {
+                $hashtags = trim(get_post_meta($post->ID, $custom_hashtag_field, true));
+            }
+        } elseif ($custom_hashtag_option == "categories") {
+            $post_categories = get_the_category($post->ID);
+            if ($post_categories) {
+                foreach ($post_categories as $category) {
+                    $tagname = str_replace(".", "", str_replace(" ", "_", $category->cat_name));
+                    if ($use_inline_hashtags) {
+                        if (strrpos($content, $tagname) === false) {
+                            $hashtags = $hashtags . "#" . $tagname . " ";
+                        } else {
+                            $newcontent = preg_replace('/\b' . $tagname . '\b/i', "#" . $tagname, $content, 1);
+                        }
+                    } else {
+                        $hashtags = $hashtags . "#" . $tagname . " ";
+                    }
+                }
+            }
+        } elseif ($custom_hashtag_option == "tags") {
+            $post_tags = get_the_tags($post->ID);
+            if ($post_tags) {
+                foreach ($post_tags as $tag) {
+                    $tagname = str_replace(".", "", str_replace(" ", "_", $tag->name));
+                    if ($use_inline_hashtags) {
+                        if (strrpos($content, $tagname) === false) {
+                            $hashtags = $hashtags . "#" . $tagname . " ";
+                        } else {
+                            $newcontent = preg_replace('/\b' . $tagname . '\b/i', "#" . $tagname, $content, 1);
+                        }
+                    } else {
+                        $hashtags = $hashtags . "#" . $tagname . " ";
+                    }
+                }
+            }
+        }
+
+        if ($newcontent != "")
+            $content = $newcontent;
     }
 
-    if ($include_link) {
+
+
+    if ($include_link != "false") {
         if (!is_numeric($shorturl) && (strncmp($shorturl, "http", strlen("http")) == 0)) {
             
         } else {
@@ -189,14 +229,14 @@ function top_opt_tweet_post($oldest_post) {
         }
     }
 
-    $message = set_tweet_length($content, $shorturl, $hashtags);
+    $message = set_tweet_length($content, $shorturl, $hashtags, $hashtag_length);
     $status = urlencode(stripslashes(urldecode($message)));
     if ($status) {
         $poststatus = top_update_status($message);
         if ($poststatus == true)
             return "Whoopie!!! Tweet Posted Successfully";
         else
-            return "OOPS!!! there seems to be some problem while tweeting. Twitter returned ". $poststatus;
+            return "OOPS!!! there seems to be some problem while tweeting. Please try again.";
     }
     return "OOPS!!! there seems to be some problem while tweeting. Try again. If problem is persistent mail the problem at ajay@ajaymatharu.com";
 }
@@ -230,15 +270,13 @@ function send_request($url, $method='GET', $data='', $auth_user='', $auth_pass='
 function shorten_url($the_url, $shortener='is.gd', $api_key='', $user='') {
 
     if (($shortener == "bit.ly") && isset($api_key) && isset($user)) {
-        $url = "http://api.bit.ly/shorten?version=2.0.1&longUrl={$the_url}&login={$user}&apiKey={$api_key}&format=xml";
-        $response = send_request($url, 'GET');
 
-        $the_results = new SimpleXmlElement($response);
-        if ($the_results->errorCode == '0') {
-            $response = $the_results->results->nodeKeyVal->shortUrl;
-        } else {
-            $response = "";
-        }
+        $url = "http://api.bit.ly/v3/shorten?longUrl={$the_url}&login={$user}&apiKey={$api_key}&format=json";
+        $result = json_decode(file_get_contents($url));
+        if ($result->status_code == 200)
+            $response = $result->data->url;
+        else
+            $response="" . $result->status_txt ."";
     } elseif ($shortener == "su.pr") {
         $url = "http://su.pr/api/simpleshorten?url={$the_url}";
         $response = send_request($url, 'GET');
@@ -266,20 +304,28 @@ function shorten_url($the_url, $shortener='is.gd', $api_key='', $user='') {
 }
 
 //Shrink a tweet and accompanying URL down to 140 chars.
-function set_tweet_length($message, $url, $twitter_hashtags="") {
+function set_tweet_length($message, $url, $twitter_hashtags="", $hashtag_length=0) {
 
+    $tags = $twitter_hashtags;
     $message_length = strlen($message);
     $url_length = strlen($url);
-    $hashtags_length = strlen($twitter_hashtags);
-    if ($message_length + $url_length + $hashtags_length > 140) {
-        $shorten_message_to = 140 - $url_length - $hashtags_length;
+    if ($hashtag_length == 0)
+        $hashtag_length = strlen($tags);
+
+    if ($message_length + $url_length + $hashtag_length > 140) {
+        $tags = substr($tags, 0, $hashtag_length);
+        $tags = substr($tags, 0, strrpos($tags, ' '));
+
+        $hashtag_length = strlen($tags);
+
+        $shorten_message_to = 140 - $url_length - $hashtag_length;
         $shorten_message_to = $shorten_message_to - 4;
-        //$message = $message." ";
+//$message = $message." ";
         $message = substr($message, 0, $shorten_message_to);
         $message = substr($message, 0, strrpos($message, ' '));
         $message = $message . "...";
     }
-    return $message . " " . $url . " " . $twitter_hashtags;
+    return $message . " " . $url . " " . $tags;
 }
 
 //check time and update the last tweet time
@@ -346,10 +392,10 @@ function top_do_tweet($post_id) {
 
     $message = top_get_message($post_id);
 
-    // If we have a valid message, Tweet it
-    // this will fail if the Tiny URL service is done
+// If we have a valid message, Tweet it
+// this will fail if the Tiny URL service is done
     if ($message) {
-        // If we successfully posted this to Twitter, then we can remove it from the queue eventually
+// If we successfully posted this to Twitter, then we can remove it from the queue eventually
         if (twit_update_status($message)) {
             return true;
         }
