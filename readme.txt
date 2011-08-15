@@ -17,7 +17,7 @@ For updates follow http://twitter.com/matharuajay
 
 New
 
-<<<<<<< .mine
+
 **New in v3.2.3**
 
 - Bug fixes
@@ -239,7 +239,7 @@ http://www.ajaymatharu.com/wordpress-plugin-tweet-old-posts/
 
 == Changelog ==
 
-<<<<<<< .mine
+
 **New in v3.2.3**
 
 - Bug fixes
@@ -398,13 +398,9 @@ http://www.ajaymatharu.com/wordpress-plugin-tweet-old-posts/
 
 Some of the options you can configure for the Tweet Old Posts plugins are,
 
-<<<<<<< .mine
-**New in v3.2.3**
-=======
-**New in v3.2.2**
->>>>>>> .r423856
 
-<<<<<<< .mine
+**New in v3.2.3**
+
 - Bug fixes
 
 
