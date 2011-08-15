@@ -67,9 +67,13 @@ function top_opt_tweet_old_post() {
             $sql = $sql . " AND ID Not IN (" . $exposts . ") ";
         }
     }
+<<<<<<< .mine
+    
+=======
     /* if ($omitCats != '') {
       $sql = $sql . " AND NOT (ID IN (SELECT tr.object_id FROM wp_term_relationships AS tr INNER JOIN wp_term_taxonomy AS tt ON tr.term_taxonomy_id = tt.term_taxonomy_id WHERE tt.taxonomy = 'category' AND tt.term_id IN (" . $omitCats . ")))";
       } */
+>>>>>>> .r423856
     if ($omitCats != '') {
         $sql = $sql . " AND NOT (ID IN (SELECT tr.object_id FROM " . $wpdb->prefix . "term_relationships AS tr INNER JOIN " . $wpdb->prefix . "term_taxonomy AS tt ON tr.term_taxonomy_id = tt.term_taxonomy_id WHERE tt.taxonomy = 'category' AND tt.term_id IN (" . $omitCats . ")))";
     }
@@ -167,6 +171,80 @@ function top_opt_tweet_post($oldest_post) {
             $content = $additional_text . ": " . $content;
         }
     }
+<<<<<<< .mine
+
+    $hashtags = "";
+    $newcontent = "";
+    if ($custom_hashtag_option != "nohashtag") {
+
+        if ($custom_hashtag_option == "common") {
+//common hashtag
+            $hashtags = $twitter_hashtags;
+        }
+//post custom field hashtag
+        elseif ($custom_hashtag_option == "custom") {
+            if (trim($custom_hashtag_field) != "") {
+                $hashtags = trim(get_post_meta($post->ID, $custom_hashtag_field, true));
+            }
+        } elseif ($custom_hashtag_option == "categories") {
+            $post_categories = get_the_category($post->ID);
+            if ($post_categories) {
+                foreach ($post_categories as $category) {
+                    $tagname = str_replace(".", "", str_replace(" ", "_", $category->cat_name));
+                    if ($use_inline_hashtags) {
+                        if (strrpos($content, $tagname) === false) {
+                            $hashtags = $hashtags . "#" . $tagname . " ";
+                        } else {
+                            $newcontent = preg_replace('/\b' . $tagname . '\b/i', "#" . $tagname, $content, 1);
+                        }
+                    } else {
+                        $hashtags = $hashtags . "#" . $tagname . " ";
+                    }
+                }
+            }
+        } elseif ($custom_hashtag_option == "tags") {
+            $post_tags = get_the_tags($post->ID);
+            if ($post_tags) {
+                foreach ($post_tags as $tag) {
+                    $tagname = str_replace(".", "", str_replace(" ", "_", $tag->name));
+                    if ($use_inline_hashtags) {
+                        if (strrpos($content, $tagname) === false) {
+                            $hashtags = $hashtags . "#" . $tagname . " ";
+                        } else {
+                            $newcontent = preg_replace('/\b' . $tagname . '\b/i', "#" . $tagname, $content, 1);
+                        }
+                    } else {
+                        $hashtags = $hashtags . "#" . $tagname . " ";
+                    }
+                }
+            }
+        }
+
+        if ($newcontent != "")
+            $content = $newcontent;
+    }
+
+
+
+    if ($include_link != "false") {
+        if (!is_numeric($shorturl) && (strncmp($shorturl, "http", strlen("http")) == 0)) {
+            
+        } else {
+            return "OOPS!!! problem with your URL shortning service. Some signs of error " . $shorturl . ".";
+        }
+    }
+
+    $message = set_tweet_length($content, $shorturl, $hashtags, $hashtag_length);
+    $status = urlencode(stripslashes(urldecode($message)));
+    if ($status) {
+        $poststatus = top_update_status($message);
+        if ($poststatus == true)
+            return "Whoopie!!! Tweet Posted Successfully";
+        else
+            return "OOPS!!! there seems to be some problem while tweeting. Please try again.";
+    }
+    return "OOPS!!! there seems to be some problem while tweeting. Try again. If problem is persistent mail the problem at ajay@ajaymatharu.com";
+=======
 
     $hashtags = "";
     $newcontent = "";
@@ -239,6 +317,7 @@ function top_opt_tweet_post($oldest_post) {
             return "OOPS!!! there seems to be some problem while tweeting. Please try again.";
     }
     return "OOPS!!! there seems to be some problem while tweeting. Try again. If problem is persistent mail the problem at ajay@ajaymatharu.com";
+>>>>>>> .r423856
 }
 
 //send request to passed url and return the response
@@ -271,12 +350,21 @@ function shorten_url($the_url, $shortener='is.gd', $api_key='', $user='') {
 
     if (($shortener == "bit.ly") && isset($api_key) && isset($user)) {
 
+<<<<<<< .mine
+        $url = "http://api.bit.ly/v3/shorten?longUrl={$the_url}&login={$user}&apiKey={$api_key}&format=json";
+        $result = json_decode(file_get_contents($url));
+        if ($result->status_code == 200)
+            $response = $result->data->url;
+        else
+            $response="" . $result->status_txt . "";
+=======
         $url = "http://api.bit.ly/v3/shorten?longUrl={$the_url}&login={$user}&apiKey={$api_key}&format=json";
         $result = json_decode(file_get_contents($url));
         if ($result->status_code == 200)
             $response = $result->data->url;
         else
             $response="" . $result->status_txt ."";
+>>>>>>> .r423856
     } elseif ($shortener == "su.pr") {
         $url = "http://su.pr/api/simpleshorten?url={$the_url}";
         $response = send_request($url, 'GET');
@@ -309,6 +397,23 @@ function set_tweet_length($message, $url, $twitter_hashtags="", $hashtag_length=
     $tags = $twitter_hashtags;
     $message_length = strlen($message);
     $url_length = strlen($url);
+<<<<<<< .mine
+    //$cur_length = strlen($tags);
+    if ($hashtag_length == 0)
+        $hashtag_length = strlen($tags);
+    
+    if ($twitter_hashtags != "") {
+        $tags = substr($tags, 0, $hashtag_length);
+        $tags = substr($tags, 0, strrpos($tags, ' '));
+
+        $hashtag_length = strlen($tags);
+    }
+    
+    if ($message_length + $url_length + $hashtag_length > 140) {
+
+
+        $shorten_message_to = 140 - $url_length - $hashtag_length;
+=======
     if ($hashtag_length == 0)
         $hashtag_length = strlen($tags);
 
@@ -319,6 +424,7 @@ function set_tweet_length($message, $url, $twitter_hashtags="", $hashtag_length=
         $hashtag_length = strlen($tags);
 
         $shorten_message_to = 140 - $url_length - $hashtag_length;
+>>>>>>> .r423856
         $shorten_message_to = $shorten_message_to - 4;
 //$message = $message." ";
         $message = substr($message, 0, $shorten_message_to);

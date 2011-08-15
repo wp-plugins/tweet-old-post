@@ -141,6 +141,89 @@ function top_admin() {
                     }
                 }
             }
+<<<<<<< .mine
+
+            //hashtags option
+            if (isset($_POST['top_opt_custom_hashtag_option'])) {
+                update_option('top_opt_custom_hashtag_option', $_POST['top_opt_custom_hashtag_option']);
+            } else {
+                update_option('top_opt_custom_hashtag_option', "nohashtag");
+            }
+
+            //use inline hashtags
+            if (isset($_POST['top_opt_use_inline_hashtags'])) {
+                update_option('top_opt_use_inline_hashtags', true);
+            } else {
+                update_option('top_opt_use_inline_hashtags', false);
+            }
+
+             //hashtag length
+            if (isset($_POST['top_opt_hashtag_length'])) {
+                update_option('top_opt_hashtag_length', $_POST['top_opt_hashtag_length']);
+            } else {
+                update_option('top_opt_hashtag_length', 0);
+            }
+            
+            //custom field name to fetch hashtag from 
+            if (isset($_POST['top_opt_custom_hashtag_field'])) {
+                update_option('top_opt_custom_hashtag_field', $_POST['top_opt_custom_hashtag_field']);
+            } else {
+                update_option('top_opt_custom_hashtag_field', '');
+            }
+
+            //default hashtags for tweets
+            if (isset($_POST['top_opt_hashtags'])) {
+                update_option('top_opt_hashtags', $_POST['top_opt_hashtags']);
+            } else {
+                update_option('top_opt_hashtags', '');
+            }
+
+            //tweet interval 
+            if (isset($_POST['top_opt_interval'])) {
+                if (is_numeric($_POST['top_opt_interval']) && $_POST['top_opt_interval'] > 0) {
+                    update_option('top_opt_interval', $_POST['top_opt_interval']);
+                } else {
+                    update_option('top_opt_interval', "4");
+                }
+            }
+
+            //random interval
+            if (isset($_POST['top_opt_interval_slop'])) {
+
+                if (is_numeric($_POST['top_opt_interval_slop']) && $_POST['top_opt_interval_slop'] > 0) {
+                    update_option('top_opt_interval_slop', $_POST['top_opt_interval_slop']);
+                } else {
+                    update_option('top_opt_interval_slop', "4");
+                }
+            }
+
+            //minimum post age to tweet
+            if (isset($_POST['top_opt_age_limit'])) {
+                if (is_numeric($_POST['top_opt_age_limit']) && $_POST['top_opt_age_limit'] >= 0) {
+                    update_option('top_opt_age_limit', $_POST['top_opt_age_limit']);
+                } else {
+                    update_option('top_opt_age_limit', "30");
+                }
+            }
+
+            //maximum post age to tweet
+            if (isset($_POST['top_opt_max_age_limit'])) {
+                if (is_numeric($_POST['top_opt_max_age_limit']) && $_POST['top_opt_max_age_limit'] > 0) {
+                    update_option('top_opt_max_age_limit', $_POST['top_opt_max_age_limit']);
+                } else {
+                    update_option('top_opt_max_age_limit', "0");
+                }
+            }
+
+            //categories to omit from tweet
+            if (isset($_POST['post_category'])) {
+                update_option('top_opt_omit_cats', implode(',', $_POST['post_category']));
+            } else {
+                update_option('top_opt_omit_cats', '');
+            }
+
+            //successful update message
+=======
 
             //hashtags option
             if (isset($_POST['top_opt_custom_hashtag_option'])) {
@@ -222,6 +305,7 @@ function top_admin() {
             }
 
             //successful update message
+>>>>>>> .r423856
             print('
 			<div id="message" class="updated fade">
 				<p>' . __('Tweet Old Post Options Updated.', 'TweetOldPost') . '</p>
@@ -498,6 +582,30 @@ function top_admin() {
 						</div>
 						<div id="inlinehashtag" style="display:none;">
 						<div class="option">
+<<<<<<< .mine
+							<label for="top_opt_use_inline_hashtags">' . __('Use inline hashtags: ', 'TweetOldPost') . '</label>
+							<input type="checkbox" name="top_opt_use_inline_hashtags" id="top_opt_use_inline_hashtags" ' . $use_inline_hashtags . ' /> 
+                                                       
+						</div>
+                                                
+                                                <div class="option">
+							<label for="top_opt_hashtag_length">' . __('Maximum Hashtag length: ', 'TweetOldPost') . '</label>
+							<input type="text" size="25" name="top_opt_hashtag_length" id="top_opt_hashtag_length" value="' . $hashtag_length . '" /> 
+                                                       <b>Set this to 0 to include all hashtags</b>
+						</div>
+						</div>
+						<div id="customhashtag" style="display:none;">
+						<div class="option">
+							<label for="top_opt_custom_hashtag_field">' . __('Custom field name', 'TweetOldPost') . ':</label>
+							<input type="text" size="25" name="top_opt_custom_hashtag_field" id="top_opt_custom_hashtag_field" value="' . $custom_hashtag_field . '" autocomplete="off" />
+							<b>fetch hashtags from this custom field</b>
+						</div>
+						
+						</div>
+                                                <div id="commonhashtag" style="display:none;">
+						<div class="option">
+							<label for="top_opt_hashtags">' . __('Common #hashtags for your tweets', 'TweetOldPost') . ':</label>
+=======
 							<label for="top_opt_use_inline_hashtags">' . __('Use inline hashtags: ', 'TweetOldPost') . '</label>
 							<input type="checkbox" name="top_opt_use_inline_hashtags" id="top_opt_use_inline_hashtags" ' . $use_inline_hashtags . ' /> 
                                                        
@@ -520,6 +628,7 @@ function top_admin() {
                                                 <div id="commonhashtag" style="display:none;">
 						<div class="option">
 							<label for="top_opt_hashtags">' . __('Common #hashtags for your tweets', 'TweetOldPost') . ':</label>
+>>>>>>> .r423856
 							<input type="text" size="25" name="top_opt_hashtags" id="top_opt_hashtags" value="' . $twitter_hashtags . '" autocomplete="off" />
 							<b>Include #, like #thoughts</b>
 						</div>
