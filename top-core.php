@@ -1,0 +1,426 @@
+<?php
+
+require_once( 'Include/oauth.php' );
+global $top_oauth;
+$top_oauth = new TOPOAuth;
+
+function top_tweet_old_post() {
+//check last tweet time against set interval and span
+    if (top_opt_update_time()) {
+        update_option('top_opt_last_update', time());
+        top_opt_tweet_old_post();
+    }
+}
+
+function top_currentPageURL() {
+    $pageURL = 'http';
+    if ($_SERVER["HTTPS"] == "on") {
+        $pageURL .= "s";
+    }
+    $pageURL .= "://";
+    if ($_SERVER["SERVER_PORT"] != "80") {
+        $pageURL .= $_SERVER["SERVER_NAME"] . ":" . $_SERVER["SERVER_PORT"] . $_SERVER["REQUEST_URI"];
+    } else {
+        $pageURL .= $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"];
+    }
+    return $pageURL;
+}
+
+//get random post and tweet
+function top_opt_tweet_old_post() {
+    global $wpdb;
+    $omitCats = get_option('top_opt_omit_cats');
+    $maxAgeLimit = get_option('top_opt_max_age_limit');
+    $ageLimit = get_option('top_opt_age_limit');
+    $exposts = get_option('top_opt_excluded_post');
+    $exposts = preg_replace('/,,+/', ',', $exposts);
+
+    if (substr($exposts, 0, 1) == ",") {
+        $exposts = substr($exposts, 1, strlen($exposts));
+    }
+    if (substr($exposts, -1, 1) == ",") {
+        $exposts = substr($exposts, 0, strlen($exposts) - 1);
+    }
+
+    if (!(isset($ageLimit) && is_numeric($ageLimit))) {
+        $ageLimit = top_opt_AGE_LIMIT;
+    }
+
+    if (!(isset($maxAgeLimit) && is_numeric($maxAgeLimit))) {
+        $maxAgeLimit = top_opt_MAX_AGE_LIMIT;
+    }
+    if (!isset($omitCats)) {
+        $omitCats = top_opt_OMIT_CATS;
+    }
+
+    $sql = "SELECT ID
+            FROM $wpdb->posts
+            WHERE post_type = 'post'
+                  AND post_status = 'publish'
+                  AND post_date <= curdate( ) - INTERVAL " . $ageLimit . " day";
+
+    if ($maxAgeLimit != 0) {
+        $sql = $sql . " AND post_date >= curdate( ) - INTERVAL " . $maxAgeLimit . " day";
+    }
+    if (isset($exposts)) {
+        if (trim($exposts) != '') {
+            $sql = $sql . " AND ID Not IN (" . $exposts . ") ";
+        }
+    }
+    /* if ($omitCats != '') {
+      $sql = $sql . " AND NOT (ID IN (SELECT tr.object_id FROM wp_term_relationships AS tr INNER JOIN wp_term_taxonomy AS tt ON tr.term_taxonomy_id = tt.term_taxonomy_id WHERE tt.taxonomy = 'category' AND tt.term_id IN (" . $omitCats . ")))";
+      } */
+    if ($omitCats != '') {
+        $sql = $sql . " AND NOT (ID IN (SELECT tr.object_id FROM " . $wpdb->prefix . "term_relationships AS tr INNER JOIN " . $wpdb->prefix . "term_taxonomy AS tt ON tr.term_taxonomy_id = tt.term_taxonomy_id WHERE tt.taxonomy = 'category' AND tt.term_id IN (" . $omitCats . ")))";
+    }
+    $sql = $sql . "
+            ORDER BY RAND() 
+            LIMIT 1 ";
+
+    $oldest_post = $wpdb->get_var($sql);
+    if ($oldest_post == null) {
+        return "No post found to tweet. Please check your settings and try again.";
+    }
+    if (isset($oldest_post)) {
+        return top_opt_tweet_post($oldest_post);
+    }
+}
+
+//tweet for the passed random post
+function top_opt_tweet_post($oldest_post) {
+    global $wpdb;
+    $post = get_post($oldest_post);
+    $content = "";
+    $to_short_url = true;
+    $shorturl = "";
+    $tweet_type = get_option('top_opt_tweet_type');
+    $additional_text = get_option('top_opt_add_text');
+    $additional_text_at = get_option('top_opt_add_text_at');
+    $include_link = get_option('top_opt_include_link');
+    $custom_hashtag_option = get_option('top_opt_custom_hashtag_option');
+    $custom_hashtag_field = get_option('top_opt_custom_hashtag_field');
+    $twitter_hashtags = get_option('top_opt_hashtags');
+    $url_shortener = get_option('top_opt_url_shortener');
+    $custom_url_option = get_option('top_opt_custom_url_option');
+    $to_short_url = get_option('top_opt_use_url_shortner');
+    $use_inline_hashtags = get_option('top_opt_use_inline_hashtags');
+    $hashtag_length = get_option('top_opt_hashtag_length');
+
+    if ($include_link != "false") {
+        $permalink = get_permalink($oldest_post);
+
+        if ($custom_url_option) {
+            $custom_url_field = get_option('top_opt_custom_url_field');
+            if (trim($custom_url_field) != "") {
+                $permalink = trim(get_post_meta($post->ID, $custom_url_field, true));
+            }
+        }
+
+        if ($to_short_url) {
+
+            if ($url_shortener == "bit.ly") {
+                $bitly_key = get_option('top_opt_bitly_key');
+                $bitly_user = get_option('top_opt_bitly_user');
+                $shorturl = shorten_url($permalink, $url_shortener, $bitly_key, $bitly_user);
+            } else {
+                $shorturl = shorten_url($permalink, $url_shortener);
+            }
+        } else {
+            $shorturl = $permalink;
+        }
+    }
+
+    if ($tweet_type == "title" || $tweet_type == "titlenbody") {
+        $title = stripslashes($post->post_title);
+        $title = strip_tags($title);
+        $title = preg_replace('/\s\s+/', ' ', $title);
+    } else {
+        $title = "";
+    }
+
+    if ($tweet_type == "body" || $tweet_type == "titlenbody") {
+        $body = stripslashes($post->post_content);
+        $body = strip_tags($body);
+        $body = preg_replace('/\s\s+/', ' ', $body);
+    } else {
+        $body = "";
+    }
+
+    if ($tweet_type == "titlenbody") {
+        if ($title == null) {
+            $content = $body;
+        } elseif ($body == null) {
+            $content = $title;
+        } else {
+            $content = $title . " - " . $body;
+        }
+    } elseif ($tweet_type == "title") {
+        $content = $title;
+    } elseif ($tweet_type == "body") {
+        $content = $body;
+    }
+
+    if ($additional_text != "") {
+        if ($additional_text_at == "end") {
+            $content = $content . ". " . $additional_text;
+        } elseif ($additional_text_at == "beginning") {
+            $content = $additional_text . ": " . $content;
+        }
+    }
+
+    $hashtags = "";
+    $newcontent = "";
+    if ($custom_hashtag_option != "nohashtag") {
+       
+        if ($custom_hashtag_option == "common") {
+//common hashtag
+            $hashtags = $twitter_hashtags;
+        }
+//post custom field hashtag
+        elseif ($custom_hashtag_option == "custom") {
+            if (trim($custom_hashtag_field) != "") {
+                $hashtags = trim(get_post_meta($post->ID, $custom_hashtag_field, true));
+            }
+        } elseif ($custom_hashtag_option == "categories") {
+            $post_categories = get_the_category($post->ID);
+            if ($post_categories) {
+                foreach ($post_categories as $category) {
+                    $tagname = str_replace(".", "", str_replace(" ", "_", $category->cat_name));
+                    if ($use_inline_hashtags) {
+                        if (strrpos($content, $tagname) === false) {
+                            $hashtags = $hashtags . "#" . $tagname . " ";
+                        } else {
+                            $newcontent = preg_replace('/\b' . $tagname . '\b/i', "#" . $tagname, $content, 1);
+                        }
+                    } else {
+                        $hashtags = $hashtags . "#" . $tagname . " ";
+                    }
+                }
+            }
+        } elseif ($custom_hashtag_option == "tags") {
+            $post_tags = get_the_tags($post->ID);
+            if ($post_tags) {
+                foreach ($post_tags as $tag) {
+                    $tagname = str_replace(".", "", str_replace(" ", "_", $tag->name));
+                    if ($use_inline_hashtags) {
+                        if (strrpos($content, $tagname) === false) {
+                            $hashtags = $hashtags . "#" . $tagname . " ";
+                        } else {
+                            $newcontent = preg_replace('/\b' . $tagname . '\b/i', "#" . $tagname, $content, 1);
+                        }
+                    } else {
+                        $hashtags = $hashtags . "#" . $tagname . " ";
+                    }
+                }
+            }
+        }
+
+        if ($newcontent != "")
+            $content = $newcontent;
+    }
+
+
+
+    if ($include_link != "false") {
+        if (!is_numeric($shorturl) && (strncmp($shorturl, "http", strlen("http")) == 0)) {
+            
+        } else {
+            return "OOPS!!! problem with your URL shortning service. Some signs of error " . $shorturl . ".";
+        }
+    }
+
+    $message = set_tweet_length($content, $shorturl, $hashtags, $hashtag_length);
+    $status = urlencode(stripslashes(urldecode($message)));
+    if ($status) {
+        $poststatus = top_update_status($message);
+        if ($poststatus == true)
+            return "Whoopie!!! Tweet Posted Successfully";
+        else
+            return "OOPS!!! there seems to be some problem while tweeting. Please try again.";
+    }
+    return "OOPS!!! there seems to be some problem while tweeting. Try again. If problem is persistent mail the problem at ajay@ajaymatharu.com";
+}
+
+//send request to passed url and return the response
+function send_request($url, $method='GET', $data='', $auth_user='', $auth_pass='') {
+    $ch = curl_init($url);
+    if (strtoupper($method) == "POST") {
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+    }
+    if (ini_get('open_basedir') == '' && ini_get('safe_mode') == 'Off') {
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+    }
+    curl_setopt($ch, CURLOPT_HEADER, 0);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    if ($auth_user != '' && $auth_pass != '') {
+        curl_setopt($ch, CURLOPT_USERPWD, "{$auth_user}:{$auth_pass}");
+    }
+    $response = curl_exec($ch);
+    $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    curl_close($ch);
+    if ($httpcode != 200) {
+        return $httpcode;
+    }
+
+    return $response;
+}
+
+//Shorten long URLs with is.gd or bit.ly.
+function shorten_url($the_url, $shortener='is.gd', $api_key='', $user='') {
+
+    if (($shortener == "bit.ly") && isset($api_key) && isset($user)) {
+
+        $url = "http://api.bit.ly/v3/shorten?longUrl={$the_url}&login={$user}&apiKey={$api_key}&format=json";
+        $result = json_decode(file_get_contents($url));
+        if ($result->status_code == 200)
+            $response = $result->data->url;
+        else
+            $response="" . $result->status_txt ."";
+    } elseif ($shortener == "su.pr") {
+        $url = "http://su.pr/api/simpleshorten?url={$the_url}";
+        $response = send_request($url, 'GET');
+    } elseif ($shortener == "tr.im") {
+        $url = "http://api.tr.im/api/trim_simple?url={$the_url}";
+        $response = send_request($url, 'GET');
+    } elseif ($shortener == "3.ly") {
+        $url = "http://3.ly/?api=em5893833&u={$the_url}";
+        $response = send_request($url, 'GET');
+    } elseif ($shortener == "tinyurl") {
+        $url = "http://tinyurl.com/api-create.php?url={$the_url}";
+        $response = send_request($url, 'GET');
+    } elseif ($shortener == "u.nu") {
+        $url = "http://u.nu/unu-api-simple?url={$the_url}";
+        $response = send_request($url, 'GET');
+    } elseif ($shortener == "1click.at") {
+        $url = "http://1click.at/api.php?action=shorturl&url={$the_url}&format=simple";
+        $response = send_request($url, 'GET');
+    } else {
+        $url = "http://is.gd/api.php?longurl={$the_url}";
+        $response = send_request($url, 'GET');
+    }
+
+    return $response;
+}
+
+//Shrink a tweet and accompanying URL down to 140 chars.
+function set_tweet_length($message, $url, $twitter_hashtags="", $hashtag_length=0) {
+
+    $tags = $twitter_hashtags;
+    $message_length = strlen($message);
+    $url_length = strlen($url);
+    if ($hashtag_length == 0)
+        $hashtag_length = strlen($tags);
+
+    if ($message_length + $url_length + $hashtag_length > 140) {
+        $tags = substr($tags, 0, $hashtag_length);
+        $tags = substr($tags, 0, strrpos($tags, ' '));
+
+        $hashtag_length = strlen($tags);
+
+        $shorten_message_to = 140 - $url_length - $hashtag_length;
+        $shorten_message_to = $shorten_message_to - 4;
+//$message = $message." ";
+        $message = substr($message, 0, $shorten_message_to);
+        $message = substr($message, 0, strrpos($message, ' '));
+        $message = $message . "...";
+    }
+    return $message . " " . $url . " " . $tags;
+}
+
+//check time and update the last tweet time
+function top_opt_update_time() {
+    $last = get_option('top_opt_last_update');
+    $interval = get_option('top_opt_interval');
+    $slop = get_option('top_opt_interval_slop');
+
+    if (!(isset($interval) && is_numeric($interval))) {
+        $interval = top_opt_INTERVAL;
+    }
+
+    if (!(isset($slop) && is_numeric($slop))) {
+        $slop = top_opt_INTERVAL_SLOP;
+    }
+    $interval = $interval * 60 * 60;
+    $slop = $slop * 60 * 60;
+    if (false === $last) {
+        $ret = 1;
+    } else if (is_numeric($last)) {
+        $ret = ( (time() - $last) > ($interval + rand(0, $slop)));
+    }
+    return $ret;
+}
+
+function top_get_auth_url() {
+    global $top_oauth;
+    $settings = top_get_settings();
+
+    $token = $top_oauth->get_request_token();
+    if ($token) {
+        $settings['oauth_request_token'] = $token['oauth_token'];
+        $settings['oauth_request_token_secret'] = $token['oauth_token_secret'];
+
+        top_save_settings($settings);
+
+        return $top_oauth->get_auth_url($token['oauth_token']);
+    }
+}
+
+function top_update_status($new_status) {
+    global $top_oauth;
+    $settings = top_get_settings();
+
+    if (isset($settings['oauth_access_token']) && isset($settings['oauth_access_token_secret'])) {
+        return $top_oauth->update_status($settings['oauth_access_token'], $settings['oauth_access_token_secret'], $new_status);
+    }
+
+    return false;
+}
+
+function top_has_tokens() {
+    $settings = top_get_settings();
+
+    return ( $settings['oauth_access_token'] && $settings['oauth_access_token_secret'] );
+}
+
+function top_is_valid() {
+    return twit_has_tokens();
+}
+
+function top_do_tweet($post_id) {
+    $settings = top_get_settings();
+
+    $message = top_get_message($post_id);
+
+// If we have a valid message, Tweet it
+// this will fail if the Tiny URL service is done
+    if ($message) {
+// If we successfully posted this to Twitter, then we can remove it from the queue eventually
+        if (twit_update_status($message)) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+function top_get_settings() {
+    global $top_defaults;
+
+    $settings = $top_defaults;
+
+    $wordpress_settings = get_option('top_settings');
+    if ($wordpress_settings) {
+        foreach ($wordpress_settings as $key => $value) {
+            $settings[$key] = $value;
+        }
+    }
+
+    return $settings;
+}
+
+function top_save_settings($settings) {
+    update_option('top_settings', $settings);
+}
+
+?>
