@@ -16,6 +16,9 @@ Tweet Old Posts randomly picks your older post based on the interval specified b
 For updates follow http://twitter.com/matharuajay
 
 New
+**New in v3.2.4**
+
+- Bug fixes
 
 
 **New in v3.2.3**
@@ -51,36 +54,6 @@ New
 
 
 
-=======
-**New in v3.2.2**
-
-- Resolved bit.ly issue
-- new option for hashtags
-- other bug fixes
-
-
-**New in v3.2.1**
-
-- Bug fixes
-
-
-**New in v3.2**
-
-- Bug fixes
-- Option to choose to include link in post
-- option to post only title or body or both title and body
-- option to set additional text either at beginning or end of tweet
-- option to pick hashtags from custom field
-
-
-**New in v3.1.2**
-
-- Resolved tweets not getting posted when categories are excluded.
-- If you are not able to authorise your twitter account set you blog URL in Administration → Settings → General.
-
-
-
->>>>>>> .r423856
 **New in v3.1.1**
 
 - Resolved tweets not getting posted issue. Sorry guys :(
@@ -239,6 +212,10 @@ http://www.ajaymatharu.com/wordpress-plugin-tweet-old-posts/
 
 == Changelog ==
 
+**New in v3.2.4**
+
+- Bug fixes
+
 
 **New in v3.2.3**
 
@@ -276,39 +253,6 @@ http://www.ajaymatharu.com/wordpress-plugin-tweet-old-posts/
 
 
 
-=======
-**New in v3.2.2**
-
-- Resolved bit.ly issue
-- new option for hashtags
-- other bug fixes
-
-
-
-**New in v3.2.1**
-
-- Bug fixes
-
-
-
-**New in v3.2**
-
-- Bug fixes
-- Option to choose to include link in post
-- option to post only title or body or both title and body
-- option to set additional text either at beginning or end of tweet
-- option to pick hashtags from custom field
-
-
-
-**New in v3.1.2**
-
-- Resolved tweets not getting posted when categories are excluded.
-- If you are not able to authorise your twitter account set you blog URL in Administration → Settings → General.
-
-
-
->>>>>>> .r423856
 **New in v3.1**
 
 - Resolved issue of plugin flooding twitter account with tweets.
@@ -398,6 +342,10 @@ http://www.ajaymatharu.com/wordpress-plugin-tweet-old-posts/
 
 Some of the options you can configure for the Tweet Old Posts plugins are,
 
+**New in v3.2.4**
+
+- Bug fixes
+
 
 **New in v3.2.3**
 
@@ -435,37 +383,6 @@ Some of the options you can configure for the Tweet Old Posts plugins are,
 
 
 
-=======
-- Resolved bit.ly issue
-- new option for hashtags
-- other bug fixes
-
-
-
-**New in v3.2.1**
-
-- Bug fixes
-
-
-
-**New in v3.2**
-
-- Bug fixes
-- Option to choose to include link in post
-- option to post only title or body or both title and body
-- option to set additional text either at beginning or end of tweet
-- option to pick hashtags from custom field
-
-
-
-**New in v3.1.2**
-
-- Resolved tweets not getting posted when categories are excluded.
-- If you are not able to authorise your twitter account set you blog URL in Administration → Settings → General.
-
-
-
->>>>>>> .r423856
 **New in v3.1**
 
 - Resolved issue of plugin flooding twitter account with tweets.
