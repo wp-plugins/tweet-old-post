@@ -312,9 +312,11 @@ function set_tweet_length($message, $url, $twitter_hashtags="", $hashtag_length=
         $hashtag_length = strlen($tags);
     
     if ($twitter_hashtags != "") {
+        if(strlen($tags)>$hashtag_length)
+        {
         $tags = substr($tags, 0, $hashtag_length);
         $tags = substr($tags, 0, strrpos($tags, ' '));
-
+        }
         $hashtag_length = strlen($tags);
     }
     
@@ -324,8 +326,11 @@ function set_tweet_length($message, $url, $twitter_hashtags="", $hashtag_length=
         $shorten_message_to = 140 - $url_length - $hashtag_length;
         $shorten_message_to = $shorten_message_to - 4;
 //$message = $message." ";
-        $message = substr($message, 0, $shorten_message_to);
-        $message = substr($message, 0, strrpos($message, ' '));
+        if(strlen($message)>$shorten_message_to)
+        {
+            $message = substr($message, 0, $shorten_message_to);
+            $message = substr($message, 0, strrpos($message, ' '));
+        }
         $message = $message . "...";
     }
     return $message . " " . $url . " " . $tags;

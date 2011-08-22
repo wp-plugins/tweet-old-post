@@ -16,7 +16,7 @@ class TOPOAuth {
 	function TOPOAuth() {
 		$this->duplicate_tweet = false;
 		
-		$this->setup();
+		
 	}
 	
 	function encode( $string ) {
@@ -234,9 +234,7 @@ class TOPOAuth {
 		}			
 	}
 	
-	function setup() {
-		eval( base64_decode( 'ZGVmaW5lKCAnV09SRFRXSVRfT0FVVEhfQ09OU1VNRVJfU0VDUkVUJywgJ0cxWkVTQjVXUGpDVDE4dVhDeldxNVZxbHBtdDdKanNVYVN0ZG5Gd3dhdycgKTs=' ) );
-	}
+	
 }
 
 ?>

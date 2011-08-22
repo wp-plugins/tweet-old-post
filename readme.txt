@@ -15,7 +15,31 @@ Tweet Old Posts randomly picks your older post based on the interval specified b
 
 For updates follow http://twitter.com/matharuajay
 
-New
+**Fortcoming**
+
+- Sleep time
+- Read tweets from title
+- Post priority
+- Additional text based on categories
+- Post for Facebook and Google+
+- Maintain Tweet Cycle. Repeat only when all post have been tweeted
+- Option to set number of tweets to post at a time
+
+
+**Pro Version (will be released soon)**
+- Change via Tweet Old Post to your specified name
+- Multiple Twitter accounts
+
+
+**Let me know if you have any more ideas**
+
+
+**New in v3.2.5**
+
+- Resolved hashtag not posting issue.
+- other bug fixes.
+
+
 **New in v3.2.4**
 
 - Bug fixes
@@ -212,6 +236,12 @@ http://www.ajaymatharu.com/wordpress-plugin-tweet-old-posts/
 
 == Changelog ==
 
+**New in v3.2.5**
+
+- Resolved hashtag not posting issue.
+- other bug fixes.
+
+
 **New in v3.2.4**
 
 - Bug fixes
@@ -341,6 +371,12 @@ http://www.ajaymatharu.com/wordpress-plugin-tweet-old-posts/
 == Other Notes ==
 
 Some of the options you can configure for the Tweet Old Posts plugins are,
+
+**New in v3.2.5**
+
+- Resolved hashtag not posting issue.
+- other bug fixes.
+
 
 **New in v3.2.4**
 
