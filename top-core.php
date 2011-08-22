@@ -67,9 +67,7 @@ function top_opt_tweet_old_post() {
             $sql = $sql . " AND ID Not IN (" . $exposts . ") ";
         }
     }
-    /* if ($omitCats != '') {
-      $sql = $sql . " AND NOT (ID IN (SELECT tr.object_id FROM wp_term_relationships AS tr INNER JOIN wp_term_taxonomy AS tt ON tr.term_taxonomy_id = tt.term_taxonomy_id WHERE tt.taxonomy = 'category' AND tt.term_id IN (" . $omitCats . ")))";
-      } */
+    
     if ($omitCats != '') {
         $sql = $sql . " AND NOT (ID IN (SELECT tr.object_id FROM " . $wpdb->prefix . "term_relationships AS tr INNER JOIN " . $wpdb->prefix . "term_taxonomy AS tt ON tr.term_taxonomy_id = tt.term_taxonomy_id WHERE tt.taxonomy = 'category' AND tt.term_id IN (" . $omitCats . ")))";
     }
@@ -171,7 +169,7 @@ function top_opt_tweet_post($oldest_post) {
     $hashtags = "";
     $newcontent = "";
     if ($custom_hashtag_option != "nohashtag") {
-       
+
         if ($custom_hashtag_option == "common") {
 //common hashtag
             $hashtags = $twitter_hashtags;
@@ -276,7 +274,7 @@ function shorten_url($the_url, $shortener='is.gd', $api_key='', $user='') {
         if ($result->status_code == 200)
             $response = $result->data->url;
         else
-            $response="" . $result->status_txt ."";
+            $response="" . $result->status_txt . "";
     } elseif ($shortener == "su.pr") {
         $url = "http://su.pr/api/simpleshorten?url={$the_url}";
         $response = send_request($url, 'GET');
@@ -309,14 +307,19 @@ function set_tweet_length($message, $url, $twitter_hashtags="", $hashtag_length=
     $tags = $twitter_hashtags;
     $message_length = strlen($message);
     $url_length = strlen($url);
+    //$cur_length = strlen($tags);
     if ($hashtag_length == 0)
         $hashtag_length = strlen($tags);
-
-    if ($message_length + $url_length + $hashtag_length > 140) {
+    
+    if ($twitter_hashtags != "") {
         $tags = substr($tags, 0, $hashtag_length);
         $tags = substr($tags, 0, strrpos($tags, ' '));
 
         $hashtag_length = strlen($tags);
+    }
+    
+    if ($message_length + $url_length + $hashtag_length > 140) {
+
 
         $shorten_message_to = 140 - $url_length - $hashtag_length;
         $shorten_message_to = $shorten_message_to - 4;

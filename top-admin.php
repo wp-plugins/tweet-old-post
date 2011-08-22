@@ -198,7 +198,7 @@ function top_admin() {
 
             //minimum post age to tweet
             if (isset($_POST['top_opt_age_limit'])) {
-                if (is_numeric($_POST['top_opt_age_limit']) && $_POST['top_opt_age_limit'] > 0) {
+                if (is_numeric($_POST['top_opt_age_limit']) && $_POST['top_opt_age_limit'] >= 0) {
                     update_option('top_opt_age_limit', $_POST['top_opt_age_limit']);
                 } else {
                     update_option('top_opt_age_limit', "30");
@@ -504,7 +504,7 @@ function top_admin() {
 						</div>
                                                 
                                                 <div class="option">
-							<label for="top_opt_hashtag_length">' . __('Total Hashtag length: ', 'TweetOldPost') . '</label>
+							<label for="top_opt_hashtag_length">' . __('Maximum Hashtag length: ', 'TweetOldPost') . '</label>
 							<input type="text" size="25" name="top_opt_hashtag_length" id="top_opt_hashtag_length" value="' . $hashtag_length . '" /> 
                                                        <b>Set this to 0 to include all hashtags</b>
 						</div>

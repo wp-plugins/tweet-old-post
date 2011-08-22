@@ -16,6 +16,15 @@ Tweet Old Posts randomly picks your older post based on the interval specified b
 For updates follow http://twitter.com/matharuajay
 
 New
+**New in v3.2.4**
+
+- Bug fixes
+
+
+**New in v3.2.3**
+
+- Bug fixes
+
 
 **New in v3.2.2**
 
@@ -203,6 +212,16 @@ http://www.ajaymatharu.com/wordpress-plugin-tweet-old-posts/
 
 == Changelog ==
 
+**New in v3.2.4**
+
+- Bug fixes
+
+
+**New in v3.2.3**
+
+- Bug fixes
+
+
 **New in v3.2.2**
 
 - Resolved bit.ly issue
@@ -322,6 +341,16 @@ http://www.ajaymatharu.com/wordpress-plugin-tweet-old-posts/
 == Other Notes ==
 
 Some of the options you can configure for the Tweet Old Posts plugins are,
+
+**New in v3.2.4**
+
+- Bug fixes
+
+
+**New in v3.2.3**
+
+- Bug fixes
+
 
 **New in v3.2.2**
 
