@@ -556,9 +556,7 @@ function top_admin() {
 								');
         wp_category_checklist(0, 0, explode(',', $omitCats));
         print('				    		</ul>
-             <div style="clear:both;padding-top:20px;">
-                                                          <a href="' . get_bloginfo('wpurl') . '/wp-admin/admin.php?page=ExcludePosts">Exclude specific posts</a> from selected categories.
-                                                              </div>
+             
 								</div>
                                                                
 								</div>

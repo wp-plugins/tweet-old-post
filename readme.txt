@@ -34,6 +34,11 @@ For updates follow http://twitter.com/matharuajay
 **Let me know if you have any more ideas**
 
 
+**New in v3.2.6**
+
+- removed exclude post due to security threat. Will work on it and bring it up back.
+
+
 **New in v3.2.5**
 
 - Resolved hashtag not posting issue.
@@ -236,6 +241,12 @@ http://www.ajaymatharu.com/wordpress-plugin-tweet-old-posts/
 
 == Changelog ==
 
+
+**New in v3.2.6**
+
+- removed exclude post due to security threat. Will work on it and bring it up back.
+
+
 **New in v3.2.5**
 
 - Resolved hashtag not posting issue.
@@ -371,6 +382,12 @@ http://www.ajaymatharu.com/wordpress-plugin-tweet-old-posts/
 == Other Notes ==
 
 Some of the options you can configure for the Tweet Old Posts plugins are,
+
+
+**New in v3.2.6**
+
+- removed exclude post due to security threat. Will work on it and bring it up back.
+
 
 **New in v3.2.5**
 

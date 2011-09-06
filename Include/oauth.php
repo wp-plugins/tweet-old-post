@@ -5,6 +5,7 @@ if ( !class_exists( 'WP_Http' ) ) {
 }
 
 define( 'TOP_OAUTH_CONSUMER_KEY', 'ofaYongByVpa3NDEbXa2g' );
+
 define( 'TOP_OAUTH_REQUEST_URL', 'http://api.twitter.com/oauth/request_token' );
 define( 'TOP_OAUTH_ACCESS_URL', 'http://api.twitter.com/oauth/access_token' );
 define( 'TOP_OAUTH_AUTHORIZE_URL', 'http://api.twitter.com/oauth/authorize' );
@@ -138,6 +139,7 @@ class TOPOAuth {
 		
 		//$hash = hash_hmac( 'sha1', $sig_string, TOP_OAUTH_CONSUMER_SECRET . '&' . $token_secret, true );
 		$hash = $this->hmac_sha1( 'vTzszlMujMZCY3mVtTE6WovUKQxqv3LVgiVku276M' . '&' . $token_secret, $sig_string );
+                
 		$sig = base64_encode( $hash );
 		
 		$params['oauth_signature'] = $sig;

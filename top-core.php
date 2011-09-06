@@ -32,7 +32,7 @@ function top_opt_tweet_old_post() {
     $omitCats = get_option('top_opt_omit_cats');
     $maxAgeLimit = get_option('top_opt_max_age_limit');
     $ageLimit = get_option('top_opt_age_limit');
-    $exposts = get_option('top_opt_excluded_post');
+    /*$exposts = get_option('top_opt_excluded_post');
     $exposts = preg_replace('/,,+/', ',', $exposts);
 
     if (substr($exposts, 0, 1) == ",") {
@@ -40,7 +40,7 @@ function top_opt_tweet_old_post() {
     }
     if (substr($exposts, -1, 1) == ",") {
         $exposts = substr($exposts, 0, strlen($exposts) - 1);
-    }
+    }*/
 
     if (!(isset($ageLimit) && is_numeric($ageLimit))) {
         $ageLimit = top_opt_AGE_LIMIT;
@@ -62,11 +62,12 @@ function top_opt_tweet_old_post() {
     if ($maxAgeLimit != 0) {
         $sql = $sql . " AND post_date >= curdate( ) - INTERVAL " . $maxAgeLimit . " day";
     }
+    /*
     if (isset($exposts)) {
         if (trim($exposts) != '') {
             $sql = $sql . " AND ID Not IN (" . $exposts . ") ";
         }
-    }
+    }*/
     
     if ($omitCats != '') {
         $sql = $sql . " AND NOT (ID IN (SELECT tr.object_id FROM " . $wpdb->prefix . "term_relationships AS tr INNER JOIN " . $wpdb->prefix . "term_taxonomy AS tt ON tr.term_taxonomy_id = tt.term_taxonomy_id WHERE tt.taxonomy = 'category' AND tt.term_id IN (" . $omitCats . ")))";
