@@ -520,3 +520,4 @@ Some of the options you can configure for the Tweet Old Posts plugins are,
 - Minimum age of post to be eligible for tweet - This allows you to set how old your post should be in order to be eligible for the tweet.
 - Categories to omit from tweets - This will protect posts from the selected categories from being tweeted.
 
+ 
