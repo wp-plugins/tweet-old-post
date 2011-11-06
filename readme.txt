@@ -34,6 +34,14 @@ For updates follow http://twitter.com/matharuajay
 **Let me know if you have any more ideas**
 
 
+**New in v3.2.7**
+
+- Added logging for people who cant make it work can enable and check the log, or mail me the log file.
+- Brought back the exclude post option.
+- Made other optimizations and resolved some minor bugs.
+- Check http://www.ajaymatharu.com/tweet-old-post-update-3-2-7/ for more detailed explanation.
+
+
 **New in v3.2.6**
 
 - removed exclude post due to security threat. Will work on it and bring it up back.
@@ -242,6 +250,14 @@ http://www.ajaymatharu.com/wordpress-plugin-tweet-old-posts/
 == Changelog ==
 
 
+**New in v3.2.7**
+
+- Added logging for people who cant make it work can enable and check the log, or mail me the log file.
+- Brought back the exclude post option.
+- Made other optimizations and resolved some minor bugs.
+- Check http://www.ajaymatharu.com/tweet-old-post-update-3-2-7/ for more detailed explanation.
+
+
 **New in v3.2.6**
 
 - removed exclude post due to security threat. Will work on it and bring it up back.
@@ -384,6 +400,14 @@ http://www.ajaymatharu.com/wordpress-plugin-tweet-old-posts/
 Some of the options you can configure for the Tweet Old Posts plugins are,
 
 
+**New in v3.2.7**
+
+- Added logging for people who cant make it work can enable and check the log, or mail me the log file.
+- Brought back the exclude post option.
+- Made other optimizations and resolved some minor bugs.
+- Check http://www.ajaymatharu.com/tweet-old-post-update-3-2-7/ for more detailed explanation.
+
+
 **New in v3.2.6**
 
 - removed exclude post due to security threat. Will work on it and bring it up back.
@@ -520,4 +544,3 @@ Some of the options you can configure for the Tweet Old Posts plugins are,
 - Minimum age of post to be eligible for tweet - This allows you to set how old your post should be in order to be eligible for the tweet.
 - Categories to omit from tweets - This will protect posts from the selected categories from being tweeted.
 
- 

@@ -2,16 +2,16 @@
 #     /* 
 #     Plugin Name: Tweet old post
 #     Plugin URI: http://www.ajaymatharu.com/wordpress-plugin-tweet-old-posts/
-#     Description: Plugin for tweeting your old posts randomly 
+#     Description: This plugin helps you to keeps your old posts alive by tweeting about them and driving more traffic to them from twitter.
 #     Author: Ajay Matharu 
-#     Version: 3.2.6 
+#     Version: 3.2.7
 #     Author URI: http://www.ajaymatharu.com
 #     */  
  
 
 require_once('top-admin.php');
 require_once('top-core.php');
-
+require_once('top-excludepost.php');
 
 define ('top_opt_1_HOUR', 60*60);
 define ('top_opt_2_HOURS', 2*top_opt_1_HOUR);
@@ -38,7 +38,7 @@ $top_db_version = "1.0";
 
    function top_admin_actions() {  
         add_menu_page("Tweet Old Post", "Tweet Old Post", 1, "TweetOldPost", "top_admin");
-        
+        add_submenu_page("TweetOldPost", __('Exclude Posts','TweetOldPost'), __('Exclude Posts','TweetOldPost'), 1, __('ExcludePosts','TweetOldPost'), 'top_exclude');
 		
     }  
     
@@ -46,6 +46,7 @@ $top_db_version = "1.0";
 	add_action('admin_head', 'top_opt_head_admin');
  	add_action('init','top_tweet_old_post');
     
+        /*
 	register_activation_hook(__FILE__, "top_on_activation");
         
         
@@ -56,7 +57,7 @@ $top_db_version = "1.0";
             update_option('top_opt_age_limit', "30");
             update_option('top_opt_max_age_limit', "60");
         }
-
+*/
 
 add_filter('plugin_action_links', 'top_plugin_action_links', 10, 2);
 

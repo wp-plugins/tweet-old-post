@@ -1,5 +1,5 @@
 <?php
- 
+
 require_once( 'Include/oauth.php' );
 global $top_oauth;
 $top_oauth = new TOPOAuth;
@@ -32,7 +32,7 @@ function top_opt_tweet_old_post() {
     $omitCats = get_option('top_opt_omit_cats');
     $maxAgeLimit = get_option('top_opt_max_age_limit');
     $ageLimit = get_option('top_opt_age_limit');
-    /*$exposts = get_option('top_opt_excluded_post');
+    $exposts = get_option('top_opt_excluded_post');
     $exposts = preg_replace('/,,+/', ',', $exposts);
 
     if (substr($exposts, 0, 1) == ",") {
@@ -40,7 +40,7 @@ function top_opt_tweet_old_post() {
     }
     if (substr($exposts, -1, 1) == ",") {
         $exposts = substr($exposts, 0, strlen($exposts) - 1);
-    }*/
+    }
 
     if (!(isset($ageLimit) && is_numeric($ageLimit))) {
         $ageLimit = top_opt_AGE_LIMIT;
@@ -62,13 +62,13 @@ function top_opt_tweet_old_post() {
     if ($maxAgeLimit != 0) {
         $sql = $sql . " AND post_date >= curdate( ) - INTERVAL " . $maxAgeLimit . " day";
     }
-    /*
+
     if (isset($exposts)) {
         if (trim($exposts) != '') {
             $sql = $sql . " AND ID Not IN (" . $exposts . ") ";
         }
-    }*/
-    
+    }
+
     if ($omitCats != '') {
         $sql = $sql . " AND NOT (ID IN (SELECT tr.object_id FROM " . $wpdb->prefix . "term_relationships AS tr INNER JOIN " . $wpdb->prefix . "term_taxonomy AS tt ON tr.term_taxonomy_id = tt.term_taxonomy_id WHERE tt.taxonomy = 'category' AND tt.term_id IN (" . $omitCats . ")))";
     }
@@ -275,7 +275,7 @@ function shorten_url($the_url, $shortener='is.gd', $api_key='', $user='') {
         if ($result->status_code == 200)
             $response = $result->data->url;
         else
-            $response="" . $result->status_txt . "";
+            $response = "" . $result->status_txt . "";
     } elseif ($shortener == "su.pr") {
         $url = "http://su.pr/api/simpleshorten?url={$the_url}";
         $response = send_request($url, 'GET');
@@ -311,24 +311,22 @@ function set_tweet_length($message, $url, $twitter_hashtags="", $hashtag_length=
     //$cur_length = strlen($tags);
     if ($hashtag_length == 0)
         $hashtag_length = strlen($tags);
-    
+
     if ($twitter_hashtags != "") {
-        if(strlen($tags)>$hashtag_length)
-        {
-        $tags = substr($tags, 0, $hashtag_length);
-        $tags = substr($tags, 0, strrpos($tags, ' '));
+        if (strlen($tags) > $hashtag_length) {
+            $tags = substr($tags, 0, $hashtag_length);
+            $tags = substr($tags, 0, strrpos($tags, ' '));
         }
         $hashtag_length = strlen($tags);
     }
-    
+
     if ($message_length + $url_length + $hashtag_length > 140) {
 
 
         $shorten_message_to = 140 - $url_length - $hashtag_length;
         $shorten_message_to = $shorten_message_to - 4;
 //$message = $message." ";
-        if(strlen($message)>$shorten_message_to)
-        {
+        if (strlen($message) > $shorten_message_to) {
             $message = substr($message, 0, $shorten_message_to);
             $message = substr($message, 0, strrpos($message, ' '));
         }
@@ -339,6 +337,13 @@ function set_tweet_length($message, $url, $twitter_hashtags="", $hashtag_length=
 
 //check time and update the last tweet time
 function top_opt_update_time() {
+
+   
+        return top_to_update();
+    
+}
+
+function top_to_update() {
     $last = get_option('top_opt_last_update');
     $interval = get_option('top_opt_interval');
     $slop = get_option('top_opt_interval_slop');
@@ -357,6 +362,8 @@ function top_opt_update_time() {
     } else if (is_numeric($last)) {
         $ret = ( (time() - $last) > ($interval + rand(0, $slop)));
     }
+    
+    
     return $ret;
 }
 

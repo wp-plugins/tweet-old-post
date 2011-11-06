@@ -1,13 +1,14 @@
 <?php
- 
+
 require_once('tweet-old-post.php');
 require_once('top-core.php');
 require_once( 'Include/oauth.php' );
 require_once('xml.php');
-
+require_once( 'Include/debug.php' );
 function top_admin() {
     //check permission
-    if (current_user_can('manage_options')) {
+    if (current_user_can('manage_options')) 
+        {
         $message = null;
         $message_updated = __("Tweet Old Post Options Updated.", 'TweetOldPost');
         $response = null;
@@ -188,7 +189,6 @@ function top_admin() {
 
             //random interval
             if (isset($_POST['top_opt_interval_slop'])) {
-
                 if (is_numeric($_POST['top_opt_interval_slop']) && $_POST['top_opt_interval_slop'] > 0) {
                     update_option('top_opt_interval_slop', $_POST['top_opt_interval_slop']);
                 } else {
@@ -214,6 +214,18 @@ function top_admin() {
                 }
             }
 
+            //option to enable log
+            if ( isset($_POST['top_enable_log'])) {
+                update_option('top_enable_log', true);
+		global $top_debug;
+		$top_debug->enable( true );	
+            }
+            else{
+                update_option('top_enable_log', false);
+                global $top_debug;
+		$top_debug->enable( false );	
+            }
+        
             //categories to omit from tweet
             if (isset($_POST['post_category'])) {
                 update_option('top_opt_omit_cats', implode(',', $_POST['post_category']));
@@ -361,6 +373,16 @@ function top_admin() {
             $maxAgeLimit = top_opt_MAX_AGE_LIMIT;
         }
 
+        
+        //check enable log
+        $top_enable_log = get_option('top_enable_log');
+        if (!isset($top_enable_log)) {
+            $top_enable_log = "";
+        } elseif ($top_enable_log)
+            $top_enable_log = "checked";
+        else
+            $top_enable_log="";
+        
         //set omitted categories
         $omitCats = get_option('top_opt_omit_cats');
         if (!isset($omitCats)) {
@@ -548,6 +570,19 @@ function top_admin() {
 							<b>Post older than specified days will not be tweeted.</b>
 						</div>
 						
+
+                                                
+
+
+
+                                                <div class="option">
+							<label for="top_enable_log">' . __('Enable Log: ', 'TweetOldPost') . '</label>
+							<input type="checkbox" name="top_enable_log" id="top_enable_log" ' . $top_enable_log . ' /> 
+                                                        <b>saves log in log folder</b>    
+                                                       
+						</div>
+
+
 				    	<div class="option category">
 				    	<div style="float:left">
 						    	<label class="catlabel">' . __('Categories to Omit from tweets: ', 'TweetOldPost') . '</label> </div>
@@ -556,7 +591,11 @@ function top_admin() {
 								');
         wp_category_checklist(0, 0, explode(',', $omitCats));
         print('				    		</ul>
-             
+              <div style="clear:both;padding-top:20px;">
+                                                          <a href="' . get_bloginfo('wpurl') . '/wp-admin/admin.php?page=ExcludePosts">Exclude specific posts</a> from selected categories.
+                                                              </div>
+                                                              
+
 								</div>
                                                                
 								</div>
@@ -722,6 +761,7 @@ showshortener();
 showCustomField();
 showHashtagCustomField();
 showURLOptions();
+
 </script>');
     } else {
         print('
