@@ -2,7 +2,7 @@
 Contributors: Ajay Matharu
 Tags: Tweet old post, Tweets, Promote old post by tweeting about them, Twitter, Auto Tweet, Hashtags, Twitter Hashtags, Tweet Posts, Tweet, Post Tweets, Wordpress Twitter Plugin, Twitter Plugin, Tweet Selected Posts
 Requires at least: 2.7
-Tested up to: 3.2.1
+Tested up to: 3.3.1
 Stable tag: trunk
 
 Plugin to tweet about your old posts to get more hits for them and keep them alive.
@@ -18,11 +18,9 @@ For updates follow http://twitter.com/matharuajay
 **Fortcoming**
 
 - Sleep time
-- Read tweets from title
 - Post priority
 - Additional text based on categories
 - Post for Facebook and Google+
-- Maintain Tweet Cycle. Repeat only when all post have been tweeted
 - Option to set number of tweets to post at a time
 
 
@@ -32,6 +30,14 @@ For updates follow http://twitter.com/matharuajay
 
 
 **Let me know if you have any more ideas**
+
+
+**New in v3.2.8**
+
+- Resolved conflict with Google Analytics Plugin.
+- Changed the log file location to root of plugin folder.
+- Maintained Tweet Cycle. Repeat only when all post have been tweeted.
+- Made other optimizations and resolved some minor bugs.
 
 
 **New in v3.2.7**
@@ -250,6 +256,15 @@ http://www.ajaymatharu.com/wordpress-plugin-tweet-old-posts/
 == Changelog ==
 
 
+**New in v3.2.8**
+
+- Resolved conflict with Google Analytics Plugin.
+- Changed the log file location to root of plugin folder.
+- Maintained Tweet Cycle. Repeat only when all post have been tweeted.
+- Made other optimizations and resolved some minor bugs.
+
+
+
 **New in v3.2.7**
 
 - Added logging for people who cant make it work can enable and check the log, or mail me the log file.
@@ -258,9 +273,11 @@ http://www.ajaymatharu.com/wordpress-plugin-tweet-old-posts/
 - Check http://www.ajaymatharu.com/tweet-old-post-update-3-2-7/ for more detailed explanation.
 
 
+
 **New in v3.2.6**
 
 - removed exclude post due to security threat. Will work on it and bring it up back.
+
 
 
 **New in v3.2.5**
@@ -269,14 +286,17 @@ http://www.ajaymatharu.com/wordpress-plugin-tweet-old-posts/
 - other bug fixes.
 
 
+
 **New in v3.2.4**
 
 - Bug fixes
 
 
+
 **New in v3.2.3**
 
 - Bug fixes
+
 
 
 **New in v3.2.2**
@@ -400,6 +420,14 @@ http://www.ajaymatharu.com/wordpress-plugin-tweet-old-posts/
 Some of the options you can configure for the Tweet Old Posts plugins are,
 
 
+**New in v3.2.8**
+
+- Resolved conflict with Google Analytics Plugin.
+- Changed the log file location to root of plugin folder.
+- Maintained Tweet Cycle. Repeat only when all post have been tweeted.
+- Made other optimizations and resolved some minor bugs.
+
+
 **New in v3.2.7**
 
 - Added logging for people who cant make it work can enable and check the log, or mail me the log file.
@@ -436,11 +464,9 @@ Some of the options you can configure for the Tweet Old Posts plugins are,
 - other bug fixes
 
 
-
 **New in v3.2.1**
 
 - Bug fixes
-
 
 
 **New in v3.2**
@@ -452,19 +478,16 @@ Some of the options you can configure for the Tweet Old Posts plugins are,
 - option to pick hashtags from custom field
 
 
-
 **New in v3.1.2**
 
 - Resolved tweets not getting posted when categories are excluded.
 - If you are not able to authorise your twitter account set you blog URL in Administration → Settings → General.
 
 
-
 **New in v3.1**
 
 - Resolved issue of plugin flooding twitter account with tweets.
 - added provision to exclude some post from selected categories
-
 
 
 **New in v3.0**
@@ -474,18 +497,15 @@ Some of the options you can configure for the Tweet Old Posts plugins are,
 - may not work under php 4 requires php 5
 
 
-
 **New in v2.0**
 
 - added provision to select if you want to shorten the URL or not.
 - Cleaned other options.
 
 
-
 **New in v1.9**
 
 - Removed PHP 4 support as it was creating problem for lot of people
-
 
 
 **New in v1.8**
@@ -494,11 +514,9 @@ Some of the options you can configure for the Tweet Old Posts plugins are,
 - Provision to fetch tweet url from custom field
 
 
-
 **New in v1.7**
 
 - Removed api option from 1click.at not needed api key
-
 
 
 **New in v1.6**
@@ -508,12 +526,10 @@ Some of the options you can configure for the Tweet Old Posts plugins are,
 - Added 1click.at shortning service you need to get the api key from http://theeasyapi.com/ you need to add your machine IP address in the server of http://theeasyapi.com/ for this api key to work.
 
 
-
 **New in v1.5**
 
 - Maximum age of post to be eligible for tweet - allows you to set Maximum age of the post to be eligible for tweet
 - Added one more shortner service was looking for j.mp but they dont have the api yet.
-
 
 
 **New in v1.4**
@@ -521,11 +537,9 @@ Some of the options you can configure for the Tweet Old Posts plugins are,
 - Hashtags - allows you to set default hashtags for your tweets
 
 
-
 **New in v1.3**
 
 - URL Shortener Service - allows you to select which URL shortener service you want to use.
-
 
 
 **New in v1.2**
@@ -533,7 +547,6 @@ Some of the options you can configure for the Tweet Old Posts plugins are,
 - Tweet Prefix - Allows you to set prefix to the tweets.
 - Add Data - Allows you to add post data to the tweets
 - Tweet now - Button that will tweet at that moment without wanting you to wait for scheduled tweet
-
 
 
 **v1.1**

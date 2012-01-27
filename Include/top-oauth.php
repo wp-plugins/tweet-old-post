@@ -4,7 +4,7 @@ if (!class_exists('WP_Http')) {
     include_once( ABSPATH . WPINC . '/class-http.php' );
 }
 
-require_once( 'debug.php' );
+require_once( 'top-debug.php' );
 
 define('TOP_OAUTH_CONSUMER_KEY', 'ofaYongByVpa3NDEbXa2g');
 
@@ -104,10 +104,18 @@ class TOPOAuth {
         }
     }
 
+    function check_rate_limit()
+    {
+       
+    }
+    
     function do_request($url, $oauth_header, $body_params = '') {
         TOP_DEBUG('Doing POST request, OAUTH header is ' . $oauth_header);
 
         if (function_exists('curl_init') && $this->can_use_curl) {
+        
+          
+            
             $ch = curl_init($url);
 
             TOP_DEBUG('..using CURL transport');
@@ -284,6 +292,7 @@ class TOPOAuth {
         $params['oauth_consumer_key'] = TOP_OAUTH_CONSUMER_KEY;
         //$params['oauth_callback'] = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . '&TOP_oauth=1';
         $params['oauth_callback'] = htmlentities(top_currentPageURL() . '&TOP_oauth=1');
+        
         $params['oauth_signature_method'] = 'HMAC-SHA1';
         $params['oauth_timestamp'] = time();
         $params['oauth_nonce'] = $this->get_nonce();

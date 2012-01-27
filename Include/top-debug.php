@@ -1,8 +1,13 @@
 <?php
 
-function TOP_DEBUG( $str ) {
+function top_DEBUG( $str ) {
 	global $top_debug;
-	
+        $top_enable_log = get_option('top_enable_log');
+        if($top_enable_log)
+        {
+	$top_debug->enable(true);
+        }
+        
 	$top_debug->add_to_log( $str );
 }
 
@@ -12,11 +17,11 @@ function top_is_debug_enabled() {
 	return $top_debug->is_enabled();
 }
 
-class TOPDebug {
+class topDebug {
 	var $debug_file;
 	var $log_messages;
 
-	function TOPDebug() {
+	function topDebug() {
 		$this->debug_file = false;
 	}
 	
@@ -26,7 +31,7 @@ class TOPDebug {
 
 	function enable( $enable_or_disable ) {
 		if ( $enable_or_disable ) {
-			$this->debug_file = @fopen( WP_CONTENT_DIR . '/plugins/Tweet-Old-Post/log/log.txt', 'a+t' );
+			$this->debug_file = fopen( WP_CONTENT_DIR . '/plugins/Tweet-Old-Post/log.txt', 'a+t' );
 			$this->log_messages = 0;
 		} else if ( $this->debug_file ) {
 			fclose( $this->debug_file );
@@ -49,7 +54,7 @@ class TOPDebug {
 }
 
 global $top_debug;
-$top_debug = &new TOPDebug;
+$top_debug = &new topDebug;
 
 
 ?>

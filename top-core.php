@@ -1,6 +1,6 @@
 <?php
 
-require_once( 'Include/oauth.php' );
+require_once( 'Include/top-oauth.php' );
 global $top_oauth;
 $top_oauth = new TOPOAuth;
 
@@ -28,13 +28,30 @@ function top_currentPageURL() {
 
 //get random post and tweet
 function top_opt_tweet_old_post() {
+    return top_generate_query();
+}
+
+function top_generate_query($can_requery = true)
+{
     global $wpdb;
+
     $omitCats = get_option('top_opt_omit_cats');
     $maxAgeLimit = get_option('top_opt_max_age_limit');
     $ageLimit = get_option('top_opt_age_limit');
     $exposts = get_option('top_opt_excluded_post');
     $exposts = preg_replace('/,,+/', ',', $exposts);
 
+    $top_opt_tweeted_posts = array();
+    $top_opt_tweeted_posts = get_option('top_opt_tweeted_posts');
+    
+    if(!$top_opt_tweeted_posts)
+        $top_opt_tweeted_posts = array();
+        
+    if($top_opt_tweeted_posts != null)
+        $already_tweeted = implode(",", $top_opt_tweeted_posts);
+    else
+        $already_tweeted="";
+    
     if (substr($exposts, 0, 1) == ",") {
         $exposts = substr($exposts, 1, strlen($exposts));
     }
@@ -56,9 +73,14 @@ function top_opt_tweet_old_post() {
     $sql = "SELECT ID
             FROM $wpdb->posts
             WHERE post_type = 'post'
-                  AND post_status = 'publish'
-                  AND post_date <= curdate( ) - INTERVAL " . $ageLimit . " day";
-
+                  AND post_status = 'publish' ";
+    
+    if(is_numeric($ageLimit))
+    {
+        if($ageLimit > 0)
+                $sql = $sql . " AND post_date <= curdate( ) - INTERVAL " . $ageLimit . " day";
+    }
+    
     if ($maxAgeLimit != 0) {
         $sql = $sql . " AND post_date >= curdate( ) - INTERVAL " . $maxAgeLimit . " day";
     }
@@ -69,21 +91,41 @@ function top_opt_tweet_old_post() {
         }
     }
 
+    if (isset($already_tweeted)) {
+    if(trim($already_tweeted) !="")
+    {
+        $sql = $sql . " AND ID Not IN (" . $already_tweeted . ") ";
+    }
+    }
     if ($omitCats != '') {
         $sql = $sql . " AND NOT (ID IN (SELECT tr.object_id FROM " . $wpdb->prefix . "term_relationships AS tr INNER JOIN " . $wpdb->prefix . "term_taxonomy AS tt ON tr.term_taxonomy_id = tt.term_taxonomy_id WHERE tt.taxonomy = 'category' AND tt.term_id IN (" . $omitCats . ")))";
     }
     $sql = $sql . "
             ORDER BY RAND() 
             LIMIT 1 ";
-
+   
     $oldest_post = $wpdb->get_var($sql);
-    if ($oldest_post == null) {
-        return "No post found to tweet. Please check your settings and try again.";
+    
+    if($oldest_post == null)
+    {
+        if($can_requery)
+        {
+            $top_opt_tweeted_posts=array();
+            update_option('top_opt_tweeted_posts', $top_opt_tweeted_posts);
+            top_generate_query(false);
+        }
+        else
+        {
+           return "No post found to tweet. Please check your settings and try again."; 
+        }
     }
     if (isset($oldest_post)) {
-        return top_opt_tweet_post($oldest_post);
-    }
-}
+        array_push($top_opt_tweeted_posts, $oldest_post);
+         update_option('top_opt_tweeted_posts', $top_opt_tweeted_posts);
+         return top_opt_tweet_post($oldest_post);
+     }
+   }
+
 
 //tweet for the passed random post
 function top_opt_tweet_post($oldest_post) {
@@ -348,13 +390,25 @@ function top_to_update() {
     $interval = get_option('top_opt_interval');
     $slop = get_option('top_opt_interval_slop');
 
-    if (!(isset($interval) && is_numeric($interval))) {
+    if (!(isset($interval))) {
         $interval = top_opt_INTERVAL;
     }
-
-    if (!(isset($slop) && is_numeric($slop))) {
+    else if(!(is_numeric($interval)))
+    {
+        $interval = top_opt_INTERVAL;
+    }
+    
+    
+    if (!(isset($slop))) {
         $slop = top_opt_INTERVAL_SLOP;
     }
+    else if(!(is_numeric($slop)))
+    {
+        $slop = top_opt_INTERVAL_SLOP;
+    }
+    
+    
+    
     $interval = $interval * 60 * 60;
     $slop = $slop * 60 * 60;
     if (false === $last) {

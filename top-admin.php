@@ -2,9 +2,9 @@
 
 require_once('tweet-old-post.php');
 require_once('top-core.php');
-require_once( 'Include/oauth.php' );
+require_once( 'Include/top-oauth.php' );
 require_once('xml.php');
-require_once( 'Include/debug.php' );
+require_once( 'Include/top-debug.php' );
 function top_admin() {
     //check permission
     if (current_user_can('manage_options')) 
@@ -218,7 +218,8 @@ function top_admin() {
             if ( isset($_POST['top_enable_log'])) {
                 update_option('top_enable_log', true);
 		global $top_debug;
-		$top_debug->enable( true );	
+		$top_debug->enable( true );
+                
             }
             else{
                 update_option('top_enable_log', false);

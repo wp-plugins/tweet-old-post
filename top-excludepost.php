@@ -2,7 +2,7 @@
 
 require_once('tweet-old-post.php');
 require_once('top-core.php');
-require_once( 'Include/oauth.php' );
+require_once( 'Include/top-oauth.php' );
 require_once('xml.php');
 
 if (!function_exists ("mysql_real_escape_string"))
