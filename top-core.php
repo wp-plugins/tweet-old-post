@@ -493,4 +493,33 @@ function top_save_settings($settings) {
     update_option('top_settings', $settings);
 }
 
+function top_reset_settings()
+{
+    delete_option('top_settings');
+    update_option('top_enable_log','');
+update_option('top_opt_add_text','');
+update_option('top_opt_add_text_at','beginning');
+update_option('top_opt_age_limit',30);
+update_option('top_opt_bitly_key','');
+update_option('top_opt_bitly_user','');
+update_option('top_opt_custom_hashtag_field','');
+update_option('top_opt_custom_hashtag_option','nohashtag');
+update_option('top_opt_custom_url_field','');
+update_option('top_opt_custom_url_option','');
+update_option('top_opt_excluded_post','');
+update_option('top_opt_hashtags','');
+update_option('top_opt_hashtag_length','20');
+update_option('top_opt_include_link','no');
+update_option('top_opt_interval',4);
+update_option('top_opt_interval_slop',4);
+delete_option('top_opt_last_update');
+update_option('top_opt_max_age_limit',60);
+update_option('top_opt_omit_cats','');
+update_option('top_opt_tweet_type','title');
+delete_option('top_opt_tweeted_posts');
+update_option('top_opt_url_shortener','is.gd');
+update_option('top_opt_use_inline_hashtags','');
+update_option('top_opt_use_url_shortner','');
+}
+
 ?>

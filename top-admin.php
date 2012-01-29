@@ -54,7 +54,12 @@ function top_admin() {
             echo '<script language="javascript">window.open ("' . get_bloginfo('wpurl') . '/wp-admin/admin.php?page=TweetOldPost","_self")</script>';
             die;
         }
-
+         else if (isset($_GET['top']) && $_GET['top'] == 'reset') {
+              print('
+			<div id="message" class="updated fade">
+				<p>' . __("All settings have been reset. Kindly update the settings for Tweet Old Post to start tweeting again.", 'TweetOldPost') . '</p>
+			</div>');
+         }
         //check if username and key provided if bitly selected
         if (isset($_POST['top_opt_url_shortener'])) {
             if ($_POST['top_opt_url_shortener'] == "bit.ly") {
@@ -247,6 +252,11 @@ function top_admin() {
 			<div id="message" class="updated fade">
 				<p>' . __($tweet_msg, 'TweetOldPost') . '</p>
 			</div>');
+        }
+        elseif (isset($_POST['reset'])) {
+           top_reset_settings();
+           echo '<script language="javascript">window.open ("' . get_bloginfo('wpurl') . '/wp-admin/admin.php?page=TweetOldPost&top=reset","_self")</script>';
+                die;
         }
 
 
@@ -605,6 +615,7 @@ function top_admin() {
                                                 <h3>Note: Please click update to then click tweet now to reflect the changes.</h3>
 						<p class="submit"><input type="submit" name="submit" onclick="javascript:return validate()" value="' . __('Update Tweet Old Post Options', 'TweetOldPost') . '" />
 						<input type="submit" name="tweet" value="' . __('Tweet Now', 'TweetOldPost') . '" />
+                                                <input type="submit" onclick=\'return confirm("This will reset all the setting, including your account, omitted categories and excluded posts. Are you sure you want to reset all the settings?");\' name="reset" value="' . __('Reset Settings', 'TweetOldPost') . '" />
 					</p>
 						
 				</form><script language="javascript" type="text/javascript">
