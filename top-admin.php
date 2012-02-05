@@ -768,6 +768,7 @@ function showshortener()
 			document.getElementById("urlshortener").style.display="none";
 		}
 }
+
 showURLAPI();
 showshortener();
 showCustomField();
