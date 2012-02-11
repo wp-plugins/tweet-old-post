@@ -31,6 +31,11 @@ For updates follow http://twitter.com/matharuajay
 
 **Let me know if you have any more ideas**
 
+**New in v3.3.1**
+
+- Changed logic for posting data to twitter.
+- Resolved bit.ly issue.
+
 
 **New in v3.3.0**
 
@@ -268,6 +273,12 @@ http://www.ajaymatharu.com/wordpress-plugin-tweet-old-posts/
 == Changelog ==
 
 
+**New in v3.3.1**
+
+- Changed logic for posting data to twitter.
+- Resolved bit.ly issue.
+
+
 **New in v3.3.0**
 
 - Attempt to fix logs out issue (Tweet Old Post pushes out when any action is performed).
@@ -443,6 +454,12 @@ http://www.ajaymatharu.com/wordpress-plugin-tweet-old-posts/
 == Other Notes ==
 
 Some of the options you can configure for the Tweet Old Posts plugins are,
+
+
+**New in v3.3.1**
+
+- Changed logic for posting data to twitter.
+- Resolved bit.ly issue.
 
 
 **New in v3.3.0**

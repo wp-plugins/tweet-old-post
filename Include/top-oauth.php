@@ -288,10 +288,16 @@ class TOPOAuth {
 
     function get_request_token() {
         $params = array();
+        
+        $admin_url = get_option('top_opt_admin_url');
+        if (!isset($admin_url)) {
+            $admin_url = top_currentPageURL();
+        }
+        
         TOP_DEBUG( 'In function get_request_token' );
         $params['oauth_consumer_key'] = TOP_OAUTH_CONSUMER_KEY;
         //$params['oauth_callback'] = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . '&TOP_oauth=1';
-        $params['oauth_callback'] = htmlentities(top_currentPageURL() . '&TOP_oauth=1');
+        $params['oauth_callback'] = htmlentities($admin_url . '&TOP_oauth=1');
         
         $params['oauth_signature_method'] = 'HMAC-SHA1';
         $params['oauth_timestamp'] = time();

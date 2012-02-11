@@ -20,14 +20,14 @@ function top_currentPageURL() {
         $serverrequri =    $_SERVER['REQUEST_URI'];
     }
     $s = empty($_SERVER["HTTPS"]) ? '' : ($_SERVER["HTTPS"] == "on") ? "s" : "";
-    $protocol = strleft(strtolower($_SERVER["SERVER_PROTOCOL"]), "/").$s;
+    $protocol = top_strleft(strtolower($_SERVER["SERVER_PROTOCOL"]), "/").$s;
     $port = ($_SERVER["SERVER_PORT"] == "80") ? "" : (":".$_SERVER["SERVER_PORT"]);
     return $protocol."://".$_SERVER['SERVER_NAME'].$port.$serverrequri;
     
     
 }
 
-function strleft($s1, $s2) {
+function top_strleft($s1, $s2) {
 	return substr($s1, 0, strpos($s1, $s2));
 }
 
@@ -39,7 +39,7 @@ function top_opt_tweet_old_post() {
 function top_generate_query($can_requery = true)
 {
     global $wpdb;
-
+    $rtrn_msg="";
     $omitCats = get_option('top_opt_omit_cats');
     $maxAgeLimit = get_option('top_opt_max_age_limit');
     $ageLimit = get_option('top_opt_age_limit');
@@ -117,7 +117,7 @@ function top_generate_query($can_requery = true)
         {
             $top_opt_tweeted_posts=array();
             update_option('top_opt_tweeted_posts', $top_opt_tweeted_posts);
-            top_generate_query(false);
+           return top_generate_query(false);
         }
         else
         {
@@ -129,6 +129,7 @@ function top_generate_query($can_requery = true)
          update_option('top_opt_tweeted_posts', $top_opt_tweeted_posts);
          return top_opt_tweet_post($oldest_post);
      }
+     return $rtrn_msg;
    }
 
 
@@ -312,17 +313,29 @@ function send_request($url, $method='GET', $data='', $auth_user='', $auth_pass='
     return $response;
 }
 
+
+/* returns a result form url */
+function top_curl_get_result($url) {
+  $ch = curl_init();
+  $timeout = 5;
+  curl_setopt($ch,CURLOPT_URL,$url);
+  curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
+  curl_setopt($ch,CURLOPT_CONNECTTIMEOUT,$timeout);
+  $data = curl_exec($ch);
+  curl_close($ch);
+  return $data;
+}
+
+function top_get_bitly_short_url($url,$login,$appkey,$format='txt') {
+  $connectURL = 'http://api.bit.ly/v3/shorten?login='.$login.'&apiKey='.$appkey.'&uri='.urlencode($url).'&format='.$format;
+  return top_curl_get_result($connectURL);
+}
+
 //Shorten long URLs with is.gd or bit.ly.
 function shorten_url($the_url, $shortener='is.gd', $api_key='', $user='') {
 
     if (($shortener == "bit.ly") && isset($api_key) && isset($user)) {
-
-        $url = "http://api.bit.ly/v3/shorten?longUrl={$the_url}&login={$user}&apiKey={$api_key}&format=json";
-        $result = json_decode(file_get_contents($url));
-        if ($result->status_code == 200)
-            $response = $result->data->url;
-        else
-            $response = "" . $result->status_txt . "";
+            $response = top_get_bitly_short_url($the_url, $user, $api_key);
     } elseif ($shortener == "su.pr") {
         $url = "http://su.pr/api/simpleshorten?url={$the_url}";
         $response = send_request($url, 'GET');

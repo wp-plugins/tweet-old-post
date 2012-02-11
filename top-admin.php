@@ -91,6 +91,11 @@ function top_admin() {
         if (isset($_POST['submit']) && $save) {
             $message = $message_updated;
 
+            //TOP admin URL (current url)
+            if (isset($_POST['top_opt_admin_url'])) {
+                update_option('top_opt_admin_url', $_POST['top_opt_admin_url']);
+            }
+            
             //what to tweet 
             if (isset($_POST['top_opt_tweet_type'])) {
                 update_option('top_opt_tweet_type', $_POST['top_opt_tweet_type']);
@@ -261,6 +266,13 @@ function top_admin() {
 
 
         //set up data into fields from db
+        
+        //what to tweet?
+        $admin_url = get_option('top_opt_admin_url');
+        if (!isset($admin_url)) {
+            $admin_url = "";
+        }
+        
         //what to tweet?
         $tweet_type = get_option('top_opt_tweet_type');
         if (!isset($tweet_type)) {
@@ -405,7 +417,7 @@ function top_admin() {
         print('
 			<div class="wrap">
 				<h2>' . __('Tweet old post by - ', 'TweetOldPost') . ' <a href="http://www.ajaymatharu.com">Ajay Matharu</a></h2>
-				<form id="top_opt" name="top_TweetOldPost" action="' . top_currentPageURL() . '" method="post">
+				<form id="top_opt" name="top_TweetOldPost" action="" method="post">
 					<input type="hidden" name="top_opt_action" value="top_opt_update_settings" />
 					<fieldset class="options">
 						<div class="option">
@@ -432,6 +444,19 @@ function top_admin() {
         }
         print('</div>
 						</div>
+                                                <div class="option">
+							<b>&nbsp;&nbsp;&nbsp;Note: </b>If you are not able to authorize? or Wordpress logs you out on any button click,<br/>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- If current URL is not showing your current page URL, copy paste the current page URL in Current URL field and press update settings button to update the settings. Then retry to authorize.<br/>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- If current URL is showing your current page URL,  press update settings button to update the settings. Then retry to authorize. 
+
+
+						</div>
+                                                <div class="option">
+							<label for="top_opt_admin_url">' . __('Tweet Old Post Admin URL <br/> (Current URL)', 'TweetOldPost') . ':</label>
+							<input type="text" style="width:500px" id="top_opt_admin_url" value="' . $admin_url . '" name="top_opt_admin_url" /><br/><b>(Note: If this does not show your current URL in this textbox, copy paste the current URL in this textbox)</b>  
+						</div>
 						<div class="option">
 							<label for="top_opt_tweet_type">' . __('Tweet Content', 'TweetOldPost') . ':</label>
 							<select id="top_opt_tweet_type" name="top_opt_tweet_type" style="width:150px">
@@ -439,6 +464,7 @@ function top_admin() {
 								<option value="body" ' . top_opt_optionselected("body", $tweet_type) . '>' . __(' Body Only ', 'TweetOldPost') . ' </option>
 								<option value="titlenbody" ' . top_opt_optionselected("titlenbody", $tweet_type) . '>' . __(' Title & Body ', 'TweetOldPost') . ' </option>
 							</select>
+                                                        
 						</div>
 						
 						
@@ -583,7 +609,7 @@ function top_admin() {
 						
 
                                                 
-
+                                                    
 
 
                                                 <div class="option">
@@ -593,7 +619,7 @@ function top_admin() {
                                                        
 						</div>
 
-
+                                        
 				    	<div class="option category">
 				    	<div style="float:left">
 						    	<label class="catlabel">' . __('Categories to Omit from tweets: ', 'TweetOldPost') . '</label> </div>
@@ -612,6 +638,8 @@ function top_admin() {
 								</div>
 					</fieldset>
 					
+                                                
+
                                                 <h3>Note: Please click update to then click tweet now to reflect the changes.</h3>
 						<p class="submit"><input type="submit" name="submit" onclick="javascript:return validate()" value="' . __('Update Tweet Old Post Options', 'TweetOldPost') . '" />
 						<input type="submit" name="tweet" value="' . __('Tweet Now', 'TweetOldPost') . '" />
@@ -768,7 +796,20 @@ function showshortener()
 			document.getElementById("urlshortener").style.display="none";
 		}
 }
+function setFormAction()
+{
+    if(document.getElementById("top_opt_admin_url").value == "")
+    {
+        document.getElementById("top_opt_admin_url").value=location.href;
+        document.getElementById("top_opt").action=location.href;
+    }
+    else
+    {
+        document.getElementById("top_opt").action=document.getElementById("top_opt_admin_url").value;
+    }
+}
 
+setFormAction();
 showURLAPI();
 showshortener();
 showCustomField();
