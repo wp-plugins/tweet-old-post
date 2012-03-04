@@ -232,6 +232,13 @@ Alternatively you can also follow the following steps to install the Tweet Old P
 If you have any questions please mail me at,
 ajay@ajaymatharu.com or matharuajay@yahoo.co.in
 
+**Too many redirects while trying to authorize**
+
+- Make sure "Tweet Old Post Admin URL (Current URL)" is showing your current URL.
+- Click on "Update Tweet Old Post Options". 
+- Try to authorize again.
+
+
 **Tweet Old post does not posts any tweets?**
 
 - If its not tweeting any tweets try playing around with the options. Try setting maxtweetage to none and try again.
