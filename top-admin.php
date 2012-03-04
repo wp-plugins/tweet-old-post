@@ -267,10 +267,11 @@ function top_admin() {
 
         //set up data into fields from db
         
-        //what to tweet?
+        //Current URL
         $admin_url = get_option('top_opt_admin_url');
         if (!isset($admin_url)) {
-            $admin_url = "";
+            $admin_url = top_currentPageURL();
+			update_option('top_opt_admin_url', $admin_url);
         }
         
         //what to tweet?

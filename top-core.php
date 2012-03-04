@@ -232,7 +232,7 @@ function top_opt_tweet_post($oldest_post) {
             $post_categories = get_the_category($post->ID);
             if ($post_categories) {
                 foreach ($post_categories as $category) {
-                    $tagname = str_replace(".", "", str_replace(" ", "_", $category->cat_name));
+                    $tagname = str_replace(".", "", str_replace(" ", "", $category->cat_name));
                     if ($use_inline_hashtags) {
                         if (strrpos($content, $tagname) === false) {
                             $hashtags = $hashtags . "#" . $tagname . " ";
@@ -248,7 +248,7 @@ function top_opt_tweet_post($oldest_post) {
             $post_tags = get_the_tags($post->ID);
             if ($post_tags) {
                 foreach ($post_tags as $tag) {
-                    $tagname = str_replace(".", "", str_replace(" ", "_", $tag->name));
+                    $tagname = str_replace(".", "", str_replace(" ", "", $tag->name));
                     if ($use_inline_hashtags) {
                         if (strrpos($content, $tagname) === false) {
                             $hashtags = $hashtags . "#" . $tagname . " ";

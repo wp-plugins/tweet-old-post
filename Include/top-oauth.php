@@ -8,6 +8,7 @@ require_once( 'top-debug.php' );
 
 define('TOP_OAUTH_CONSUMER_KEY', 'ofaYongByVpa3NDEbXa2g');
 
+
 define('TOP_OAUTH_REQUEST_URL', 'http://api.twitter.com/oauth/request_token');
 define('TOP_OAUTH_ACCESS_URL', 'http://api.twitter.com/oauth/access_token');
 define('TOP_OAUTH_AUTHORIZE_URL', 'http://api.twitter.com/oauth/authorize');
@@ -35,6 +36,7 @@ class TOPOAuth {
     function set_defeault_oauth_tokens() {
         $this->oauth_consumer_key = TOP_OAUTH_CONSUMER_KEY;
         $this->oauth_consumer_secret = "vTzszlMujMZCY3mVtTE6WovUKQxqv3LVgiVku276M";
+
     }
 
     function set_oauth_tokens($key, $secret) {

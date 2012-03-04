@@ -4,8 +4,8 @@
 #     Plugin URI: http://www.ajaymatharu.com/wordpress-plugin-tweet-old-posts/
 #     Description: This plugin helps you to keeps your old posts alive by tweeting about them and driving more traffic to them from twitter.
 #     Author: Ajay Matharu 
-#     Version: 3.3.1
-#     Author URI: http://www.ajaymatharu.com
+#     Version: 3.3.2
+#     Author URI: http://www.ajaymatharu.com/
 #     */  
  
 

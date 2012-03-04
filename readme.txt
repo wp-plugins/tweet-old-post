@@ -32,6 +32,17 @@ For updates follow http://twitter.com/matharuajay
 
 **Let me know if you have any more ideas**
 
+
+**New in v3.3.2**
+
+- Resolved too many redirects issue
+	If its still not working try these steps
+		- Make sure "Tweet Old Post Admin URL (Current URL)" is showing your current URL.
+		- Click on "Update Tweet Old Post Options". 
+		- Try to authorize again.
+- Removed "_" from hashtags. Previously space in hashtag was replaced with "_". Now there will be no spaces or "_" in hashtags.
+
+
 **New in v3.3.1**
 
 - Changed logic for posting data to twitter.
@@ -239,6 +250,13 @@ ajay@ajaymatharu.com or matharuajay@yahoo.co.in
 - Try to authorize again.
 
 
+**If new version doesn't works**
+
+- Try other versions from http://wordpress.org/extend/plugins/tweet-old-post/download/
+- Manually upload it in your plugins folder, activate and use.
+- Note: Do not upgrade your plugin if you want to use the older version.
+
+
 **Tweet Old post does not posts any tweets?**
 
 - If its not tweeting any tweets try playing around with the options. Try setting maxtweetage to none and try again.
@@ -279,6 +297,15 @@ for screenshots you can check out
 http://www.ajaymatharu.com/wordpress-plugin-tweet-old-posts/
 
 == Changelog ==
+
+**New in v3.3.2**
+
+- Resolved too many redirects issue
+	If its still not working try these steps
+		- Make sure "Tweet Old Post Admin URL (Current URL)" is showing your current URL.
+		- Click on "Update Tweet Old Post Options". 
+		- Try to authorize again.
+- Removed "_" from hashtags. Previously space in hashtag was replaced with "_". Now there will be no spaces or "_" in hashtags.
 
 
 **New in v3.3.1**
@@ -461,7 +488,15 @@ http://www.ajaymatharu.com/wordpress-plugin-tweet-old-posts/
 
 == Other Notes ==
 
-Some of the options you can configure for the Tweet Old Posts plugins are,
+
+**New in v3.3.2**
+
+- Resolved too many redirects issue
+	If its still not working try these steps
+		- Make sure "Tweet Old Post Admin URL (Current URL)" is showing your current URL.
+		- Click on "Update Tweet Old Post Options". 
+		- Try to authorize again.
+- Removed "_" from hashtags. Previously space in hashtag was replaced with "_". Now there will be no spaces or "_" in hashtags.
 
 
 **New in v3.3.1**
