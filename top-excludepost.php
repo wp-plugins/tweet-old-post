@@ -14,6 +14,8 @@ if (!function_exists ("mysql_real_escape_string"))
 }
 
 function top_exclude() {
+    if (current_user_can('manage_options')) 
+        {
     $message = null;
     $message_updated = __("Tweet Old Post Options Updated.", 'TweetOldPost');
     $response = null;
@@ -339,5 +341,11 @@ else
 			</div>');
 }
 print('</form>');
+} else {
+        print('
+			<div id="message" class="updated fade">
+				<p>' . __('You do not have enough permission to set the option. Please contact your admin.', 'TweetOldPost') . '</p>
+			</div>');
+    }
 }
 ?>

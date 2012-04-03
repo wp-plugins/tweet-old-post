@@ -32,6 +32,10 @@ For updates follow http://twitter.com/matharuajay
 
 **Let me know if you have any more ideas**
 
+**New in v3.3.3**
+
+- Resolved permission issue of exclude post.
+
 
 **New in v3.3.2**
 
@@ -298,6 +302,11 @@ http://www.ajaymatharu.com/wordpress-plugin-tweet-old-posts/
 
 == Changelog ==
 
+**New in v3.3.3**
+
+- Resolved permission issue of exclude post.
+
+
 **New in v3.3.2**
 
 - Resolved too many redirects issue
@@ -487,6 +496,11 @@ http://www.ajaymatharu.com/wordpress-plugin-tweet-old-posts/
 
 
 == Other Notes ==
+
+
+**New in v3.3.3**
+
+- Resolved permission issue of exclude post.
 
 
 **New in v3.3.2**
