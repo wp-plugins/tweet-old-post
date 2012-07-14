@@ -2,9 +2,9 @@
 #     /* 
 #     Plugin Name: Tweet old post
 #     Plugin URI: http://www.ajaymatharu.com/wordpress-plugin-tweet-old-posts/
-#     Description: This plugin helps you to keeps your old posts alive by tweeting about them and driving more traffic to them from twitter.
+#     Description: This plugin helps you to keeps your old posts alive by tweeting about them and driving more traffic to them from twitter. It also helps you to promote your content. You can set time and no of tweets to post to drive more traffic.For questions, comments, or feature requests, contact me! <a href="http://www.ajaymatharu.com/">Ajay Matharu</a> you can follow me twitter at <a href="http://twitter.com/matharuajay/">@matharuajay</a>.
 #     Author: Ajay Matharu 
-#     Version: 3.3.3
+#     Version: 4.0.0
 #     Author URI: http://www.ajaymatharu.com/
 #     */  
  
@@ -24,7 +24,6 @@ define ('top_opt_48_HOURS', 48*top_opt_1_HOUR);
 define ('top_opt_72_HOURS', 72*top_opt_1_HOUR); 
 define ('top_opt_168_HOURS', 168*top_opt_1_HOUR); 
 define ('top_opt_INTERVAL', 4);
-define ('top_opt_INTERVAL_SLOP', 4);
 define ('top_opt_AGE_LIMIT', 30); // 120 days
 define ('top_opt_MAX_AGE_LIMIT', 60); // 120 days
 define ('top_opt_OMIT_CATS', "");
@@ -32,9 +31,11 @@ define('top_opt_TWEET_PREFIX',"");
 define('top_opt_ADD_DATA',"false");
 define('top_opt_URL_SHORTENER',"is.gd");
 define('top_opt_HASHTAGS',"");
+define('top_opt_consumer_key',"");
+define('top_opt_consumer_secret',"");
+define('top_opt_no_of_tweet',"1");
+define('top_opt_post_type',"post");
 
-global $top_db_version;
-$top_db_version = "1.0";
 
    function top_admin_actions() {  
         add_menu_page("Tweet Old Post", "Tweet Old Post", 1, "TweetOldPost", "top_admin");
@@ -54,9 +55,11 @@ $top_db_version = "1.0";
             if ( isset( $_REQUEST['oauth_token'] ) ) {
 			    $auth_url= str_replace('oauth_token', 'oauth_token1', top_currentPageURL());
 				$top_url = get_option('top_opt_admin_url') . substr($auth_url,strrpos($auth_url, "page=TweetOldPost") + strlen("page=TweetOldPost"));
-                echo '<script language="javascript">window.open ("'.$top_url.'","_self")</script>';
-                
+                echo $auth_url;
+                echo $top_url;
                 die;
+                                echo '<script language="javascript">window.open ("'.$top_url.'","_self")</script>';
+               
             }
         
         }

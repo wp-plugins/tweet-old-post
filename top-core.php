@@ -45,7 +45,9 @@ function top_generate_query($can_requery = true)
     $ageLimit = get_option('top_opt_age_limit');
     $exposts = get_option('top_opt_excluded_post');
     $exposts = preg_replace('/,,+/', ',', $exposts);
-
+    $top_opt_post_type = get_option('top_opt_post_type');
+    $top_opt_no_of_tweet = get_option('top_opt_no_of_tweet');
+    
     $top_opt_tweeted_posts = array();
     $top_opt_tweeted_posts = get_option('top_opt_tweeted_posts');
     
@@ -75,10 +77,21 @@ function top_generate_query($can_requery = true)
         $omitCats = top_opt_OMIT_CATS;
     }
 
-    $sql = "SELECT ID
+    if($top_opt_no_of_tweet<=0){$top_opt_no_of_tweet = 1;}
+    
+    if($top_opt_no_of_tweet>10){$top_opt_no_of_tweet = 10;}
+    
+    if($top_opt_post_type!='both'){
+	$post_type = "post_type = '$top_opt_post_type' AND";
+     }
+     else
+     {
+         $post_type="";
+     }
+    
+    $sql = "SELECT ID,POST_TITLE
             FROM $wpdb->posts
-            WHERE post_type = 'post'
-                  AND post_status = 'publish' ";
+            WHERE $post_type post_status = 'publish' ";
     
     if(is_numeric($ageLimit))
     {
@@ -107,9 +120,9 @@ function top_generate_query($can_requery = true)
     }
     $sql = $sql . "
             ORDER BY RAND() 
-            LIMIT 1 ";
+            LIMIT $top_opt_no_of_tweet ";
    
-    $oldest_post = $wpdb->get_var($sql);
+    $oldest_post = $wpdb->get_results($sql);
     
     if($oldest_post == null)
     {
@@ -124,11 +137,17 @@ function top_generate_query($can_requery = true)
            return "No post found to tweet. Please check your settings and try again."; 
         }
     }
-    if (isset($oldest_post)) {
-        array_push($top_opt_tweeted_posts, $oldest_post);
-         update_option('top_opt_tweeted_posts', $top_opt_tweeted_posts);
-         return top_opt_tweet_post($oldest_post);
+       
+     if(isset($oldest_post)){
+		 $ret = '';
+		 foreach($oldest_post as $k=>$odp){
+                    array_push($top_opt_tweeted_posts, $odp->ID);
+         	    $ret .= 'Tweet '.($k + 1) . ' ( '. $odp->POST_TITLE .' )' . ' : ' .top_opt_tweet_post($odp->ID).'<br/>';
+		}
+                update_option('top_opt_tweeted_posts', $top_opt_tweeted_posts);
+		return $ret;
      }
+     
      return $rtrn_msg;
    }
 
@@ -209,7 +228,7 @@ function top_opt_tweet_post($oldest_post) {
 
     if ($additional_text != "") {
         if ($additional_text_at == "end") {
-            $content = $content . ". " . $additional_text;
+            $content = $content . " - " . $additional_text;
         } elseif ($additional_text_at == "beginning") {
             $content = $additional_text . ": " . $content;
         }
@@ -281,7 +300,7 @@ function top_opt_tweet_post($oldest_post) {
     if ($status) {
         $poststatus = top_update_status($message);
         if ($poststatus == true)
-            return "Whoopie!!! Tweet Posted Successfully";
+            return "Whoopie!!! Posted Successfully";
         else
             return "OOPS!!! there seems to be some problem while tweeting. Please try again.";
     }
@@ -404,9 +423,13 @@ function top_opt_update_time() {
 }
 
 function top_to_update() {
-    $last = get_option('top_opt_last_update');
+    global $wpdb;
+        
+    //$last = get_option('top_opt_last_update');
+    //prevention from caching
+    $last  = $wpdb->get_var("select option_value from $wpdb->options where option_name = 'top_opt_last_update';");
     $interval = get_option('top_opt_interval');
-    $slop = get_option('top_opt_interval_slop');
+    
 
     if (!(isset($interval))) {
         $interval = top_opt_INTERVAL;
@@ -417,22 +440,15 @@ function top_to_update() {
     }
     
     
-    if (!(isset($slop))) {
-        $slop = top_opt_INTERVAL_SLOP;
-    }
-    else if(!(is_numeric($slop)))
-    {
-        $slop = top_opt_INTERVAL_SLOP;
-    }
-    
+      
     
     
     $interval = $interval * 60 * 60;
-    $slop = $slop * 60 * 60;
+    
     if (false === $last) {
         $ret = 1;
     } else if (is_numeric($last)) {
-        $ret = ( (time() - $last) > ($interval + rand(0, $slop)));
+        $ret = ( (time() - $last) > ($interval ));
     }
     
     
@@ -443,6 +459,17 @@ function top_get_auth_url() {
     global $top_oauth;
     $settings = top_get_settings();
 
+    $consumer_key = get_option('top_opt_consumer_key');
+     $consumer_secret = get_option('top_opt_consumer_secret');
+        
+        if (!isset($consumer_key) || !isset($consumer_secret) || trim($consumer_key)=="" || trim($consumer_secret)=="") {
+            $top_oauth->set_defeault_oauth_tokens();
+        }
+        else
+        {
+            $top_oauth->set_oauth_tokens($consumer_key, $consumer_secret);
+        }
+    
     $token = $top_oauth->get_request_token();
     if ($token) {
         $settings['oauth_request_token'] = $token['oauth_token'];
@@ -458,6 +485,16 @@ function top_update_status($new_status) {
     global $top_oauth;
     $settings = top_get_settings();
 
+     $consumer_key = get_option('top_opt_consumer_key');
+     $consumer_secret = get_option('top_opt_consumer_secret');
+        
+        if (!isset($consumer_key) || !isset($consumer_secret) || trim($consumer_key)=="" || trim($consumer_secret)=="") {
+            $top_oauth->set_defeault_oauth_tokens();
+        }
+        else
+        {
+            $top_oauth->set_oauth_tokens($consumer_key, $consumer_secret);
+        }
     if (isset($settings['oauth_access_token']) && isset($settings['oauth_access_token_secret'])) {
         return $top_oauth->update_status($settings['oauth_access_token'], $settings['oauth_access_token_secret'], $new_status);
     }
@@ -529,7 +566,6 @@ update_option('top_opt_hashtags','');
 update_option('top_opt_hashtag_length','20');
 update_option('top_opt_include_link','no');
 update_option('top_opt_interval',4);
-update_option('top_opt_interval_slop',4);
 delete_option('top_opt_last_update');
 update_option('top_opt_max_age_limit',60);
 update_option('top_opt_omit_cats','');

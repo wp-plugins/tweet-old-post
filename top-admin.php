@@ -19,6 +19,17 @@ function top_admin() {
         if (isset($_GET['TOP_oauth'])) {
             global $top_oauth;
 
+             $consumer_key = get_option('top_opt_consumer_key');
+     $consumer_secret = get_option('top_opt_consumer_secret');
+        
+        if (!isset($consumer_key) || !isset($consumer_secret) || trim($consumer_key)=="" || trim($consumer_secret)=="") {
+            $top_oauth->set_defeault_oauth_tokens();
+        }
+        else
+        {
+            $top_oauth->set_oauth_tokens($consumer_key, $consumer_secret);
+        }
+            
             $result = $top_oauth->get_access_token($settings['oauth_request_token'], $settings['oauth_request_token_secret'], $_GET['oauth_verifier']);
 
             if ($result) {
@@ -94,6 +105,16 @@ function top_admin() {
             //TOP admin URL (current url)
             if (isset($_POST['top_opt_admin_url'])) {
                 update_option('top_opt_admin_url', $_POST['top_opt_admin_url']);
+            }
+            
+            //twitter consumer key
+            if (isset($_POST['top_opt_consumer_key'])) {
+                update_option('top_opt_consumer_key', $_POST['top_opt_consumer_key']);
+            }
+            
+            //twitter consumer secret
+            if (isset($_POST['top_opt_consumer_secret'])) {
+                update_option('top_opt_consumer_secret', $_POST['top_opt_consumer_secret']);
             }
             
             //what to tweet 
@@ -197,14 +218,7 @@ function top_admin() {
                 }
             }
 
-            //random interval
-            if (isset($_POST['top_opt_interval_slop'])) {
-                if (is_numeric($_POST['top_opt_interval_slop']) && $_POST['top_opt_interval_slop'] > 0) {
-                    update_option('top_opt_interval_slop', $_POST['top_opt_interval_slop']);
-                } else {
-                    update_option('top_opt_interval_slop', "4");
-                }
-            }
+           
 
             //minimum post age to tweet
             if (isset($_POST['top_opt_age_limit'])) {
@@ -224,6 +238,20 @@ function top_admin() {
                 }
             }
 
+            //number of posts to tweet
+            if (isset($_POST['top_opt_no_of_tweet'])) {
+                if (is_numeric($_POST['top_opt_no_of_tweet']) && $_POST['top_opt_no_of_tweet'] > 0) {
+                    update_option('top_opt_no_of_tweet', $_POST['top_opt_no_of_tweet']);
+                } else {
+                    update_option('top_opt_no_of_tweet', "1");
+                }
+            }
+            
+            //type of post to tweet
+            if (isset($_POST['top_opt_post_type'])) {
+                update_option('top_opt_post_type', $_POST['top_opt_post_type']);
+            }
+            
             //option to enable log
             if ( isset($_POST['top_enable_log'])) {
                 update_option('top_enable_log', true);
@@ -272,6 +300,18 @@ function top_admin() {
         if (!isset($admin_url)) {
             $admin_url = top_currentPageURL();
 			update_option('top_opt_admin_url', $admin_url);
+        }
+        
+        //twitter consumer key
+        $top_opt_consumer_key = get_option('top_opt_consumer_key');
+        if (!isset($top_opt_consumer_key)) {
+            $top_opt_consumer_key = "";
+        }
+        
+        //twitter consumer secret
+        $top_opt_consumer_secret = get_option('top_opt_consumer_secret');
+        if (!isset($top_opt_consumer_secret)) {
+            $top_opt_consumer_secret = "";
         }
         
         //what to tweet?
@@ -379,11 +419,7 @@ function top_admin() {
             $interval = top_opt_INTERVAL;
         }
 
-        //random interval
-        $slop = get_option('top_opt_interval_slop');
-        if (!(isset($slop) && is_numeric($slop))) {
-            $slop = top_opt_INTERVAL_SLOP;
-        }
+        
 
         //min age limit
         $ageLimit = get_option('top_opt_age_limit');
@@ -397,6 +433,17 @@ function top_admin() {
             $maxAgeLimit = top_opt_MAX_AGE_LIMIT;
         }
 
+        //number of post to tweet
+        $top_opt_no_of_tweet = get_option('top_opt_no_of_tweet');
+        if (!(isset($top_opt_no_of_tweet) && is_numeric($top_opt_no_of_tweet))) {
+            $top_opt_no_of_tweet = "1";
+        }
+        
+        //type of post to tweet
+        $top_opt_post_type = get_option('top_opt_post_type');
+        if (!isset($top_opt_post_type)) {
+            $top_opt_post_type = "post";
+        }
         
         //check enable log
         $top_enable_log = get_option('top_enable_log');
@@ -426,7 +473,8 @@ function top_admin() {
 
 <div id="profile-box">');
         if (!$settings["oauth_access_token"]) {
-
+                 TOP_DEBUG("url key is " . $top_opt_consumer_key);
+            TOP_DEBUG("url secret is " . $top_opt_consumer_secret);
             echo '<a href="' . top_get_auth_url() . '"><img src="' . $x . 'images/twitter.png" /></a>';
         } else {
             echo '<img class="avatar" src="' . $settings["profile_image_url"] . '" alt="" />
@@ -458,6 +506,19 @@ function top_admin() {
 							<label for="top_opt_admin_url">' . __('Tweet Old Post Admin URL <br/> (Current URL)', 'TweetOldPost') . ':</label>
 							<input type="text" style="width:500px" id="top_opt_admin_url" value="' . $admin_url . '" name="top_opt_admin_url" /><br/><b>(Note: If this does not show your current URL in this textbox, copy paste the current URL in this textbox)</b>  
 						</div>
+                                                
+                                                <div class="option">
+							<label for="top_opt_consumer_key">' . __('Twitter Consumer Key', 'TweetOldPost') . ':</label>
+							<input type="text" style="width:300px" id="top_opt_consumer_key" value="' . $top_opt_consumer_key . '" name="top_opt_consumer_key" /><b> (Note: Keep empty for using default)</b>  
+						</div>
+
+                                                <div class="option">
+							<label for="top_opt_consumer_secret">' . __('Twitter Consumer Secret', 'TweetOldPost') . ':</label>
+							<input type="text" style="width:300px" id="top_opt_consumer_secret" value="' . $top_opt_consumer_secret . '" name="top_opt_consumer_secret" /><b> (Note: Keep empty for using default)</b>  
+						</div>
+
+
+
 						<div class="option">
 							<label for="top_opt_tweet_type">' . __('Tweet Content', 'TweetOldPost') . ':</label>
 							<select id="top_opt_tweet_type" name="top_opt_tweet_type" style="width:150px">
@@ -589,11 +650,7 @@ function top_admin() {
 							<input type="text" id="top_opt_interval" maxlength="5" value="' . $interval . '" name="top_opt_interval" /> Hour / Hours <b>(Note: If set to 0 it will take default as 4 hours)</b>
                                                        
 						</div>
-						<div class="option">
-							<label for="top_opt_interval_slop">' . __('Random Interval (added to minimum interval): ', 'TweetOldPost') . '</label>
-							<input type="text" id="top_opt_interval_slop" maxlength="5" value="' . $slop . '" name="top_opt_interval_slop" /> Hour / Hours <b>(Note: If set to 0 it will take default as 4 hours)</b>
-                                                            
-						</div>
+						
 						<div class="option">
 							<label for="top_opt_age_limit">' . __('Minimum age of post to be eligible for tweet: ', 'TweetOldPost') . '</label>
 							<input type="text" id="top_opt_age_limit" maxlength="5" value="' . $ageLimit . '" name="top_opt_age_limit" /> Day / Days
@@ -609,7 +666,22 @@ function top_admin() {
 						</div>
 						
 
-                                                
+                                                <div class="option">
+							<label for="top_opt_no_of_tweet">' . __('Number Of Posts To Tweet', 'TweetOldPost') . ':</label>
+							<input type="text" style="width:30px" id="top_opt_no_of_tweet" value="' . $top_opt_no_of_tweet . '" name="top_opt_no_of_tweet" /></b>  
+						</div>
+
+
+
+						<div class="option">
+							<label for="top_opt_post_type">' . __('Post Type', 'TweetOldPost') . ':</label>
+							<select id="top_opt_post_type" name="top_opt_post_type" style="width:150px">
+								<option value="post" ' . top_opt_optionselected("post", $top_opt_post_type) . '>' . __(' Post Only ', 'TweetOldPost') . ' </option>
+								<option value="page" ' . top_opt_optionselected("page", $top_opt_post_type) . '>' . __(' Page Only ', 'TweetOldPost') . ' </option>
+								<option value="both" ' . top_opt_optionselected("both", $top_opt_post_type) . '>' . __(' Post & Page ', 'TweetOldPost') . ' </option>
+							</select>
+                                                        
+						</div>
                                                     
 
 
@@ -689,12 +761,14 @@ function validate()
 		document.getElementById("top_opt_interval").focus();
 		return false;
         }
-         if(trim(document.getElementById("top_opt_interval_slop").value) != "" && !isNumber(trim(document.getElementById("top_opt_interval_slop").value)))
+
+ if(trim(document.getElementById("top_opt_no_of_tweet").value) != "" && !isNumber(trim(document.getElementById("top_opt_no_of_tweet").value)))
         {
-            alert("Enter only numeric in Random interval");
-		document.getElementById("top_opt_interval_slop").focus();
+            alert("Enter only numeric in Number Of Posts To Tweet");
+		document.getElementById("top_opt_no_of_tweet").focus();
 		return false;
         }
+
         if(trim(document.getElementById("top_opt_age_limit").value) != "" && !isNumber(trim(document.getElementById("top_opt_age_limit").value)))
         {
             alert("Enter only numeric in Minimum age of post");

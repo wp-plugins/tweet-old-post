@@ -1,8 +1,8 @@
-=== Tweet Old Post ===
+﻿=== Tweet Old Post ===
 Contributors: Ajay Matharu
-Tags: Tweet old post, Tweets, Promote old post by tweeting about them, Twitter, Auto Tweet, Hashtags, Twitter Hashtags, Tweet Posts, Tweet, Post Tweets, Wordpress Twitter Plugin, Twitter Plugin, Tweet Selected Posts
+Tags: Tweet old post, Tweets, Promote old post by tweeting about them, Twitter, Auto Tweet, Hashtags, Twitter Hashtags, Tweet Posts, Tweet, Post Tweets, Wordpress Twitter Plugin, Twitter Plugin, Tweet Selected Posts, Twitter, Promote Posts, Tweet Random Post, Share Post, Promote Post, Post Tweets, Wordpress Twitter, Drive Traffic, Tweet Selected Posts
 Requires at least: 2.7
-Tested up to: 3.3.1
+Tested up to: 3.4.1
 Stable tag: trunk
 
 
@@ -12,7 +12,7 @@ Plugin to tweet about your old posts to get more hits for them and keep them ali
 
 Tweet Old Posts is a plugin designed to tweet your older posts to get more traffic. 
 
-Tweet Old Posts randomly picks your older post based on the interval specified by you. The primary function of this plugin is to promote older blog posts by tweeting about them and getting more traffic.
+This plugin helps you to keeps your old posts alive by tweeting about them and driving more traffic to them from twitter. It also helps you to promote your content. You can set time and no of tweets to post to drive more traffic.For questions, comments, or feature requests, contact me! <a href="http://www.ajaymatharu.com/">Ajay Matharu</a> you can follow me twitter at <a href="http://twitter.com/matharuajay/">@matharuajay</a>.
 
 For updates follow http://twitter.com/matharuajay
 
@@ -22,203 +22,22 @@ For updates follow http://twitter.com/matharuajay
 - Post priority
 - Additional text based on categories
 - Post for Facebook and Google+
-- Option to set number of tweets to post at a time
 
-
-**Pro Version (will be released soon)**
-- Change via Tweet Old Post to your specified name
-- Multiple Twitter accounts
 
 
 **Let me know if you have any more ideas**
 
-**New in v3.3.3**
+**New in v4.0.0**
 
-- Resolved permission issue of exclude post.
+- You can now change the application name. Change via Tweet Old Post to your specified name. Follow the Steps here, 
+http://www.ajaymatharu.com/major-update-to-tweet-old-post/
+- Pages can now be included in tweets. Added an option to select what is to be tweeted (pages, posts, or both).
+- Removed "." and used "-" when adding additional text, "." was causing grammatical mistakes if sentence was trimmed.
+- Added option to specify number of posts that can be tweeted simultaneously. You can specify how many tweets you want at a time.
+- Cleaned up code.
+- Last but not the least, removed random time slot was causing lot of confusion.
 
 
-**New in v3.3.2**
-
-- Resolved too many redirects issue
-	If its still not working try these steps
-		- Make sure "Tweet Old Post Admin URL (Current URL)" is showing your current URL.
-		- Click on "Update Tweet Old Post Options". 
-		- Try to authorize again.
-- Removed "_" from hashtags. Previously space in hashtag was replaced with "_". Now there will be no spaces or "_" in hashtags.
-
-
-**New in v3.3.1**
-
-- Changed logic for posting data to twitter.
-- Resolved bit.ly issue.
-
-
-**New in v3.3.0**
-
-- Attempt to fix logs out issue (Tweet Old Post pushes out when any action is performed).
-
-
-**New in v3.2.9**
-
-- Option to reset setting. When something goes wrong, please reset the settings and setup again.
-- For people still facing issues of conflict with Google Analytics Plugin, this version should work.
-- Minor bug fixes.
-
-
-**New in v3.2.8**
-
-- Resolved conflict with Google Analytics Plugin.
-- Changed the log file location to root of plugin folder.
-- Maintained Tweet Cycle. Repeat only when all post have been tweeted.
-- Made other optimizations and resolved some minor bugs.
-
-
-**New in v3.2.7**
-
-- Added logging for people who cant make it work can enable and check the log, or mail me the log file.
-- Brought back the exclude post option.
-- Made other optimizations and resolved some minor bugs.
-- Check http://www.ajaymatharu.com/tweet-old-post-update-3-2-7/ for more detailed explanation.
-
-
-**New in v3.2.6**
-
-- removed exclude post due to security threat. Will work on it and bring it up back.
-
-
-**New in v3.2.5**
-
-- Resolved hashtag not posting issue.
-- other bug fixes.
-
-
-**New in v3.2.4**
-
-- Bug fixes
-
-
-**New in v3.2.3**
-
-- Bug fixes
-
-
-**New in v3.2.2**
-
-- Resolved bit.ly issue
-- new option for hashtags
-- other bug fixes
-
-
-**New in v3.2.1**
-
-- Bug fixes
-
-
-**New in v3.2**
-
-- Bug fixes
-- Option to choose to include link in post
-- option to post only title or body or both title and body
-- option to set additional text either at beginning or end of tweet
-- option to pick hashtags from custom field
-
-
-**New in v3.1.2**
-
-- Resolved tweets not getting posted when categories are excluded.
-- If you are not able to authorise your twitter account set you blog URL in Administration → Settings → General.
-
-
-
-**New in v3.1.1**
-
-- Resolved tweets not getting posted issue. Sorry guys :(
-
-
-
-**New in v3.1**
-
-- Resolved issue of plugin flooding twitter account with tweets.
-- added provision to exclude some post from selected categories
-
-
-
-**New in v3.0**
-
-- added OAuth authentication 
-- user defined intervals
-- may not work under php 4 requires php 5
-
-
-
-**New in v2.0**
-
-- added provision to select if you want to shorten the URL or not.
-- Cleaned other options.
-
-
-
-**New in v1.9**
-
-- Removed PHP 4 support as it was creating problem for lot of people
-
-
-
-**New in v1.8**
-
-- Bug Fixes
-- Provision to fetch tweet url from custom field
-
-
-
-**New in v1.7**
-
-- Removed api option from 1click.at not needed api key
-
-
-
-**New in v1.6**
-
-- Made the plugin PHP 4 compatible. Guys try it out and please let me know if that worked.
-- Better error prompting. If your tweets are not appearing on twitter. Try "Tweet Now" button you'll see if there is any problem in tweeting.
-- Added 1click.at shortning service you need to get the api key from http://theeasyapi.com/ you need to add your machine IP address in the server of http://theeasyapi.com/ for this api key to work.
-
-
-
-**New in v1.5**
-
-- Maximum age of post to be eligible for tweet - allows you to set Maximum age of the post to be eligible for tweet
-- Added one more shortner service was looking for j.mp but they dont have the api yet.
-
-
-
-**New in v1.4**
-
-- Hashtags - allows you to set default hashtags for your tweets
-
-
-
-**New in v1.3**
-
-- URL Shortener Service - allows you to select which URL shortener service you want to use.
-
-
-
-**New in v1.2**
-
-- Tweet Prefix - Allows you to set prefix to the tweets.
-- Add Data - Allows you to add post data to the tweets
-- Tweet now - Button that will tweet at that moment without wanting you to wait for scheduled tweet
-
-
-
-**v1.1**
-
-- Twitter Username & Password - Using this twitter account credentials plugin will tweet.
-- Minimum interval between tweets - allows you to determine how often the plugin will automatically choose and tweet a blog post for you.
-- Randomness interval - This is a contributing factor in minimum interval so that posts are randomly chosen and tweeted from your blog.
-- Minimum age of post to be eligible for tweet - This allows you to set how old your post should be in order to be eligible for the tweet.
-- Categories to omit from tweets - This will protect posts from the selected categories from being tweeted.
 
 == Installation ==
 
@@ -246,6 +65,16 @@ Alternatively you can also follow the following steps to install the Tweet Old P
 
 If you have any questions please mail me at,
 ajay@ajaymatharu.com or matharuajay@yahoo.co.in
+
+
+**Plugin page gets blank while trying to authorize**
+
+- Make sure "Tweet Old Post Admin URL (Current URL)" is showing your current URL.
+- Click on "Update Tweet Old Post Options". 
+- Try to authorize again.
+- If it still does not work try changing browser. Chrome does not work sometimes.
+- If it still does not work enable log, mail me the log file. Log file is generated in tweet old post root folder as log.txt
+
 
 **Too many redirects while trying to authorize**
 
@@ -296,15 +125,33 @@ plugin.
 
 == Screenshots ==
 
-for screenshots you can check out 
+1. Screenshot 1 Basic configurable options for Tweet Old Post to function, with ability to tweet at random interval.
+2. Screenshot 2 configurable categories. Select categories to exclude from tweeting.
+3. Screenshot 3 Configure posts to exclude from selected categories :).
+
+for more you can check out 
 
 http://www.ajaymatharu.com/wordpress-plugin-tweet-old-posts/
 
+
 == Changelog ==
+
+
+**New in v4.0.0**
+
+- You can now change the application name. Change via Tweet Old Post to your specified name. Follow the Steps here, 
+http://www.ajaymatharu.com/major-update-to-tweet-old-post/
+- Pages can now be included in tweets. Added an option to select what is to be tweeted (pages, posts, or both).
+- Removed "." and used "-" when adding additional text, "." was causing grammatical mistakes if sentence was trimmed.
+- Added option to specify number of posts that can be tweeted simultaneously. You can specify how many tweets you want at a time.
+- Last but not the least, removed random time slot was causing lot of confusion.
+
+
 
 **New in v3.3.3**
 
 - Resolved permission issue of exclude post.
+
 
 
 **New in v3.3.2**
@@ -317,15 +164,18 @@ http://www.ajaymatharu.com/wordpress-plugin-tweet-old-posts/
 - Removed "_" from hashtags. Previously space in hashtag was replaced with "_". Now there will be no spaces or "_" in hashtags.
 
 
+
 **New in v3.3.1**
 
 - Changed logic for posting data to twitter.
 - Resolved bit.ly issue.
 
 
+
 **New in v3.3.0**
 
 - Attempt to fix logs out issue (Tweet Old Post pushes out when any action is performed).
+
 
 
 **New in v3.2.9**
@@ -498,9 +348,21 @@ http://www.ajaymatharu.com/wordpress-plugin-tweet-old-posts/
 == Other Notes ==
 
 
+**New in v4.0.0**
+
+- You can now change the application name. Change via Tweet Old Post to your specified name. Follow the Steps here, 
+http://www.ajaymatharu.com/major-update-to-tweet-old-post/
+- Pages can now be included in tweets. Added an option to select what is to be tweeted (pages, posts, or both).
+- Removed "." and used "-" when adding additional text, "." was causing grammatical mistakes if sentence was trimmed.
+- Added option to specify number of posts that can be tweeted simultaneously. You can specify how many tweets you want at a time.
+- Last but not the least, removed random time slot was causing lot of confusion.
+
+
+
 **New in v3.3.3**
 
 - Resolved permission issue of exclude post.
+
 
 
 **New in v3.3.2**
