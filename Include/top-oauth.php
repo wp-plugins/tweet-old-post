@@ -6,7 +6,7 @@ if (!class_exists('WP_Http')) {
 
 require_once( 'top-debug.php' );
 
-//define('TOP_OAUTH_CONSUMER_KEY', 'URFj8APc9YrK9mLFwtca1A');
+
 define('TOP_OAUTH_CONSUMER_KEY', 'ofaYongByVpa3NDEbXa2g');
 
 define('TOP_OAUTH_REQUEST_URL', 'http://api.twitter.com/oauth/request_token');
@@ -14,7 +14,7 @@ define('TOP_OAUTH_ACCESS_URL', 'http://api.twitter.com/oauth/access_token');
 define('TOP_OAUTH_AUTHORIZE_URL', 'http://api.twitter.com/oauth/authorize');
 define('TOP_OAUTH_REALM', 'http://twitter.com/');
 define('TOP_OAUTH_CONSUMER_SECRET','vTzszlMujMZCY3mVtTE6WovUKQxqv3LVgiVku276M');
-//define('TOP_OAUTH_CONSUMER_SECRET','luvypl19s7EsNoosb0PDWbjbCn86rkh23wkLJczZvI');
+
 class TOPOAuth {
 
     var $duplicate_tweet;
