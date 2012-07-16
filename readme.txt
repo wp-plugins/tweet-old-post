@@ -27,6 +27,15 @@ For updates follow http://twitter.com/matharuajay
 
 **Let me know if you have any more ideas**
 
+
+**New in v4.0.1**
+
+- Resolved issue of page getting blank after returning from twitter
+- added pages to exclude post option
+- Bug fixes
+- updated the steps of creating twitter application check here http://www.ajaymatharu.com/major-update-to-tweet-old-post/
+
+
 **New in v4.0.0**
 
 - You can now change the application name. Change via Tweet Old Post to your specified name. Follow the Steps here, 
@@ -135,6 +144,14 @@ http://www.ajaymatharu.com/wordpress-plugin-tweet-old-posts/
 
 
 == Changelog ==
+
+
+**New in v4.0.1**
+
+- Resolved issue of page getting blank after returning from twitter
+- added pages to exclude post option
+- Bug fixes
+- updated the steps of creating twitter application check here http://www.ajaymatharu.com/major-update-to-tweet-old-post/
 
 
 **New in v4.0.0**
@@ -346,6 +363,14 @@ http://www.ajaymatharu.com/major-update-to-tweet-old-post/
 
 
 == Other Notes ==
+
+
+**New in v4.0.1**
+
+- Resolved issue of page getting blank after returning from twitter
+- added pages to exclude post option
+- Bug fixes
+- updated the steps of creating twitter application check here http://www.ajaymatharu.com/major-update-to-tweet-old-post/
 
 
 **New in v4.0.0**

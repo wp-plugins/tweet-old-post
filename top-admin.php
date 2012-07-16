@@ -473,8 +473,7 @@ function top_admin() {
 
 <div id="profile-box">');
         if (!$settings["oauth_access_token"]) {
-                 TOP_DEBUG("url key is " . $top_opt_consumer_key);
-            TOP_DEBUG("url secret is " . $top_opt_consumer_secret);
+                 
             echo '<a href="' . top_get_auth_url() . '"><img src="' . $x . 'images/twitter.png" /></a>';
         } else {
             echo '<img class="avatar" src="' . $settings["profile_image_url"] . '" alt="" />

@@ -75,7 +75,7 @@ function top_exclude() {
 				<p>' . __('You have selected following POST IDs to be excluded from tweeting: <span id="excludeList" style="font-weight:bold;font-style:italic;"></span>.<br /> <strong>Note:</strong> If you have made any change and dint hit "Exclude Selected" button changes will not be saved. Please hit "Exclude Selected" button after making any changes.', 'TweetOldPost') . '</p>
 			</div>');
 
-    $sql = "SELECT p.ID,p.post_title,p.post_date,u.user_nicename,p.guid FROM $wpdb->posts p join  $wpdb->users u on p.post_author=u.ID WHERE post_type = 'post'
+    $sql = "SELECT p.ID,p.post_title,p.post_date,u.user_nicename,p.guid,p.post_type FROM $wpdb->posts p join  $wpdb->users u on p.post_author=u.ID WHERE (post_type = 'post' or post_type = 'page') 
                   AND post_status = 'publish'";
 
    
@@ -125,6 +125,8 @@ function top_exclude() {
     $sql = $sql . " order by post_date desc";
     $posts = $wpdb->get_results($sql);
 
+    
+    
     $from = $_GET["paged"] * $records_per_page - $records_per_page;
     $to = min($_GET['paged'] * $records_per_page, count($posts));
     $post_count =count($posts);
@@ -153,6 +155,7 @@ if($excludeList.length >0)
 </p>');
         print('</div>');
     if (count($posts) > 0) {
+        
         $page_links = paginate_links(array(
                     'base' => add_query_arg('paged', '%#%'),
                     'format' => '',
@@ -187,6 +190,7 @@ if($excludeList.length >0)
 						<th>Author</th>
 						<th>Post Date</th>
                                                 <th>Categories</th>
+                                                <th>Post Type</th>
 					</tr>
 					</thead>
 					<tbody>
@@ -196,16 +200,19 @@ if($excludeList.length >0)
 
 
         for ($i = $from; $i < $to; $i++) {
+            
+            
             $categories = get_the_category($posts[$i]->ID);
             if (!empty($categories)) {
                 $out = array();
                 foreach ($categories as $c)
                     $out[] = "<a href='edit.php?post_type={$post->post_type}&amp;category_name={$c->slug}'> " . esc_html(sanitize_term_field('name', $c->name, $c->term_id, 'category', 'display')) . "</a>";
                 $cats = join(', ', $out);
-            } else {
+            }
+            else {
                 $cats = 'Uncategorized';
             }
-
+            
             if (in_array($posts[$i]->ID, $excluded_posts)) {
                 $checked = "Checked";
                 $bgcolor="#FFCC99";
@@ -237,6 +244,9 @@ if($excludeList.length >0)
                                         </td>
                                         <td>
                                             ' . $cats . '
+                                        </td>
+                                        <td>
+                                            ' . $posts[$i]->post_type . '
                                         </td>
 				</tr>
 				

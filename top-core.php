@@ -86,7 +86,7 @@ function top_generate_query($can_requery = true)
      }
      else
      {
-         $post_type="";
+         $post_type="(post_type = 'post' OR post_type = 'page') AND";
      }
     
     $sql = "SELECT ID,POST_TITLE
