@@ -6,14 +6,13 @@ if (!class_exists('WP_Http')) {
 
 require_once( 'top-debug.php' );
 
-
 define('TOP_OAUTH_CONSUMER_KEY', 'ofaYongByVpa3NDEbXa2g');
+
 
 define('TOP_OAUTH_REQUEST_URL', 'http://api.twitter.com/oauth/request_token');
 define('TOP_OAUTH_ACCESS_URL', 'http://api.twitter.com/oauth/access_token');
 define('TOP_OAUTH_AUTHORIZE_URL', 'http://api.twitter.com/oauth/authorize');
 define('TOP_OAUTH_REALM', 'http://twitter.com/');
-define('TOP_OAUTH_CONSUMER_SECRET','vTzszlMujMZCY3mVtTE6WovUKQxqv3LVgiVku276M');
 
 class TOPOAuth {
 
@@ -31,23 +30,12 @@ class TOPOAuth {
         $this->response_code = false;
         $this->error_message = false;
         $this->oauth_time_offset = 0;
-        
-        $top_opt_consumer_key = get_option('top_opt_consumer_key');
-        $top_opt_consumer_secret = get_option('top_opt_consumer_secret');
-        
-        if (!isset($top_opt_consumer_key) || !isset($top_opt_consumer_secret) || $top_opt_consumer_key=="" || $top_opt_consumer_secret=="") {
-            $this->set_defeault_oauth_tokens();
-        }
-        else
-        {
-            $this->set_oauth_tokens($top_opt_consumer_key, $top_opt_consumer_secret);
-            
-        }
+        $this->set_defeault_oauth_tokens();
     }
 
     function set_defeault_oauth_tokens() {
         $this->oauth_consumer_key = TOP_OAUTH_CONSUMER_KEY;
-        $this->oauth_consumer_secret = TOP_OAUTH_CONSUMER_SECRET;
+        $this->oauth_consumer_secret = "vTzszlMujMZCY3mVtTE6WovUKQxqv3LVgiVku276M";
 
     }
 
@@ -294,11 +282,9 @@ class TOPOAuth {
                 $other_params[$key] = $value;
             }
         }
-        //TOP_DEBUG("key is " . $this->oauth_consumer_key);
-        //    TOP_DEBUG("secret is " . $this->oauth_consumer_secret);
-        TOP_DEBUG( 'in do auth ' . print_r( $params, true ) );
+
         $header .= implode($all_params, ", ");
-        
+
         return $this->do_request($url, $header, $other_params);
     }
 
@@ -311,7 +297,7 @@ class TOPOAuth {
         }
         
         TOP_DEBUG( 'In function get_request_token' );
-        $params['oauth_consumer_key'] = $this->oauth_consumer_key;
+        $params['oauth_consumer_key'] = TOP_OAUTH_CONSUMER_KEY;
         //$params['oauth_callback'] = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . '&TOP_oauth=1';
         $params['oauth_callback'] = htmlentities($admin_url . '&TOP_oauth=1');
         
@@ -325,8 +311,7 @@ class TOPOAuth {
 		}
         
         $result = $this->do_oauth(TOP_OAUTH_REQUEST_URL, $params);
-        
-        TOP_DEBUG( 'output of get_request_token ' . print_r( $result, true ) );
+
         if ($result) {
             $new_params = $this->parse_params($result);
             return $new_params;

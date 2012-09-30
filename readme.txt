@@ -2,7 +2,7 @@
 Contributors: Ajay Matharu
 Tags: Tweet old post, Tweets, Promote old post by tweeting about them, Twitter, Auto Tweet, Hashtags, Twitter Hashtags, Tweet Posts, Tweet, Post Tweets, Wordpress Twitter Plugin, Twitter Plugin, Tweet Selected Posts, Twitter, Promote Posts, Tweet Random Post, Share Post, Promote Post, Post Tweets, Wordpress Twitter, Drive Traffic, Tweet Selected Posts
 Requires at least: 2.7
-Tested up to: 3.4.1
+Tested up to: 3.4.2
 Stable tag: trunk
 
 
@@ -26,6 +26,12 @@ For updates follow http://twitter.com/matharuajay
 
 
 **Let me know if you have any more ideas**
+
+**New in v4.0.2**
+
+- Removed the option to specify the consumer key and secret as twitter does not show the application from which its tweeted anymore.
+- Most probably, the tweet not posting automatically issue is resolved. Please check and let me know.
+- Bug fixes
 
 
 **New in v4.0.1**
@@ -144,6 +150,13 @@ http://www.ajaymatharu.com/wordpress-plugin-tweet-old-posts/
 
 
 == Changelog ==
+
+
+**New in v4.0.2**
+
+- Removed the option to specify the consumer key and secret as twitter does not show the application from which its tweeted anymore.
+- Most probably, the tweet not posting automatically issue is resolved. Please check and let me know.
+- Bug fixes
 
 
 **New in v4.0.1**
@@ -365,6 +378,13 @@ http://www.ajaymatharu.com/major-update-to-tweet-old-post/
 == Other Notes ==
 
 
+**New in v4.0.2**
+
+- Removed the option to specify the consumer key and secret as twitter does not show the application from which its tweeted anymore.
+- Most probably, the tweet not posting automatically issue is resolved. Please check and let me know.
+- Bug fixes
+
+
 **New in v4.0.1**
 
 - Resolved issue of page getting blank after returning from twitter
@@ -383,11 +403,9 @@ http://www.ajaymatharu.com/major-update-to-tweet-old-post/
 - Last but not the least, removed random time slot was causing lot of confusion.
 
 
-
 **New in v3.3.3**
 
 - Resolved permission issue of exclude post.
-
 
 
 **New in v3.3.2**

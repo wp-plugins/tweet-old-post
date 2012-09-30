@@ -423,11 +423,9 @@ function top_opt_update_time() {
 }
 
 function top_to_update() {
-    global $wpdb;
-        
-    //$last = get_option('top_opt_last_update');
+    $last = get_option('top_opt_last_update');
     //prevention from caching
-    $last  = $wpdb->get_var("select option_value from $wpdb->options where option_name = 'top_opt_last_update';");
+    //$last  = $wpdb->get_var("select option_value from $wpdb->options where option_name = 'top_opt_last_update';");
     $interval = get_option('top_opt_interval');
     
 
@@ -459,17 +457,6 @@ function top_get_auth_url() {
     global $top_oauth;
     $settings = top_get_settings();
 
-    $consumer_key = get_option('top_opt_consumer_key');
-     $consumer_secret = get_option('top_opt_consumer_secret');
-        
-        if (!isset($consumer_key) || !isset($consumer_secret) || trim($consumer_key)=="" || trim($consumer_secret)=="") {
-            $top_oauth->set_defeault_oauth_tokens();
-        }
-        else
-        {
-            $top_oauth->set_oauth_tokens($consumer_key, $consumer_secret);
-        }
-    
     $token = $top_oauth->get_request_token();
     if ($token) {
         $settings['oauth_request_token'] = $token['oauth_token'];
@@ -485,16 +472,6 @@ function top_update_status($new_status) {
     global $top_oauth;
     $settings = top_get_settings();
 
-     $consumer_key = get_option('top_opt_consumer_key');
-     $consumer_secret = get_option('top_opt_consumer_secret');
-        
-        if (!isset($consumer_key) || !isset($consumer_secret) || trim($consumer_key)=="" || trim($consumer_secret)=="") {
-            $top_oauth->set_defeault_oauth_tokens();
-        }
-        else
-        {
-            $top_oauth->set_oauth_tokens($consumer_key, $consumer_secret);
-        }
     if (isset($settings['oauth_access_token']) && isset($settings['oauth_access_token_secret'])) {
         return $top_oauth->update_status($settings['oauth_access_token'], $settings['oauth_access_token_secret'], $new_status);
     }
