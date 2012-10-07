@@ -27,6 +27,13 @@ For updates follow http://twitter.com/matharuajay
 
 **Let me know if you have any more ideas**
 
+
+**New in v4.0.3**
+
+- Handled too many tweets when W3 Total Cache plugin is installed. Please check and let me know.
+- Bug fixes
+
+
 **New in v4.0.2**
 
 - Removed the option to specify the consumer key and secret as twitter does not show the application from which its tweeted anymore.
@@ -150,6 +157,12 @@ http://www.ajaymatharu.com/wordpress-plugin-tweet-old-posts/
 
 
 == Changelog ==
+
+
+**New in v4.0.3**
+
+- Handled too many tweets when W3 Total Cache plugin is installed. Please check and let me know.
+- Bug fixes
 
 
 **New in v4.0.2**
@@ -376,6 +389,12 @@ http://www.ajaymatharu.com/major-update-to-tweet-old-post/
 
 
 == Other Notes ==
+
+
+**New in v4.0.3**
+
+- Handled too many tweets when W3 Total Cache plugin is installed. Please check and let me know.
+- Bug fixes
 
 
 **New in v4.0.2**

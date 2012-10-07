@@ -1,14 +1,28 @@
 <?php
-
+    
 require_once( 'Include/top-oauth.php' );
 global $top_oauth;
 $top_oauth = new TOPOAuth;
 
+if ( function_exists('w3tc_pgcache_flush') ) {
+w3tc_pgcache_flush();
+w3tc_dbcache_flush();
+w3tc_minify_flush();
+w3tc_objectcache_flush();
+$cache = ' and W3TC Caches cleared';
+}
+
+if(function_exists('wp_cache_clean_cache'))
+{
+$file_prefix = 'wp-cache-';
+wp_cache_clean_cache( $file_prefix, true );
+}
 function top_tweet_old_post() {
 //check last tweet time against set interval and span
     if (top_opt_update_time()) {
         update_option('top_opt_last_update', time());
         top_opt_tweet_old_post();
+        $ready=false;
     }
 }
 
@@ -144,6 +158,21 @@ function top_generate_query($can_requery = true)
                     array_push($top_opt_tweeted_posts, $odp->ID);
          	    $ret .= 'Tweet '.($k + 1) . ' ( '. $odp->POST_TITLE .' )' . ' : ' .top_opt_tweet_post($odp->ID).'<br/>';
 		}
+                
+                if ( function_exists('w3tc_pgcache_flush') ) {
+                        w3tc_pgcache_flush();
+                        w3tc_dbcache_flush();
+                        w3tc_minify_flush();
+                        w3tc_objectcache_flush();
+                        $cache = ' and W3TC Caches cleared';
+                        }
+                
+                if(function_exists('wp_cache_clean_cache'))
+                        {
+                        $file_prefix = 'wp-cache-';
+                        wp_cache_clean_cache( $file_prefix, true );
+                        }                
+                
                 update_option('top_opt_tweeted_posts', $top_opt_tweeted_posts);
 		return $ret;
      }
@@ -417,15 +446,30 @@ function set_tweet_length($message, $url, $twitter_hashtags="", $hashtag_length=
 //check time and update the last tweet time
 function top_opt_update_time() {
 
-   
+    if ( function_exists('w3tc_pgcache_flush') ) {
+        w3tc_pgcache_flush();
+        w3tc_dbcache_flush();
+        w3tc_minify_flush();
+        w3tc_objectcache_flush();
+        $cache = ' and W3TC Caches cleared';
+        }
+        
+   if(function_exists('wp_cache_clean_cache'))
+        {
+        $file_prefix = 'wp-cache-';
+        wp_cache_clean_cache( $file_prefix, true );
+        }
+        
         return top_to_update();
     
 }
 
 function top_to_update() {
-    $last = get_option('top_opt_last_update');
+    global $wpdb;
+    $ret=0;
     //prevention from caching
-    //$last  = $wpdb->get_var("select option_value from $wpdb->options where option_name = 'top_opt_last_update';");
+    $last  = $wpdb->get_var("select SQL_NO_CACHE option_value from $wpdb->options where option_name = 'top_opt_last_update';");
+    //$last = get_option('top_opt_last_update');
     $interval = get_option('top_opt_interval');
     
 
@@ -442,13 +486,20 @@ function top_to_update() {
     
     
     $interval = $interval * 60 * 60;
-    
+    /*
     if (false === $last) {
         $ret = 1;
     } else if (is_numeric($last)) {
         $ret = ( (time() - $last) > ($interval ));
     }
-    
+     
+     */
+
+    if (is_numeric($last)) {
+        $ret = ( (time() - $last) > ($interval ));
+    }
+    else
+        $ret = 0;
     
     return $ret;
 }
