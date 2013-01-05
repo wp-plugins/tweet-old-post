@@ -472,6 +472,9 @@ function top_to_update() {
     //$last = get_option('top_opt_last_update');
     $interval = get_option('top_opt_interval');
     
+if((trim($last)=='') || !(isset($last)))
+    $last=0;
+ 
 
     if (!(isset($interval))) {
         $interval = top_opt_INTERVAL;
@@ -498,9 +501,9 @@ function top_to_update() {
     if (is_numeric($last)) {
         $ret = ( (time() - $last) > ($interval ));
     }
-    else
+    else{
         $ret = 0;
-    
+    }
     return $ret;
 }
 

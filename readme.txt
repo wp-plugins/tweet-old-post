@@ -28,6 +28,12 @@ For updates follow http://twitter.com/matharuajay
 **Let me know if you have any more ideas**
 
 
+**New in v4.0.4**
+
+- Resolved issue of tweet not posting automatically. Thanks to Daniel Lopez Gonzalez for helping me.
+- Minor Fixes
+
+
 **New in v4.0.3**
 
 - Handled too many tweets when W3 Total Cache plugin is installed. Please check and let me know.
@@ -157,6 +163,12 @@ http://www.ajaymatharu.com/wordpress-plugin-tweet-old-posts/
 
 
 == Changelog ==
+
+
+**New in v4.0.4**
+
+- Resolved issue of tweet not posting automatically. Thanks to Daniel Lopez Gonzalez for helping me.
+- Minor Fixes
 
 
 **New in v4.0.3**
@@ -389,6 +401,12 @@ http://www.ajaymatharu.com/major-update-to-tweet-old-post/
 
 
 == Other Notes ==
+
+
+**New in v4.0.4**
+
+- Resolved issue of tweet not posting automatically . Thanks to Daniel Lopez Gonzalez for helping me.
+- Minor Fixes
 
 
 **New in v4.0.3**
