@@ -1,3 +1,7 @@
+.desc{
+	font-size:9px;
+	font-style:italic;
+}
 .wrap h2 {
 	margin-top: 32px;
 }
@@ -7,22 +11,24 @@
 }
 #top_opt .option {
 	overflow: hidden;
-	border-bottom: dashed 1px #ccc;
-	padding-bottom: 9px;
-	padding-top: 9px;
+	border-bottom: dotted 3px #eeefff;
+	padding-bottom: 12px;
+	padding-top: 12px;
 }
+#countdown{width:500px;}
 #top_opt .option label {
 	display: block;
 	float: left;
 	width: 200px;
 	margin-right: 24px;
 	text-align: right;
+	padding-top: 5px;
 }
 #top_opt .option span {
 	display: block;
-	float: left;
-	margin-left: 230px;
-	margin-top: 6px;
+	float: right;
+	/**margin-left: 230px;
+	margin-top: 6px;**/
 	clear: left;
 }
 
@@ -74,3 +80,23 @@
 	font-size: 11px;
 	font-weight: normal;
 }
+a.auth-twitter,
+.auth-twitter {
+  float: left;
+  margin: 0 0 15px 0;
+  padding: 10px 12px 10px 40px;
+  font-size: 1.3em;
+  font-weight: normal;
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.9);
+  border: none;
+  background: url(../images/icon-twitter-bird.png) no-repeat 10px 50%;
+  background: url(../images/icon-twitter-bird.png) no-repeat 10px 50%, url(../images/glass-light.png) repeat-x 0 50%;
+  background-color: #1d88b4;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border-radius: 6px;
+  -webkit-transition: all .2s ease;
+  -moz-transition: all .2s ease;
+  -o-transition: all .2s ease;
+  transition: all .2s ease;
