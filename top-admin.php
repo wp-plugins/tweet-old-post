@@ -276,6 +276,7 @@ function top_admin() {
         
         //Current URL
         $admin_url = get_option('top_opt_admin_url');
+        //$admin_url = site_url('/wp-admin/admin.php?page=TweetOldPost');        	
         if (!isset($admin_url)) {
             $admin_url = top_currentPageURL();
 			update_option('top_opt_admin_url', $admin_url);
@@ -432,6 +433,14 @@ function top_admin() {
         print('
 			<div class="wrap">
 				<h2>' . __('Tweet old post by - ', 'TweetOldPost') . ' <a href="http://www.ajaymatharu.com">Ajay Matharu</a></h2>
+
+<h3>If you like this plugin, follow <a href="http://www.twitter.com/matharuajay">@matharuajay</a> on Twitter to help keep this plugin free...FOREVER!</h3>
+
+<a href="https://twitter.com/matharuajay" class="twitter-follow-button" data-show-count="true" data-size="large">Follow @matharuajay</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+<br /><br />
+
+
 				<form id="top_opt" name="top_TweetOldPost" action="" method="post">
 					<input type="hidden" name="top_opt_action" value="top_opt_update_settings" />
 					<fieldset class="options">
@@ -469,12 +478,12 @@ function top_admin() {
 
 						</div>
                                                 <div class="option">
-							<label for="top_opt_admin_url">' . __('Tweet Old Post Admin URL <br/> (Current URL)', 'TweetOldPost') . ':</label>
-							<input type="text" style="width:500px" id="top_opt_admin_url" value="' . $admin_url . '" name="top_opt_admin_url" /><br/><b>(Note: If this does not show your current URL in this textbox, copy paste the current URL in this textbox)</b>  
+							<label for="top_opt_admin_url">' . __('Tweet Old Post Admin URL <br/> <span class="desc">(Current URL)</span>', 'TweetOldPost') . ':</label>
+							<input type="text" style="width:500px" id="top_opt_admin_url" value="' . $admin_url . '" name="top_opt_admin_url" /><br/><b>(Note: If this does not show your current URL in this textbox, copy paste the current URL in this textbox, then click "Update Options")</b>  
 						</div>
                                                 
 						<div class="option">
-							<label for="top_opt_tweet_type">' . __('Tweet Content', 'TweetOldPost') . ':</label>
+							<label for="top_opt_tweet_type">' . __('Tweet Content:<br /><span class="desc">What do you want to share?<span>', 'TweetOldPost') . ':</label>
 							<select id="top_opt_tweet_type" name="top_opt_tweet_type" style="width:150px">
 								<option value="title" ' . top_opt_optionselected("title", $tweet_type) . '>' . __(' Title Only ', 'TweetOldPost') . ' </option>
 								<option value="body" ' . top_opt_optionselected("body", $tweet_type) . '>' . __(' Body Only ', 'TweetOldPost') . ' </option>
@@ -485,11 +494,11 @@ function top_admin() {
 						
 						
 						<div class="option">
-							<label for="top_opt_add_text">' . __('Additional Text', 'TweetOldPost') . ':</label>
+							<label for="top_opt_add_text">' . __('Additional Text:<br /><span class="desc">Text added to your auto posts.<span>', 'TweetOldPost') . ':</label>
 							<input type="text" size="25" name="top_opt_add_text" id="top_opt_add_text" value="' . $additional_text . '" autocomplete="off" />
 						</div>
 						<div class="option">
-							<label for="top_opt_add_text_at">' . __('Additional Text At', 'TweetOldPost') . ':</label>
+							<label for="top_opt_add_text_at">' . __('Additional Text At:<br /><span class="desc">Where you want the added text.<span>', 'TweetOldPost') . ':</label>
 							<select id="top_opt_add_text_at" name="top_opt_add_text_at" style="width:150px">
 								<option value="beginning" ' . top_opt_optionselected("beginning", $additional_text_at) . '>' . __(' Beginning of tweet ', 'TweetOldPost') . '</option>
 								<option value="end" ' . top_opt_optionselected("end", $additional_text_at) . '>' . __(' End of tweet ', 'TweetOldPost') . '</option>
@@ -497,7 +506,7 @@ function top_admin() {
 						</div>
 						
 						<div class="option">
-							<label for="top_opt_include_link">' . __('Include Link', 'TweetOldPost') . ':</label>
+							<label for="top_opt_include_link">' . __('Include Link:<br /><span class="desc">Include a link to your post?<span>', 'TweetOldPost') . ':</label>
 							<select id="top_opt_include_link" name="top_opt_include_link" style="width:150px" onchange="javascript:showURLOptions()">
 								<option value="false" ' . top_opt_optionselected("false", $include_link) . '>' . __(' No ', 'TweetOldPost') . '</option>
 								<option value="true" ' . top_opt_optionselected("true", $include_link) . '>' . __(' Yes ', 'TweetOldPost') . '</option>
@@ -524,7 +533,7 @@ function top_admin() {
 						</div>
 						
 						<div class="option">
-							<label for="top_opt_use_url_shortner">' . __('Use URL shortner?', 'TweetOldPost') . ':</label>
+							<label for="top_opt_use_url_shortner">' . __('Use URL shortner?:<br /><span class="desc">Shorten the link to your post.<span>', 'TweetOldPost') . ':</label>
 							<input onchange="return showshortener()" type="checkbox" name="top_opt_use_url_shortner" id="top_opt_use_url_shortner" ' . $use_url_shortner . ' />
 							
 						</div>
@@ -559,7 +568,7 @@ function top_admin() {
 						
 
                                                 <div class="option">
-							<label for="top_opt_custom_hashtag_option">' . __('Hashtags', 'TweetOldPost') . ':</label>
+							<label for="top_opt_custom_hashtag_option">' . __('#Hashtags:<br /><span class="desc">Include #hashtags in your auto posts.<span>', 'TweetOldPost') . ':</label>
                                                         <select name="top_opt_custom_hashtag_option" id="top_opt_custom_hashtag_option" onchange="javascript:return showHashtagCustomField()" style="width:250px;">
 									<option value="nohashtag" ' . top_opt_optionselected('nohashtag', $custom_hashtag_option) . '>' . __('Don`t add any hashtags', 'TweetOldPost') . '</option>
                                                                         <option value="common" ' . top_opt_optionselected('common', $custom_hashtag_option) . '>' . __('Common hashtag for all tweets', 'TweetOldPost') . '</option>    
@@ -600,20 +609,20 @@ function top_admin() {
 						</div>
 						</div>
 						<div class="option">
-							<label for="top_opt_interval">' . __('Minimum interval between tweets: ', 'TweetOldPost') . '</label>
+							<label for="top_opt_interval">' . __('Minimum interval between tweets: <br /><span class="desc">What should be minimum time between your tweets?<span> ', 'TweetOldPost') . '</label>
 							<input type="text" id="top_opt_interval" maxlength="5" value="' . $interval . '" name="top_opt_interval" /> Hour / Hours <b>(Note: If set to 0 it will take default as 4 hours)</b>
                                                        
 						</div>
 						
 						<div class="option">
-							<label for="top_opt_age_limit">' . __('Minimum age of post to be eligible for tweet: ', 'TweetOldPost') . '</label>
+							<label for="top_opt_age_limit">' . __('Minimum age of post to be eligible for tweet: <br /><span class="desc">Include post in tweets if at least this age.<span> ', 'TweetOldPost') . '</label>
 							<input type="text" id="top_opt_age_limit" maxlength="5" value="' . $ageLimit . '" name="top_opt_age_limit" /> Day / Days
 							<b> (enter 0 for today)</b>
                                                            
 						</div>
 						
 						<div class="option">
-							<label for="top_opt_max_age_limit">' . __('Maximum age of post to be eligible for tweet: ', 'TweetOldPost') . '</label>
+							<label for="top_opt_max_age_limit">' . __('Maximum age of post to be eligible for tweet: <br /><span class="desc">Don\'t include posts older than this.<span>', 'TweetOldPost') . '</label>
                                                         <input type="text" id="top_opt_max_age_limit" maxlength="5" value="' . $maxAgeLimit . '" name="top_opt_max_age_limit" /> Day / Days
                                                        <b>(If you dont want to use this option enter 0 or leave blank)</b><br/>
 							<b>Post older than specified days will not be tweeted.</b>
@@ -621,14 +630,14 @@ function top_admin() {
 						
 
                                                 <div class="option">
-							<label for="top_opt_no_of_tweet">' . __('Number Of Posts To Tweet', 'TweetOldPost') . ':</label>
+							<label for="top_opt_no_of_tweet">' . __('Number Of Posts To Tweet:<br/><span class="desc">Number of tweets to share each time.<span>', 'TweetOldPost') . ':</label>
 							<input type="text" style="width:30px" id="top_opt_no_of_tweet" value="' . $top_opt_no_of_tweet . '" name="top_opt_no_of_tweet" /></b>  
 						</div>
 
 
 
 						<div class="option">
-							<label for="top_opt_post_type">' . __('Post Type', 'TweetOldPost') . ':</label>
+							<label for="top_opt_post_type">' . __('Post Type:<br/> <span class="desc">What type of items do you want to share?<span>', 'TweetOldPost') . ':</label>
 							<select id="top_opt_post_type" name="top_opt_post_type" style="width:150px">
 								<option value="post" ' . top_opt_optionselected("post", $top_opt_post_type) . '>' . __(' Post Only ', 'TweetOldPost') . ' </option>
 								<option value="page" ' . top_opt_optionselected("page", $top_opt_post_type) . '>' . __(' Page Only ', 'TweetOldPost') . ' </option>
@@ -649,7 +658,7 @@ function top_admin() {
                                         
 				    	<div class="option category">
 				    	<div style="float:left">
-						    	<label class="catlabel">' . __('Categories to Omit from tweets: ', 'TweetOldPost') . '</label> </div>
+						    	<label class="catlabel">' . __('Categories to Omit from tweets: <br/><span class="desc">Check categories not to share.<span> ', 'TweetOldPost') . '</label> </div>
 						    	<div style="float:left">
 						    		<ul id="categorychecklist" class="list:category categorychecklist form-no-clear">
 								');

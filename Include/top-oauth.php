@@ -357,11 +357,11 @@ class TOPOAuth {
 			TOP_DEBUG( '..params are ' . print_r( $params, true ) );	
 		}
         
-        $url = 'http://api.twitter.com/1/statuses/update.xml';
+        $url = 'http://api.twitter.com/1/statuses/update.json';
 
         $result = $this->do_oauth($url, $params, $token_secret);
         if ($result) {
-            $new_params = TOP_parsexml($result);
+            //$new_params = TOP_parsexml($result);
             return true;
         } else {
             return false;
@@ -377,11 +377,12 @@ class TOPOAuth {
     }
 
     function get_user_info($user_id) {
-        $url = 'http://api.twitter.com/1/users/show.xml?id=' . $user_id;
+        $url = 'http://api.twitter.com/1.1/users/show.json?id=' . $user_id;
 
         $result = $this->do_get_request($url);
         if ($result) {
-            $new_params = TOP_parsexml($result);
+            //$new_params = TOP_parsexml($result);
+            $new_params = json_decode($result, false);
             return $new_params;
         }
     }

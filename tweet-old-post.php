@@ -4,7 +4,7 @@
 #     Plugin URI: http://www.ajaymatharu.com/wordpress-plugin-tweet-old-posts/
 #     Description: This plugin helps you to keeps your old posts alive by tweeting about them and driving more traffic to them from twitter. It also helps you to promote your content. You can set time and no of tweets to post to drive more traffic.For questions, comments, or feature requests, contact me! <a href="http://www.ajaymatharu.com/">Ajay Matharu</a> you can follow me twitter at <a href="http://twitter.com/matharuajay/">@matharuajay</a>.
 #     Author: Ajay Matharu 
-#     Version: 4.0.4
+#     Version: 4.0.5
 #     Author URI: http://www.ajaymatharu.com/
 #     */  
  
@@ -48,15 +48,13 @@ define('top_opt_post_type',"post");
         
         function top_authorize()
         {
-             
-        
-            if ( isset( $_REQUEST['oauth_token'] ) ) {
-			    $auth_url= str_replace('oauth_token', 'oauth_token1', top_currentPageURL());
-				$top_url = get_option('top_opt_admin_url') . substr($auth_url,strrpos($auth_url, "page=TweetOldPost") + strlen("page=TweetOldPost"));
-                                echo '<script language="javascript">window.open ("'.$top_url.'","_self")</script>';
-                                die;
+             if ( ! class_exists( 'BackWPup' ) ) {
+                   if ( isset( $_REQUEST['oauth_token'] ) ) {
+			$auth_url= str_replace('oauth_token', 'oauth_token1', top_currentPageURL());
+			$top_url = get_option('top_opt_admin_url') . substr($auth_url,strrpos($auth_url, "page=TweetOldPost") + strlen("page=TweetOldPost"));
+                        echo '<script language="javascript">window.open ("'.$top_url.'","_self")</script>';
+                    }
             }
-        
         }
         
 add_filter('plugin_action_links', 'top_plugin_action_links', 10, 2);

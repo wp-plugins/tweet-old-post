@@ -3,7 +3,7 @@ Contributors: Ajay Matharu
 Tags: Tweet old post, Tweets, Promote old post by tweeting about them, Twitter, Auto Tweet, Hashtags, Twitter Hashtags, Tweet Posts, Tweet, Post Tweets, Wordpress Twitter Plugin, Twitter Plugin, Tweet Selected Posts, Twitter, Promote Posts, Tweet Random Post, Share Post, Promote Post, Post Tweets, Wordpress Twitter, Drive Traffic, Tweet Selected Posts
 Requires at least: 2.7
 Tested up to: 3.5.1
-Stable tag: trunk 
+Stable tag: trunk
 
 
 Plugin to tweet about your old posts to get more hits for them and keep them alive.
@@ -16,55 +16,34 @@ This plugin helps you to keeps your old posts alive by tweeting about them and d
 
 For updates follow http://twitter.com/matharuajay
 
+
 **Fortcoming**
 
 - Sleep time
-- Post priority
 - Additional text based on categories
-- Post for Facebook and Google+
 
+
+**Tweet Old Post provides following features**
+
+- Share new and old posts.
+- Choose the time between tweets.
+- Choose the number of tweets to Tweet.
+- Use hashtags to focus on topics.
+- Include links back to your site.
+- Exclude categories
+- Exclude specific posts.
 
 
 **Let me know if you have any more ideas**
 
 
-**New in v4.0.4**
+**New in v4.0.5**
 
-- Resolved issue of tweet not posting automatically. Thanks to Daniel Lopez Gonzalez for helping me.
-- Minor Fixes
-
-
-**New in v4.0.3**
-
-- Handled too many tweets when W3 Total Cache plugin is installed. Please check and let me know.
-- Bug fixes
-
-
-**New in v4.0.2**
-
-- Removed the option to specify the consumer key and secret as twitter does not show the application from which its tweeted anymore.
-- Most probably, the tweet not posting automatically issue is resolved. Please check and let me know.
-- Bug fixes
-
-
-**New in v4.0.1**
-
-- Resolved issue of page getting blank after returning from twitter
-- added pages to exclude post option
-- Bug fixes
-- updated the steps of creating twitter application check here http://www.ajaymatharu.com/major-update-to-tweet-old-post/
-
-
-**New in v4.0.0**
-
-- You can now change the application name. Change via Tweet Old Post to your specified name. Follow the Steps here, 
-http://www.ajaymatharu.com/major-update-to-tweet-old-post/
-- Pages can now be included in tweets. Added an option to select what is to be tweeted (pages, posts, or both).
-- Removed "." and used "-" when adding additional text, "." was causing grammatical mistakes if sentence was trimmed.
-- Added option to specify number of posts that can be tweeted simultaneously. You can specify how many tweets you want at a time.
-- Cleaned up code.
-- Last but not the least, removed random time slot was causing lot of confusion.
-
+- Implemented Twitter API v1.1 as Twitter is retiring API v1 from 7th May.
+- Handled conflict with BackWPup plugin.
+- Some performance improvements with WPSuperCache plugin.
+- Some design changes.
+- Code Cleanup.
 
 
 == Installation ==
@@ -163,6 +142,15 @@ http://www.ajaymatharu.com/wordpress-plugin-tweet-old-posts/
 
 
 == Changelog ==
+
+
+**New in v4.0.5**
+
+- Implemented Twitter API v1.1 as Twitter is retiring API v1 from 7th May.
+- Handled conflict with BackWPup plugin.
+- Some performance improvements with WPSuperCache plugin.
+- Some design changes.
+- Code Cleanup.
 
 
 **New in v4.0.4**
@@ -401,6 +389,15 @@ http://www.ajaymatharu.com/major-update-to-tweet-old-post/
 
 
 == Other Notes ==
+
+
+**New in v4.0.5**
+
+- Implemented Twitter API v1.1 as Twitter is retiring API v1 from 7th May.
+- Handled conflict with BackWPup plugin.
+- Some performance improvements with WPSuperCache plugin.
+- Some design changes.
+- Code Cleanup.
 
 
 **New in v4.0.4**

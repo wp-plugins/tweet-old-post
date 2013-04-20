@@ -12,11 +12,6 @@ w3tc_objectcache_flush();
 $cache = ' and W3TC Caches cleared';
 }
 
-if(function_exists('wp_cache_clean_cache'))
-{
-$file_prefix = 'wp-cache-';
-wp_cache_clean_cache( $file_prefix, true );
-}
 function top_tweet_old_post() {
 //check last tweet time against set interval and span
     if (top_opt_update_time()) {
@@ -160,18 +155,12 @@ function top_generate_query($can_requery = true)
 		}
                 
                 if ( function_exists('w3tc_pgcache_flush') ) {
-                        w3tc_pgcache_flush();
-                        w3tc_dbcache_flush();
-                        w3tc_minify_flush();
-                        w3tc_objectcache_flush();
-                        $cache = ' and W3TC Caches cleared';
-                        }
-                
-                if(function_exists('wp_cache_clean_cache'))
-                        {
-                        $file_prefix = 'wp-cache-';
-                        wp_cache_clean_cache( $file_prefix, true );
-                        }                
+w3tc_pgcache_flush();
+w3tc_dbcache_flush();
+w3tc_minify_flush();
+w3tc_objectcache_flush();
+$cache = ' and W3TC Caches cleared';
+}           
                 
                 update_option('top_opt_tweeted_posts', $top_opt_tweeted_posts);
 		return $ret;
@@ -446,20 +435,6 @@ function set_tweet_length($message, $url, $twitter_hashtags="", $hashtag_length=
 //check time and update the last tweet time
 function top_opt_update_time() {
 
-    if ( function_exists('w3tc_pgcache_flush') ) {
-        w3tc_pgcache_flush();
-        w3tc_dbcache_flush();
-        w3tc_minify_flush();
-        w3tc_objectcache_flush();
-        $cache = ' and W3TC Caches cleared';
-        }
-        
-   if(function_exists('wp_cache_clean_cache'))
-        {
-        $file_prefix = 'wp-cache-';
-        wp_cache_clean_cache( $file_prefix, true );
-        }
-        
         return top_to_update();
     
 }
