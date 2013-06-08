@@ -567,7 +567,7 @@ update_option('top_opt_custom_hashtag_field','');
 update_option('top_opt_custom_hashtag_option','nohashtag');
 update_option('top_opt_custom_url_field','');
 update_option('top_opt_custom_url_option','');
-update_option('top_opt_excluded_post','');
+//update_option('top_opt_excluded_post','');
 update_option('top_opt_hashtags','');
 update_option('top_opt_hashtag_length','20');
 update_option('top_opt_include_link','no');
@@ -580,6 +580,8 @@ delete_option('top_opt_tweeted_posts');
 update_option('top_opt_url_shortener','is.gd');
 update_option('top_opt_use_inline_hashtags','');
 update_option('top_opt_use_url_shortner','');
+update_option('top_opt_admin_url','');
+//wp_redirect(top_currentPageURL());
 }
 
 ?>

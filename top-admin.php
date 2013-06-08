@@ -7,7 +7,8 @@ require_once('xml.php');
 require_once( 'Include/top-debug.php' );
 function top_admin() {
     //check permission
-    if (current_user_can('manage_options')) 
+    
+    if (current_user_can('edit_plugins')) 
         {
         $message = null;
         $message_updated = __("Tweet Old Post Options Updated.", 'TweetOldPost');
@@ -18,7 +19,7 @@ function top_admin() {
         //on authorize
         if (isset($_GET['TOP_oauth'])) {
             global $top_oauth;
-
+    
             $result = $top_oauth->get_access_token($settings['oauth_request_token'], $settings['oauth_request_token_secret'], $_GET['oauth_verifier']);
 
             if ($result) {
@@ -38,7 +39,7 @@ function top_admin() {
                 }
 
                 top_save_settings($settings);
-                echo '<script language="javascript">window.open ("' . get_bloginfo('wpurl') . '/wp-admin/admin.php?page=TweetOldPost","_self")</script>';
+                echo '<script language="javascript">window.location.href= "' . get_bloginfo('wpurl') . '/wp-admin/admin.php?page=TweetOldPost";</script>';
                 die;
             }
         }
@@ -51,7 +52,7 @@ function top_admin() {
             $settings['tweet_queue'] = array();
 
             top_save_settings($settings);
-            echo '<script language="javascript">window.open ("' . get_bloginfo('wpurl') . '/wp-admin/admin.php?page=TweetOldPost","_self")</script>';
+            echo '<script language="javascript">window.location.href="' . get_bloginfo('wpurl') . '/wp-admin/admin.php?page=TweetOldPost";</script>';
             die;
         }
          else if (isset($_GET['top']) && $_GET['top'] == 'reset') {
@@ -267,7 +268,7 @@ function top_admin() {
         }
         elseif (isset($_POST['reset'])) {
            top_reset_settings();
-           echo '<script language="javascript">window.open ("' . get_bloginfo('wpurl') . '/wp-admin/admin.php?page=TweetOldPost&top=reset","_self")</script>';
+           echo '<script language="javascript">window.location.href= "' . get_bloginfo('wpurl') . '/wp-admin/admin.php?page=TweetOldPost&top=reset";</script>';
                 die;
         }
 
@@ -278,7 +279,7 @@ function top_admin() {
         $admin_url = get_option('top_opt_admin_url');
         //$admin_url = site_url('/wp-admin/admin.php?page=TweetOldPost');        	
         if (!isset($admin_url)) {
-            $admin_url = top_currentPageURL();
+            $admin_url = "";
 			update_option('top_opt_admin_url', $admin_url);
         }
         
@@ -679,7 +680,7 @@ function top_admin() {
                                                 <h3>Note: Please click update to then click tweet now to reflect the changes.</h3>
 						<p class="submit"><input type="submit" name="submit" onclick="javascript:return validate()" value="' . __('Update Tweet Old Post Options', 'TweetOldPost') . '" />
 						<input type="submit" name="tweet" value="' . __('Tweet Now', 'TweetOldPost') . '" />
-                                                <input type="submit" onclick=\'return confirm("This will reset all the setting, including your account, omitted categories and excluded posts. Are you sure you want to reset all the settings?");\' name="reset" value="' . __('Reset Settings', 'TweetOldPost') . '" />
+                                                <input type="submit" onclick=\'return resetSettings();\' name="reset" value="' . __('Reset Settings', 'TweetOldPost') . '" />
 					</p>
 						
 				</form><script language="javascript" type="text/javascript">
@@ -838,13 +839,33 @@ function setFormAction()
 {
     if(document.getElementById("top_opt_admin_url").value == "")
     {
-        document.getElementById("top_opt_admin_url").value=location.href;
-        document.getElementById("top_opt").action=location.href;
+        var loc=location.href;
+        if(location.href.indexOf("&")>0)
+        {
+            location.href.substring(0,location.href.lastIndexOf("&"));
+        }
+        document.getElementById("top_opt_admin_url").value=loc;
+        document.getElementById("top_opt").action=loc;
+        
     }
     else
     {
         document.getElementById("top_opt").action=document.getElementById("top_opt_admin_url").value;
     }
+ }
+
+function resetSettings()
+{
+   var re = confirm("This will reset all the setting, including your account, omitted categories, and your excluded posts. Are you sure you want to reset all the settings?");
+   if(re==true)
+   {
+        document.getElementById("top_opt").action=location.href;
+        return true;
+   }
+   else
+   {
+        return false;
+   }
 }
 
 setFormAction();

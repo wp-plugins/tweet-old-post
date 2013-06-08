@@ -37,12 +37,11 @@ For updates follow http://twitter.com/matharuajay
 **Let me know if you have any more ideas**
 
 
-**New in v4.0.5**
+**New in v4.0.6**
 
-- Implemented Twitter API v1.1 as Twitter is retiring API v1 from 7th May.
-- Handled conflict with BackWPup plugin.
-- Some performance improvements with WPSuperCache plugin.
-- Some design changes.
+- Changed how pages are navigated. Should not conflict with any of the plugin that interacts with twitter ever.
+- For "Page not found", update the settings and then authorize with twitter.
+- If you are not able to update anything or you are redirecting to your home page, reset the settings and try again.
 - Code Cleanup.
 
 
@@ -142,6 +141,14 @@ http://www.ajaymatharu.com/wordpress-plugin-tweet-old-posts/
 
 
 == Changelog ==
+
+
+**New in v4.0.6**
+
+- Changed how pages are navigated. Should not conflict with any of the plugin that interacts with twitter ever.
+- For "Page not found", update the settings and then authorize with twitter.
+- If you are not able to update anything or you are redirecting to your home page, reset the settings and try again.
+- Code Cleanup.
 
 
 **New in v4.0.5**
@@ -389,6 +396,14 @@ http://www.ajaymatharu.com/major-update-to-tweet-old-post/
 
 
 == Other Notes ==
+
+
+**New in v4.0.6**
+
+- Changed how pages are navigated. Should not conflict with any of the plugin that interacts with twitter ever.
+- For "Page not found", update the settings and then authorize with twitter.
+- If you are not able to update anything or you are redirecting to your home page, reset the settings and try again.
+- Code Cleanup.
 
 
 **New in v4.0.5**
