@@ -14,7 +14,7 @@ Tweet Old Posts is a plugin designed to tweet your older posts to get more traff
 
 This plugin helps you to keeps your old posts alive by tweeting about them and driving more traffic to them from twitter. It also helps you to promote your content. You can set time and no of tweets to post to drive more traffic.For questions, comments, or feature requests, contact me! <a href="http://www.ajaymatharu.com/">Ajay Matharu</a> you can follow me twitter at <a href="http://twitter.com/matharuajay/">@matharuajay</a>.
 
-For updates follow http://twitter.com/matharuajay
+For updates follow http://twitter.com/matharuajay. If you have anything you can post your comment at <a href="http://www.ajaymatharu.com/tweet-old-post/">Tweet Old Post Page.</a>
 
 
 **Fortcoming**
