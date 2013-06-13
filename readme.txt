@@ -37,6 +37,11 @@ For updates follow http://twitter.com/matharuajay. If you have anything you can 
 **Let me know if you have any more ideas**
 
 
+**New in v4.0.7**
+
+- Resolved tweet not posting issue.
+
+
 **New in v4.0.6**
 
 - Changed how pages are navigated. Should not conflict with any of the plugin that interacts with twitter ever.
@@ -141,6 +146,11 @@ http://www.ajaymatharu.com/wordpress-plugin-tweet-old-posts/
 
 
 == Changelog ==
+
+
+**New in v4.0.7**
+
+- Resolved tweet not posting issue.
 
 
 **New in v4.0.6**
@@ -396,6 +406,11 @@ http://www.ajaymatharu.com/major-update-to-tweet-old-post/
 
 
 == Other Notes ==
+
+
+**New in v4.0.7**
+
+- Resolved tweet not posting issue.
 
 
 **New in v4.0.6**

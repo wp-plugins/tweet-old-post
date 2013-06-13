@@ -357,7 +357,7 @@ class TOPOAuth {
 			TOP_DEBUG( '..params are ' . print_r( $params, true ) );	
 		}
         
-        $url = 'http://api.twitter.com/1/statuses/update.json';
+        $url = 'http://api.twitter.com/1.1/statuses/update.json';
 
         $result = $this->do_oauth($url, $params, $token_secret);
         if ($result) {
