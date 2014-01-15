@@ -2,7 +2,7 @@
 Contributors: Ajay Matharu
 Tags: Tweet old post, Tweets, Promote old post by tweeting about them, Twitter, Auto Tweet, Hashtags, Twitter Hashtags, Tweet Posts, Tweet, Post Tweets, Wordpress Twitter Plugin, Twitter Plugin, Tweet Selected Posts, Twitter, Promote Posts, Tweet Random Post, Share Post, Promote Post, Post Tweets, Wordpress Twitter, Drive Traffic, Tweet Selected Posts
 Requires at least: 2.7
-Tested up to: 3.5.1
+Tested up to: 3.8
 Stable tag: trunk
 
 
@@ -35,6 +35,12 @@ For updates follow http://twitter.com/matharuajay. If you have anything you can 
 
 
 **Let me know if you have any more ideas**
+
+
+**New in v4.0.8**
+
+- Resolved twitter connectivity issue. Twitter has changed their policy 
+as per https://dev.twitter.com/discussions/24239
 
 
 **New in v4.0.7**
@@ -146,6 +152,13 @@ http://www.ajaymatharu.com/wordpress-plugin-tweet-old-posts/
 
 
 == Changelog ==
+
+
+**New in v4.0.8**
+
+- Resolved twitter connectivity issue. Twitter has changed their policy 
+as per https://dev.twitter.com/discussions/24239
+
 
 
 **New in v4.0.7**
@@ -406,6 +419,12 @@ http://www.ajaymatharu.com/major-update-to-tweet-old-post/
 
 
 == Other Notes ==
+
+
+**New in v4.0.8**
+
+- Resolved twitter connectivity issue. Twitter has changed their policy 
+as per https://dev.twitter.com/discussions/24239
 
 
 **New in v4.0.7**

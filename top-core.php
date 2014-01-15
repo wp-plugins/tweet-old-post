@@ -487,12 +487,14 @@ function top_get_auth_url() {
     $settings = top_get_settings();
 
     $token = $top_oauth->get_request_token();
+
     if ($token) {
         $settings['oauth_request_token'] = $token['oauth_token'];
         $settings['oauth_request_token_secret'] = $token['oauth_token_secret'];
 
         top_save_settings($settings);
 
+	//return 'https://api.twitter.com/oauth/authorize';
         return $top_oauth->get_auth_url($token['oauth_token']);
     }
 }

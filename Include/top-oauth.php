@@ -9,10 +9,10 @@ require_once( 'top-debug.php' );
 define('TOP_OAUTH_CONSUMER_KEY', 'ofaYongByVpa3NDEbXa2g');
 
 
-define('TOP_OAUTH_REQUEST_URL', 'http://api.twitter.com/oauth/request_token');
-define('TOP_OAUTH_ACCESS_URL', 'http://api.twitter.com/oauth/access_token');
-define('TOP_OAUTH_AUTHORIZE_URL', 'http://api.twitter.com/oauth/authorize');
-define('TOP_OAUTH_REALM', 'http://twitter.com/');
+define('TOP_OAUTH_REQUEST_URL', 'https://api.twitter.com/oauth/request_token');
+define('TOP_OAUTH_ACCESS_URL', 'https://api.twitter.com/oauth/access_token');
+define('TOP_OAUTH_AUTHORIZE_URL', 'https://api.twitter.com/oauth/authorize');
+define('TOP_OAUTH_REALM', 'https://twitter.com/');
 
 class TOPOAuth {
 
@@ -80,6 +80,7 @@ class TOPOAuth {
         $base_string = $base_string . $this->encode(implode($encoded_params, "&"));
 
         TOP_DEBUG('Signature base string is: ' . $base_string);
+
         return $base_string;
     }
 
@@ -123,7 +124,12 @@ class TOPOAuth {
             TOP_DEBUG('..using CURL transport');
 
             // we're doing a POST request
-            curl_setopt($ch, CURLOPT_POST, 1);
+        	    curl_setopt($ch, CURLOPT_POST, 1);
+
+	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 1);
+	curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 1);
+	curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
+        //curl_setopt($ch,CURLOPT_CAINFO,"cacert.pem");
 
             $body_array = array();
             foreach ($body_params as $key => $value) {
@@ -146,21 +152,23 @@ class TOPOAuth {
                 TOP_DEBUG('..CURLOPT_FOLLOWLOCATION is ON');
             }
 
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            
+      		$contents = curl_exec($ch);
 
-            if (( $contents = curl_exec($ch))) {
-                $response = curl_getinfo($ch);
+
+            if ($contents != '') {
+                $response1 = curl_getinfo($ch);
                 curl_close($ch);
 
-                TOP_DEBUG('..CURL returned a status code of ' . $response['http_code']);
+     
 
-                $this->response_code = $response['http_code'];
-                if ($response['http_code'] == 200) {
+                $this->response_code = $response1['http_code'];
+                if ($response1['http_code'] == 200) {
                     return $contents;
                 } else {
-                    TOP_DEBUG('..RESPONSE was ' . print_r($response, true));
+                    TOP_DEBUG('..RESPONSE was ' . print_r($response1, true));
 
-                    switch ($response['http_code']) {
+                    switch ($response1['http_code']) {
                         case 403:
                             $this->duplicate_tweet = true;
                             break;
@@ -309,11 +317,12 @@ class TOPOAuth {
         if ( top_is_debug_enabled() ) {
 			TOP_DEBUG( '..params are ' . print_r( $params, true ) );	
 		}
-        
+
         $result = $this->do_oauth(TOP_OAUTH_REQUEST_URL, $params);
 
         if ($result) {
             $new_params = $this->parse_params($result);
+
             return $new_params;
         }
     }
@@ -357,7 +366,7 @@ class TOPOAuth {
 			TOP_DEBUG( '..params are ' . print_r( $params, true ) );	
 		}
         
-        $url = 'http://api.twitter.com/1.1/statuses/update.json';
+        $url = 'https://api.twitter.com/1.1/statuses/update.json';
 
         $result = $this->do_oauth($url, $params, $token_secret);
         if ($result) {
@@ -377,7 +386,7 @@ class TOPOAuth {
     }
 
     function get_user_info($user_id) {
-        $url = 'http://api.twitter.com/1.1/users/show.json?id=' . $user_id;
+        $url = 'https://api.twitter.com/1.1/users/show.json?id=' . $user_id;
 
         $result = $this->do_get_request($url);
         if ($result) {

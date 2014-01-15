@@ -1,0 +1,301 @@
+  1389811111 In function get_request_token
+  1389811111 ..params are Array
+(
+    [oauth_consumer_key] => ofaYongByVpa3NDEbXa2g
+    [oauth_callback] => http://localhost:85/wordpress/wp-admin/admin.php?page=TweetOldPost&amp;TOP_oauth=1
+    [oauth_signature_method] => HMAC-SHA1
+    [oauth_timestamp] => 1389811111
+    [oauth_nonce] => 48216e9d6bc55a61d7e7de1328582130
+    [oauth_version] => 1.0
+)
+
+  1389811111 Signature base string is: POST&https%3A%2F%2Fapi.twitter.com%2Foauth%2Frequest_token&oauth_callback%3Dhttp%253A%252F%252Flocalhost%253A85%252Fwordpress%252Fwp-admin%252Fadmin.php%253Fpage%253DTweetOldPost%2526amp%253BTOP_oauth%253D1%26oauth_consumer_key%3DofaYongByVpa3NDEbXa2g%26oauth_nonce%3D48216e9d6bc55a61d7e7de1328582130%26oauth_signature_method%3DHMAC-SHA1%26oauth_timestamp%3D1389811111%26oauth_version%3D1.0
+  1389811111 Doing POST request, OAUTH header is OAuth oauth_consumer_key="ofaYongByVpa3NDEbXa2g", oauth_callback="http%3A%2F%2Flocalhost%3A85%2Fwordpress%2Fwp-admin%2Fadmin.php%3Fpage%3DTweetOldPost%26amp%3BTOP_oauth%3D1", oauth_signature_method="HMAC-SHA1", oauth_timestamp="1389811111", oauth_nonce="48216e9d6bc55a61d7e7de1328582130", oauth_version="1.0", oauth_signature="V%2FZ4%2B%2FUPqfn2i9Z2q4zSnyoXlh0%3D"
+  1389811111 ..using CURL transport
+  1389811111 ..POST parameters are Array
+(
+)
+
+  1389811111 ..CURLOPT_FOLLOWLOCATION is ON
+  1389811112 contet is 1
+  1389811112 ..CURL didn't return any contents
+  1389811936 In function get_request_token
+  1389811936 ..params are Array
+(
+    [oauth_consumer_key] => ofaYongByVpa3NDEbXa2g
+    [oauth_callback] => http://localhost:85/wordpress/wp-admin/admin.php?page=TweetOldPost&amp;TOP_oauth=1
+    [oauth_signature_method] => HMAC-SHA1
+    [oauth_timestamp] => 1389811936
+    [oauth_nonce] => 7abb1871d41a8bfaacf618930642c55d
+    [oauth_version] => 1.0
+)
+
+  1389811936 Signature base string is: POST&https%3A%2F%2Fapi.twitter.com%2Foauth%2Frequest_token&oauth_callback%3Dhttp%253A%252F%252Flocalhost%253A85%252Fwordpress%252Fwp-admin%252Fadmin.php%253Fpage%253DTweetOldPost%2526amp%253BTOP_oauth%253D1%26oauth_consumer_key%3DofaYongByVpa3NDEbXa2g%26oauth_nonce%3D7abb1871d41a8bfaacf618930642c55d%26oauth_signature_method%3DHMAC-SHA1%26oauth_timestamp%3D1389811936%26oauth_version%3D1.0
+  1389811936 Doing POST request, OAUTH header is OAuth oauth_consumer_key="ofaYongByVpa3NDEbXa2g", oauth_callback="http%3A%2F%2Flocalhost%3A85%2Fwordpress%2Fwp-admin%2Fadmin.php%3Fpage%3DTweetOldPost%26amp%3BTOP_oauth%3D1", oauth_signature_method="HMAC-SHA1", oauth_timestamp="1389811936", oauth_nonce="7abb1871d41a8bfaacf618930642c55d", oauth_version="1.0", oauth_signature="YS4tC1%2FTQCE8fXJH1MlVcYm98RI%3D"
+  1389811936 ..using CURL transport
+  1389811936 ..POST parameters are Array
+(
+)
+
+  1389811936 ..CURLOPT_FOLLOWLOCATION is ON
+  1389811937 ..CURL didn't return any contents
+  1389812129 In function get_request_token
+  1389812129 ..params are Array
+(
+    [oauth_consumer_key] => ofaYongByVpa3NDEbXa2g
+    [oauth_callback] => http://localhost:85/wordpress/wp-admin/admin.php?page=TweetOldPost&amp;TOP_oauth=1
+    [oauth_signature_method] => HMAC-SHA1
+    [oauth_timestamp] => 1389812129
+    [oauth_nonce] => 52bea0f6e3eb47f217c01ca555bec731
+    [oauth_version] => 1.0
+)
+
+  1389812129 Signature base string is: POST&https%3A%2F%2Fapi.twitter.com%2Foauth%2Frequest_token&oauth_callback%3Dhttp%253A%252F%252Flocalhost%253A85%252Fwordpress%252Fwp-admin%252Fadmin.php%253Fpage%253DTweetOldPost%2526amp%253BTOP_oauth%253D1%26oauth_consumer_key%3DofaYongByVpa3NDEbXa2g%26oauth_nonce%3D52bea0f6e3eb47f217c01ca555bec731%26oauth_signature_method%3DHMAC-SHA1%26oauth_timestamp%3D1389812129%26oauth_version%3D1.0
+  1389812129 Doing POST request, OAUTH header is OAuth oauth_consumer_key="ofaYongByVpa3NDEbXa2g", oauth_callback="http%3A%2F%2Flocalhost%3A85%2Fwordpress%2Fwp-admin%2Fadmin.php%3Fpage%3DTweetOldPost%26amp%3BTOP_oauth%3D1", oauth_signature_method="HMAC-SHA1", oauth_timestamp="1389812129", oauth_nonce="52bea0f6e3eb47f217c01ca555bec731", oauth_version="1.0", oauth_signature="Az8EmuEGkVMYEkpZcF%2F5Eiat42g%3D"
+  1389812129 ..using CURL transport
+  1389812129 ..POST parameters are Array
+(
+)
+
+  1389812129 ..CURLOPT_FOLLOWLOCATION is ON
+  1389812130 ..CURL didn't return any contents
+  1389812169 In function get_request_token
+  1389812169 ..params are Array
+(
+    [oauth_consumer_key] => ofaYongByVpa3NDEbXa2g
+    [oauth_callback] => http://localhost:85/wordpress/wp-admin/admin.php?page=TweetOldPost&amp;TOP_oauth=1
+    [oauth_signature_method] => HMAC-SHA1
+    [oauth_timestamp] => 1389812169
+    [oauth_nonce] => f87f3bf1c5927752b4399c7d143da97d
+    [oauth_version] => 1.0
+)
+
+  1389812169 Signature base string is: POST&https%3A%2F%2Fapi.twitter.com%2Foauth%2Frequest_token&oauth_callback%3Dhttp%253A%252F%252Flocalhost%253A85%252Fwordpress%252Fwp-admin%252Fadmin.php%253Fpage%253DTweetOldPost%2526amp%253BTOP_oauth%253D1%26oauth_consumer_key%3DofaYongByVpa3NDEbXa2g%26oauth_nonce%3Df87f3bf1c5927752b4399c7d143da97d%26oauth_signature_method%3DHMAC-SHA1%26oauth_timestamp%3D1389812169%26oauth_version%3D1.0
+  1389812169 Doing POST request, OAUTH header is OAuth oauth_consumer_key="ofaYongByVpa3NDEbXa2g", oauth_callback="http%3A%2F%2Flocalhost%3A85%2Fwordpress%2Fwp-admin%2Fadmin.php%3Fpage%3DTweetOldPost%26amp%3BTOP_oauth%3D1", oauth_signature_method="HMAC-SHA1", oauth_timestamp="1389812169", oauth_nonce="f87f3bf1c5927752b4399c7d143da97d", oauth_version="1.0", oauth_signature="qQfRV5%2FTUGMDl4WKwZn4XH5QM0w%3D"
+  1389812169 ..using CURL transport
+  1389812169 ..POST parameters are Array
+(
+)
+
+  1389812169 ..CURLOPT_FOLLOWLOCATION is ON
+  1389812169 In function get_request_token
+  1389812169 ..params are Array
+(
+    [oauth_consumer_key] => ofaYongByVpa3NDEbXa2g
+    [oauth_callback] => http://localhost:85/wordpress/wp-admin/admin.php?page=TweetOldPost&amp;TOP_oauth=1
+    [oauth_signature_method] => HMAC-SHA1
+    [oauth_timestamp] => 1389812169
+    [oauth_nonce] => 3fbb508d9ea11f1f6f2e348a4e6c6e73
+    [oauth_version] => 1.0
+)
+
+  1389812169 Signature base string is: POST&https%3A%2F%2Fapi.twitter.com%2Foauth%2Frequest_token&oauth_callback%3Dhttp%253A%252F%252Flocalhost%253A85%252Fwordpress%252Fwp-admin%252Fadmin.php%253Fpage%253DTweetOldPost%2526amp%253BTOP_oauth%253D1%26oauth_consumer_key%3DofaYongByVpa3NDEbXa2g%26oauth_nonce%3D3fbb508d9ea11f1f6f2e348a4e6c6e73%26oauth_signature_method%3DHMAC-SHA1%26oauth_timestamp%3D1389812169%26oauth_version%3D1.0
+  1389812169 Doing POST request, OAUTH header is OAuth oauth_consumer_key="ofaYongByVpa3NDEbXa2g", oauth_callback="http%3A%2F%2Flocalhost%3A85%2Fwordpress%2Fwp-admin%2Fadmin.php%3Fpage%3DTweetOldPost%26amp%3BTOP_oauth%3D1", oauth_signature_method="HMAC-SHA1", oauth_timestamp="1389812169", oauth_nonce="3fbb508d9ea11f1f6f2e348a4e6c6e73", oauth_version="1.0", oauth_signature="MlQLG%2FphHbVoY4YkIosWto9LNX8%3D"
+  1389812169 ..using CURL transport
+  1389812169 ..POST parameters are Array
+(
+)
+
+  1389812169 ..CURLOPT_FOLLOWLOCATION is ON
+  1389812169 ..CURL didn't return any contents
+  1389812170 ..CURL didn't return any contents
+  1389812170 In function get_request_token
+  1389812170 ..params are Array
+(
+    [oauth_consumer_key] => ofaYongByVpa3NDEbXa2g
+    [oauth_callback] => http://localhost:85/wordpress/wp-admin/admin.php?page=TweetOldPost&amp;TOP_oauth=1
+    [oauth_signature_method] => HMAC-SHA1
+    [oauth_timestamp] => 1389812170
+    [oauth_nonce] => 7db75db2dd6f73a5d19b8378979bdb24
+    [oauth_version] => 1.0
+)
+
+  1389812170 Signature base string is: POST&https%3A%2F%2Fapi.twitter.com%2Foauth%2Frequest_token&oauth_callback%3Dhttp%253A%252F%252Flocalhost%253A85%252Fwordpress%252Fwp-admin%252Fadmin.php%253Fpage%253DTweetOldPost%2526amp%253BTOP_oauth%253D1%26oauth_consumer_key%3DofaYongByVpa3NDEbXa2g%26oauth_nonce%3D7db75db2dd6f73a5d19b8378979bdb24%26oauth_signature_method%3DHMAC-SHA1%26oauth_timestamp%3D1389812170%26oauth_version%3D1.0
+  1389812170 Doing POST request, OAUTH header is OAuth oauth_consumer_key="ofaYongByVpa3NDEbXa2g", oauth_callback="http%3A%2F%2Flocalhost%3A85%2Fwordpress%2Fwp-admin%2Fadmin.php%3Fpage%3DTweetOldPost%26amp%3BTOP_oauth%3D1", oauth_signature_method="HMAC-SHA1", oauth_timestamp="1389812170", oauth_nonce="7db75db2dd6f73a5d19b8378979bdb24", oauth_version="1.0", oauth_signature="8mL5Sa1xfjoGJk54YcTE8E1IZoQ%3D"
+  1389812170 ..using CURL transport
+  1389812170 ..POST parameters are Array
+(
+)
+
+  1389812170 ..CURLOPT_FOLLOWLOCATION is ON
+  1389812170 In function get_request_token
+  1389812170 ..params are Array
+(
+    [oauth_consumer_key] => ofaYongByVpa3NDEbXa2g
+    [oauth_callback] => http://localhost:85/wordpress/wp-admin/admin.php?page=TweetOldPost&amp;TOP_oauth=1
+    [oauth_signature_method] => HMAC-SHA1
+    [oauth_timestamp] => 1389812170
+    [oauth_nonce] => f2234d1eb814a26d0079aea8e149497d
+    [oauth_version] => 1.0
+)
+
+  1389812170 Signature base string is: POST&https%3A%2F%2Fapi.twitter.com%2Foauth%2Frequest_token&oauth_callback%3Dhttp%253A%252F%252Flocalhost%253A85%252Fwordpress%252Fwp-admin%252Fadmin.php%253Fpage%253DTweetOldPost%2526amp%253BTOP_oauth%253D1%26oauth_consumer_key%3DofaYongByVpa3NDEbXa2g%26oauth_nonce%3Df2234d1eb814a26d0079aea8e149497d%26oauth_signature_method%3DHMAC-SHA1%26oauth_timestamp%3D1389812170%26oauth_version%3D1.0
+  1389812170 Doing POST request, OAUTH header is OAuth oauth_consumer_key="ofaYongByVpa3NDEbXa2g", oauth_callback="http%3A%2F%2Flocalhost%3A85%2Fwordpress%2Fwp-admin%2Fadmin.php%3Fpage%3DTweetOldPost%26amp%3BTOP_oauth%3D1", oauth_signature_method="HMAC-SHA1", oauth_timestamp="1389812170", oauth_nonce="f2234d1eb814a26d0079aea8e149497d", oauth_version="1.0", oauth_signature="JdsIEDVfnNdOFSvT0UTpRMyN3%2Bg%3D"
+  1389812170 ..using CURL transport
+  1389812170 ..POST parameters are Array
+(
+)
+
+  1389812170 ..CURLOPT_FOLLOWLOCATION is ON
+  1389812170 ..CURL didn't return any contents
+  1389812170 ..CURL didn't return any contents
+  1389812170 In function get_request_token
+  1389812170 ..params are Array
+(
+    [oauth_consumer_key] => ofaYongByVpa3NDEbXa2g
+    [oauth_callback] => http://localhost:85/wordpress/wp-admin/admin.php?page=TweetOldPost&amp;TOP_oauth=1
+    [oauth_signature_method] => HMAC-SHA1
+    [oauth_timestamp] => 1389812170
+    [oauth_nonce] => b8b139c2e9058f81ae0221acb896ba07
+    [oauth_version] => 1.0
+)
+
+  1389812170 Signature base string is: POST&https%3A%2F%2Fapi.twitter.com%2Foauth%2Frequest_token&oauth_callback%3Dhttp%253A%252F%252Flocalhost%253A85%252Fwordpress%252Fwp-admin%252Fadmin.php%253Fpage%253DTweetOldPost%2526amp%253BTOP_oauth%253D1%26oauth_consumer_key%3DofaYongByVpa3NDEbXa2g%26oauth_nonce%3Db8b139c2e9058f81ae0221acb896ba07%26oauth_signature_method%3DHMAC-SHA1%26oauth_timestamp%3D1389812170%26oauth_version%3D1.0
+  1389812170 Doing POST request, OAUTH header is OAuth oauth_consumer_key="ofaYongByVpa3NDEbXa2g", oauth_callback="http%3A%2F%2Flocalhost%3A85%2Fwordpress%2Fwp-admin%2Fadmin.php%3Fpage%3DTweetOldPost%26amp%3BTOP_oauth%3D1", oauth_signature_method="HMAC-SHA1", oauth_timestamp="1389812170", oauth_nonce="b8b139c2e9058f81ae0221acb896ba07", oauth_version="1.0", oauth_signature="MvZd4X2Vn%2F%2FrMd6F0NJbZJLC%2Fbc%3D"
+  1389812170 ..using CURL transport
+  1389812170 ..POST parameters are Array
+(
+)
+
+  1389812170 ..CURLOPT_FOLLOWLOCATION is ON
+  1389812171 ..CURL didn't return any contents
+  1389812910 In function get_request_token
+  1389812910 ..params are Array
+(
+    [oauth_consumer_key] => ofaYongByVpa3NDEbXa2g
+    [oauth_callback] => http://localhost:85/wordpress/wp-admin/admin.php?page=TweetOldPost&amp;TOP_oauth=1
+    [oauth_signature_method] => HMAC-SHA1
+    [oauth_timestamp] => 1389812910
+    [oauth_nonce] => 6b025a2b03b19ba1d0bddcc9a9456afb
+    [oauth_version] => 1.0
+)
+
+  1389812910 Signature base string is: POST&https%3A%2F%2Fapi.twitter.com%2Foauth%2Frequest_token&oauth_callback%3Dhttp%253A%252F%252Flocalhost%253A85%252Fwordpress%252Fwp-admin%252Fadmin.php%253Fpage%253DTweetOldPost%2526amp%253BTOP_oauth%253D1%26oauth_consumer_key%3DofaYongByVpa3NDEbXa2g%26oauth_nonce%3D6b025a2b03b19ba1d0bddcc9a9456afb%26oauth_signature_method%3DHMAC-SHA1%26oauth_timestamp%3D1389812910%26oauth_version%3D1.0
+  1389812910 Doing POST request, OAUTH header is OAuth oauth_consumer_key="ofaYongByVpa3NDEbXa2g", oauth_callback="http%3A%2F%2Flocalhost%3A85%2Fwordpress%2Fwp-admin%2Fadmin.php%3Fpage%3DTweetOldPost%26amp%3BTOP_oauth%3D1", oauth_signature_method="HMAC-SHA1", oauth_timestamp="1389812910", oauth_nonce="6b025a2b03b19ba1d0bddcc9a9456afb", oauth_version="1.0", oauth_signature="%2Bd5k%2FtJFVHnr1hMZ8KE4QzU%2BTWQ%3D"
+  1389812910 ..using CURL transport
+  1389812910 ..POST parameters are Array
+(
+)
+
+  1389812910 ..CURLOPT_FOLLOWLOCATION is ON
+  1389812911 ..CURL didn't return any contents
+  1389812916 In function get_request_token
+  1389812916 ..params are Array
+(
+    [oauth_consumer_key] => ofaYongByVpa3NDEbXa2g
+    [oauth_callback] => http://localhost:85/wordpress/wp-admin/admin.php?page=TweetOldPost&amp;TOP_oauth=1
+    [oauth_signature_method] => HMAC-SHA1
+    [oauth_timestamp] => 1389812916
+    [oauth_nonce] => 9194bf9ec3dc69febc23a19e2978850a
+    [oauth_version] => 1.0
+)
+
+  1389812916 Signature base string is: POST&https%3A%2F%2Fapi.twitter.com%2Foauth%2Frequest_token&oauth_callback%3Dhttp%253A%252F%252Flocalhost%253A85%252Fwordpress%252Fwp-admin%252Fadmin.php%253Fpage%253DTweetOldPost%2526amp%253BTOP_oauth%253D1%26oauth_consumer_key%3DofaYongByVpa3NDEbXa2g%26oauth_nonce%3D9194bf9ec3dc69febc23a19e2978850a%26oauth_signature_method%3DHMAC-SHA1%26oauth_timestamp%3D1389812916%26oauth_version%3D1.0
+  1389812916 Doing POST request, OAUTH header is OAuth oauth_consumer_key="ofaYongByVpa3NDEbXa2g", oauth_callback="http%3A%2F%2Flocalhost%3A85%2Fwordpress%2Fwp-admin%2Fadmin.php%3Fpage%3DTweetOldPost%26amp%3BTOP_oauth%3D1", oauth_signature_method="HMAC-SHA1", oauth_timestamp="1389812916", oauth_nonce="9194bf9ec3dc69febc23a19e2978850a", oauth_version="1.0", oauth_signature="hKuQ6jQ63YHgjGJ7EZWR764Ligc%3D"
+  1389812916 ..using CURL transport
+  1389812916 ..POST parameters are Array
+(
+)
+
+  1389812916 ..CURLOPT_FOLLOWLOCATION is ON
+  1389812916 In function get_request_token
+  1389812916 ..params are Array
+(
+    [oauth_consumer_key] => ofaYongByVpa3NDEbXa2g
+    [oauth_callback] => http://localhost:85/wordpress/wp-admin/admin.php?page=TweetOldPost&amp;TOP_oauth=1
+    [oauth_signature_method] => HMAC-SHA1
+    [oauth_timestamp] => 1389812916
+    [oauth_nonce] => af4fa591b34d20f15f5b9928431fc9d8
+    [oauth_version] => 1.0
+)
+
+  1389812916 Signature base string is: POST&https%3A%2F%2Fapi.twitter.com%2Foauth%2Frequest_token&oauth_callback%3Dhttp%253A%252F%252Flocalhost%253A85%252Fwordpress%252Fwp-admin%252Fadmin.php%253Fpage%253DTweetOldPost%2526amp%253BTOP_oauth%253D1%26oauth_consumer_key%3DofaYongByVpa3NDEbXa2g%26oauth_nonce%3Daf4fa591b34d20f15f5b9928431fc9d8%26oauth_signature_method%3DHMAC-SHA1%26oauth_timestamp%3D1389812916%26oauth_version%3D1.0
+  1389812916 Doing POST request, OAUTH header is OAuth oauth_consumer_key="ofaYongByVpa3NDEbXa2g", oauth_callback="http%3A%2F%2Flocalhost%3A85%2Fwordpress%2Fwp-admin%2Fadmin.php%3Fpage%3DTweetOldPost%26amp%3BTOP_oauth%3D1", oauth_signature_method="HMAC-SHA1", oauth_timestamp="1389812916", oauth_nonce="af4fa591b34d20f15f5b9928431fc9d8", oauth_version="1.0", oauth_signature="EfNR1xbCi08JbYCZlhDHTqA3FXQ%3D"
+  1389812916 ..using CURL transport
+  1389812916 ..POST parameters are Array
+(
+)
+
+  1389812916 ..CURLOPT_FOLLOWLOCATION is ON
+  1389812916 In function get_request_token
+  1389812916 ..params are Array
+(
+    [oauth_consumer_key] => ofaYongByVpa3NDEbXa2g
+    [oauth_callback] => http://localhost:85/wordpress/wp-admin/admin.php?page=TweetOldPost&amp;TOP_oauth=1
+    [oauth_signature_method] => HMAC-SHA1
+    [oauth_timestamp] => 1389812916
+    [oauth_nonce] => 5e129469ae0bef0043bf8219e50b6a49
+    [oauth_version] => 1.0
+)
+
+  1389812916 Signature base string is: POST&https%3A%2F%2Fapi.twitter.com%2Foauth%2Frequest_token&oauth_callback%3Dhttp%253A%252F%252Flocalhost%253A85%252Fwordpress%252Fwp-admin%252Fadmin.php%253Fpage%253DTweetOldPost%2526amp%253BTOP_oauth%253D1%26oauth_consumer_key%3DofaYongByVpa3NDEbXa2g%26oauth_nonce%3D5e129469ae0bef0043bf8219e50b6a49%26oauth_signature_method%3DHMAC-SHA1%26oauth_timestamp%3D1389812916%26oauth_version%3D1.0
+  1389812916 Doing POST request, OAUTH header is OAuth oauth_consumer_key="ofaYongByVpa3NDEbXa2g", oauth_callback="http%3A%2F%2Flocalhost%3A85%2Fwordpress%2Fwp-admin%2Fadmin.php%3Fpage%3DTweetOldPost%26amp%3BTOP_oauth%3D1", oauth_signature_method="HMAC-SHA1", oauth_timestamp="1389812916", oauth_nonce="5e129469ae0bef0043bf8219e50b6a49", oauth_version="1.0", oauth_signature="Gxi32jbPur2JJL3Vw5oVtiT8scU%3D"
+  1389812916 ..using CURL transport
+  1389812916 ..POST parameters are Array
+(
+)
+
+  1389812916 ..CURLOPT_FOLLOWLOCATION is ON
+  1389812917 ..CURL didn't return any contents
+  1389812917 ..CURL didn't return any contents
+  1389812917 ..CURL didn't return any contents
+  1389813529 In function get_request_token
+  1389813529 ..params are Array
+(
+    [oauth_consumer_key] => ofaYongByVpa3NDEbXa2g
+    [oauth_callback] => http://localhost:85/wordpress/wp-admin/admin.php?page=TweetOldPost&amp;TOP_oauth=1
+    [oauth_signature_method] => HMAC-SHA1
+    [oauth_timestamp] => 1389813529
+    [oauth_nonce] => 59d8108e2dc0fbb7e69c31ce4d7d49a7
+    [oauth_version] => 1.0
+)
+
+  1389813529 Signature base string is: POST&https%3A%2F%2Fapi.twitter.com%2Foauth%2Frequest_token&oauth_callback%3Dhttp%253A%252F%252Flocalhost%253A85%252Fwordpress%252Fwp-admin%252Fadmin.php%253Fpage%253DTweetOldPost%2526amp%253BTOP_oauth%253D1%26oauth_consumer_key%3DofaYongByVpa3NDEbXa2g%26oauth_nonce%3D59d8108e2dc0fbb7e69c31ce4d7d49a7%26oauth_signature_method%3DHMAC-SHA1%26oauth_timestamp%3D1389813529%26oauth_version%3D1.0
+  1389813529 Doing POST request, OAUTH header is OAuth oauth_consumer_key="ofaYongByVpa3NDEbXa2g", oauth_callback="http%3A%2F%2Flocalhost%3A85%2Fwordpress%2Fwp-admin%2Fadmin.php%3Fpage%3DTweetOldPost%26amp%3BTOP_oauth%3D1", oauth_signature_method="HMAC-SHA1", oauth_timestamp="1389813529", oauth_nonce="59d8108e2dc0fbb7e69c31ce4d7d49a7", oauth_version="1.0", oauth_signature="CEKJcKKtZaPIqdWiRIm16VkH%2Bqs%3D"
+  1389813529 ..using CURL transport
+  1389813529 ..POST parameters are Array
+(
+)
+
+  1389813529 ..CURLOPT_FOLLOWLOCATION is ON
+  1389813529 ..CURL didn't return any contents
+  1389813544 In function get_request_token
+  1389813544 ..params are Array
+(
+    [oauth_consumer_key] => ofaYongByVpa3NDEbXa2g
+    [oauth_callback] => http://localhost:85/wordpress/wp-admin/admin.php?page=TweetOldPost&amp;TOP_oauth=1
+    [oauth_signature_method] => HMAC-SHA1
+    [oauth_timestamp] => 1389813544
+    [oauth_nonce] => e3a35319660c3f3b8529b9943aad7a82
+    [oauth_version] => 1.0
+)
+
+  1389813544 Signature base string is: POST&https%3A%2F%2Fapi.twitter.com%2Foauth%2Frequest_token&oauth_callback%3Dhttp%253A%252F%252Flocalhost%253A85%252Fwordpress%252Fwp-admin%252Fadmin.php%253Fpage%253DTweetOldPost%2526amp%253BTOP_oauth%253D1%26oauth_consumer_key%3DofaYongByVpa3NDEbXa2g%26oauth_nonce%3De3a35319660c3f3b8529b9943aad7a82%26oauth_signature_method%3DHMAC-SHA1%26oauth_timestamp%3D1389813544%26oauth_version%3D1.0
+  1389813544 Doing POST request, OAUTH header is OAuth oauth_consumer_key="ofaYongByVpa3NDEbXa2g", oauth_callback="http%3A%2F%2Flocalhost%3A85%2Fwordpress%2Fwp-admin%2Fadmin.php%3Fpage%3DTweetOldPost%26amp%3BTOP_oauth%3D1", oauth_signature_method="HMAC-SHA1", oauth_timestamp="1389813544", oauth_nonce="e3a35319660c3f3b8529b9943aad7a82", oauth_version="1.0", oauth_signature="PnLZBvB0MYceivZOKvNdWMmYCPc%3D"
+  1389813544 ..using CURL transport
+  1389813544 ..POST parameters are Array
+(
+)
+
+  1389813544 ..CURLOPT_FOLLOWLOCATION is ON
+  1389813544 In function get_request_token
+  1389813544 ..params are Array
+(
+    [oauth_consumer_key] => ofaYongByVpa3NDEbXa2g
+    [oauth_callback] => http://localhost:85/wordpress/wp-admin/admin.php?page=TweetOldPost&amp;TOP_oauth=1
+    [oauth_signature_method] => HMAC-SHA1
+    [oauth_timestamp] => 1389813544
+    [oauth_nonce] => 4a4f4c183e37f00ea1be85690cc7a45f
+    [oauth_version] => 1.0
+)
+
+  1389813544 Signature base string is: POST&https%3A%2F%2Fapi.twitter.com%2Foauth%2Frequest_token&oauth_callback%3Dhttp%253A%252F%252Flocalhost%253A85%252Fwordpress%252Fwp-admin%252Fadmin.php%253Fpage%253DTweetOldPost%2526amp%253BTOP_oauth%253D1%26oauth_consumer_key%3DofaYongByVpa3NDEbXa2g%26oauth_nonce%3D4a4f4c183e37f00ea1be85690cc7a45f%26oauth_signature_method%3DHMAC-SHA1%26oauth_timestamp%3D1389813544%26oauth_version%3D1.0
+  1389813544 Doing POST request, OAUTH header is OAuth oauth_consumer_key="ofaYongByVpa3NDEbXa2g", oauth_callback="http%3A%2F%2Flocalhost%3A85%2Fwordpress%2Fwp-admin%2Fadmin.php%3Fpage%3DTweetOldPost%26amp%3BTOP_oauth%3D1", oauth_signature_method="HMAC-SHA1", oauth_timestamp="1389813544", oauth_nonce="4a4f4c183e37f00ea1be85690cc7a45f", oauth_version="1.0", oauth_signature="HNdwqwsGtJo2BSFXtMadM9ZwUe0%3D"
+  1389813544 ..using CURL transport
+  1389813544 ..POST parameters are Array
+(
+)
+
+  1389813544 ..CURLOPT_FOLLOWLOCATION is ON
+  1389813544 ..CURL didn't return any contents
+  1389813544 ..CURL didn't return any contents
