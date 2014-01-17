@@ -126,8 +126,11 @@ class TOPOAuth {
             // we're doing a POST request
         	    curl_setopt($ch, CURLOPT_POST, 1);
 
-	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 1);
-	curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 1);
+	//curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 1);
+	//curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 1);
+        
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+	curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
 	curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
         //curl_setopt($ch,CURLOPT_CAINFO,"cacert.pem");
 

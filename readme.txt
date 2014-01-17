@@ -37,6 +37,12 @@ For updates follow http://twitter.com/matharuajay. If you have anything you can 
 **Let me know if you have any more ideas**
 
 
+**New in v4.0.9**
+
+- Resolved twitter connectivity issue, for users who were not able to connect in 4.0.8. Twitter has changed their policy 
+as per https://dev.twitter.com/discussions/24239
+
+
 **New in v4.0.8**
 
 - Resolved twitter connectivity issue. Twitter has changed their policy 
@@ -152,6 +158,13 @@ http://www.ajaymatharu.com/wordpress-plugin-tweet-old-posts/
 
 
 == Changelog ==
+
+
+**New in v4.0.9**
+
+- Resolved twitter connectivity issue, for users who were not able to connect in 4.0.8. Twitter has changed their policy 
+as per https://dev.twitter.com/discussions/24239
+
 
 
 **New in v4.0.8**
@@ -419,6 +432,13 @@ http://www.ajaymatharu.com/major-update-to-tweet-old-post/
 
 
 == Other Notes ==
+
+
+
+**New in v4.0.9**
+
+- Resolved twitter connectivity issue, for users who were not able to connect in 4.0.8. Twitter has changed their policy 
+as per https://dev.twitter.com/discussions/24239
 
 
 **New in v4.0.8**
