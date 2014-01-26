@@ -1,11 +1,11 @@
 <?php   
 #     /* 
 #     Plugin Name: Tweet old post
-#     Plugin URI: http://www.ajaymatharu.com/wordpress-plugin-tweet-old-posts/
-#     Description: This plugin helps you to keeps your old posts alive by tweeting about them and driving more traffic to them from twitter. It also helps you to promote your content. You can set time and no of tweets to post to drive more traffic.For questions, comments, or feature requests, contact me! <a href="http://www.ajaymatharu.com/">Ajay Matharu</a> you can follow me twitter at <a href="http://twitter.com/matharuajay/">@matharuajay</a>.
-#     Author: Ajay Matharu 
-#     Version: 4.0.9
-#     Author URI: http://www.ajaymatharu.com/
+#     Plugin URI: http://www.readythemes.com/tweet-old-post-lite/
+#     Description: Wordpress plugin that helps you to keeps your old posts alive by tweeting about them and driving more traffic to them from twitter. It also helps you to promote your content. You can set time and no of tweets to post to drive more traffic.For questions, comments, or feature requests, contact me! <a href="http://www.readythemes.com/?r=top">Ionut Neagu</a>.
+#     Author: ReadyThemes 
+#     Version: 4.0.10
+#     Author URI: http://www.readythemes.com/
 #     */  
  
 

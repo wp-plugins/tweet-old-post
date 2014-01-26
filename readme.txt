@@ -1,5 +1,5 @@
 ﻿=== Tweet Old Post ===
-Contributors: Ajay Matharu
+Contributors: codeinwp
 Tags: Tweet old post, Tweets, Promote old post by tweeting about them, Twitter, Auto Tweet, Hashtags, Twitter Hashtags, Tweet Posts, Tweet, Post Tweets, Wordpress Twitter Plugin, Twitter Plugin, Tweet Selected Posts, Twitter, Promote Posts, Tweet Random Post, Share Post, Promote Post, Post Tweets, Wordpress Twitter, Drive Traffic, Tweet Selected Posts
 Requires at least: 2.7
 Tested up to: 3.8
@@ -12,9 +12,9 @@ Plugin to tweet about your old posts to get more hits for them and keep them ali
 
 Tweet Old Posts is a plugin designed to tweet your older posts to get more traffic. 
 
-This plugin helps you to keeps your old posts alive by tweeting about them and driving more traffic to them from twitter. It also helps you to promote your content. You can set time and no of tweets to post to drive more traffic.For questions, comments, or feature requests, contact me! <a href="http://www.ajaymatharu.com/">Ajay Matharu</a> you can follow me twitter at <a href="http://twitter.com/matharuajay/">@matharuajay</a>.
+This plugin helps you to keeps your old posts alive by tweeting about them and driving more traffic to them from twitter. It also helps you to promote your content. You can set time and no of tweets to post to drive more traffic.For questions, comments, or feature requests, contact us! <a href="http://www.readythemes.com/tweet-old-post-lite/?r=top">Ready Themes</a> you can follow me twitter at <a href="http://twitter.com/tweetoldpost/">@tweetoldpost</a>.
 
-For updates follow http://twitter.com/matharuajay. If you have anything you can post your comment at <a href="http://www.ajaymatharu.com/tweet-old-post/">Tweet Old Post Page.</a>
+For updates follow https://twitter.com/tweetoldpost If you have anything you can post your comment at <a href="http://www.readythemes.com/tweet-old-post-lite/">Tweet Old Post Page.</a>
 
 
 **Fortcoming**
@@ -86,8 +86,8 @@ Alternatively you can also follow the following steps to install the Tweet Old P
 
 == Frequently Asked Questions ==
 
-If you have any questions please mail me at,
-ajay@ajaymatharu.com or matharuajay@yahoo.co.in
+If you have any questions please get in touch with us at,
+http://www.readythemes.com/contact/
 
 
 **Plugin page gets blank while trying to authorize**
@@ -143,7 +143,7 @@ plugin.
 
 **Any more questions or doubts?**
 
-- DM me on http://twitter.com/matharuajay or mail me at ajay(at)ajaymatharu(dot)com 
+- Contact us at http://www.readythemes.com/contact/ 
 
 
 == Screenshots ==
@@ -154,7 +154,7 @@ plugin.
 
 for more you can check out 
 
-http://www.ajaymatharu.com/wordpress-plugin-tweet-old-posts/
+http://www.readythemes.com/tweet-old-post-lite/
 
 
 == Changelog ==

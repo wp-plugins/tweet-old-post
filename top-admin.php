@@ -88,6 +88,7 @@ function top_admin() {
             }
         }
 
+        
         //if submit and if bitly selected its fields are filled then save
         if (isset($_POST['submit']) && $save) {
             $message = $message_updated;
@@ -268,7 +269,7 @@ function top_admin() {
         }
         elseif (isset($_POST['reset'])) {
            top_reset_settings();
-           echo '<script language="javascript">window.location.href= "' . get_bloginfo('wpurl') . '/wp-admin/admin.php?page=TweetOldPost&top=reset";</script>';
+           echo '<script language="javascript">window.location.href= "' . get_bloginfo('wpurl') . '/wp-admin/admin.php?page=TweetOldPost";</script>';
                 die;
         }
 
@@ -433,12 +434,12 @@ function top_admin() {
 
         print('
 			<div class="wrap">
-				<h2>' . __('Tweet old post by - ', 'TweetOldPost') . ' <a href="http://www.ajaymatharu.com">Ajay Matharu</a></h2>
+				<h2>' . __('Tweet old post by - ', 'TweetOldPost') . ' <a href="http://www.readythemes.com/tweet-old-post-lite/">ReadyThemes.com</a></h2>
 
-<h3>If you like this plugin, follow <a href="http://www.twitter.com/matharuajay">@matharuajay</a> on Twitter to help keep this plugin free...FOREVER!</h3>
+<h3>Do you want the free version supported ? Then <a href="https://twitter.com/intent/tweet?text=Check-out%20this%20awesome%20plugin%20-%20&url=http%3A%2F%2Fwww.readythemes.com%2Ftweet-old-post-lite%2F&via=ready_themes">show your love</a> on Twitter and don\'t forget to <a href="http://wordpress.org/support/view/plugin-reviews/tweet-old-post">leave a review</a>!</h3>
 
-<a href="https://twitter.com/matharuajay" class="twitter-follow-button" data-show-count="true" data-size="large">Follow @matharuajay</a>
-<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+<p class="themealert">We have just release an awesome free theme, check-it out : <a href="http://www.readythemes.com/reviewgine-lite/?r=top" target="_blank">http://www.readythemes.com/reviewgine-lite/</a></p>
+
 <br /><br />
 
 
