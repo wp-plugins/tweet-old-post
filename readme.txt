@@ -2,7 +2,7 @@
 Contributors: codeinwp
 Tags: Tweet old post, Tweets, Promote old post by tweeting about them, Twitter, Auto Tweet, Hashtags, Twitter Hashtags, Tweet Posts, Tweet, Post Tweets, Wordpress Twitter Plugin, Twitter Plugin, Tweet Selected Posts, Twitter, Promote Posts, Tweet Random Post, Share Post, Promote Post, Post Tweets, Wordpress Twitter, Drive Traffic, Tweet Selected Posts
 Requires at least: 2.7
-Tested up to: 3.8
+Tested up to: 3.9
 Stable tag: trunk
 
 
@@ -12,9 +12,9 @@ Plugin to tweet about your old posts to get more hits for them and keep them ali
 
 Tweet Old Posts is a plugin designed to tweet your older posts to get more traffic. 
 
-This plugin helps you to keeps your old posts alive by tweeting about them and driving more traffic to them from twitter. It also helps you to promote your content. You can set time and no of tweets to post to drive more traffic.For questions, comments, or feature requests, contact us! <a href="http://www.readythemes.com/tweet-old-post-lite/?r=top">Ready Themes</a> you can follow me twitter at <a href="http://twitter.com/tweetoldpost/">@tweetoldpost</a>.
+This plugin helps you to keeps your old posts alive by tweeting about them and driving more traffic to them from twitter. It also helps you to promote your content. You can set time and no of tweets to post to drive more traffic.For questions, comments, or feature requests, <a href="http://themeisle.com/contact/">contact us</a>!
 
-For updates follow https://twitter.com/tweetoldpost If you have anything you can post your comment at <a href="http://www.readythemes.com/tweet-old-post-lite/">Tweet Old Post Page.</a>
+For updates follow https://twitter.com/themeisle If you have anything you can let us know at <a href="http://themeisle.com/contact">here</a>
 
 
 **Fortcoming**
@@ -36,6 +36,9 @@ For updates follow https://twitter.com/tweetoldpost If you have anything you can
 
 **Let me know if you have any more ideas**
 
+**New in v5.0**
+
+- Whole plugin was rewrote from scratch and a pro version was added, so after 50 hours of work, here we are. This change will allow us to easier fix issues/ release new features and maintain the plugin.
 
 **New in v4.0.9**
 
