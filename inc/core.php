@@ -16,7 +16,8 @@ if (!class_exists('CWP_TOP_Core')) {
 		public $consumer;
 		public $consumerSecret;
 		public $oAuthCallback;
-
+		public $bitly_key;
+		public $bitly_user;
 		// Access token, oAuth Token, oAuth Token Secret and User Information
 		private $cwp_top_access_token;
 		private $cwp_top_oauth_token;
@@ -234,6 +235,8 @@ if (!class_exists('CWP_TOP_Core')) {
 			$common_hashtags				= get_option('top_opt_hashtags');
 			$maximum_hashtag_length 		= get_option('top_opt_hashtag_length');
 			$hashtag_custom_field 			= get_option('top_opt_custom_hashtag_field');
+			$bitly_key 						= get_option('top_opt_bitly_key');
+            $bitly_user 					= get_option('top_opt_bitly_user');
 			$additionalTextBeginning 		= "";
 			$additionalTextEnd 				= "";
 
@@ -282,7 +285,7 @@ if (!class_exists('CWP_TOP_Core')) {
 				}
 
 				if($use_url_shortner == 'on') {
-					$post_url = " " . $this->shortenURL($post_url, $url_shortner_service, $postQuery->ID);
+					$post_url = " " . $this->shortenURL($post_url, $url_shortner_service, $postQuery->ID, $bitly_key, $bitly_user);
 				}
 				$post_url = $post_url . " ";
 			} else { $post_url = ""; }
@@ -605,7 +608,7 @@ if (!class_exists('CWP_TOP_Core')) {
 				topProAddNewAccount();
 			}
 			else{
-				_e("You need to <a target='_blank' href='http://themeisle.com/plugins/tweet-old-post-pro'>upgrade to the PRO version</a> in order to add more accounts, fellow pirate!", CWP_TEXTDOMAIN);
+				_e("You need to <a target='_blank' href='http://themeisle.com/plugins/tweet-old-post-pro/?utm_source=topplusacc&utm_medium=announce&utm_campaign=top&upgrade=true'>upgrade to the PRO version</a> in order to add more accounts, fellow pirate!", CWP_TEXTDOMAIN);
 
 			}
 			die(); // Required
@@ -982,10 +985,14 @@ if (!class_exists('CWP_TOP_Core')) {
 		}
 
 		// Shortens the url.
-		public function shortenURL($url, $service, $id) {
-
+		public function shortenURL($url, $service, $id, $bitly_key, $bitly_user) {
+			
 			if ($service == "bit.ly") {
-		        $shortURL = "http://api.bit.ly/v3/shorten?format=txt&login=themeisle&apiKey=R_63828fcfb472493582406758bbdbfb7d&longUrl={$url}";
+				//$shortURL = $url;
+				$url = trim($url);
+				$bitly_key = trim($bitly_key);
+				$bitly_user = trim($bitly_user);
+		        $shortURL = "http://api.bit.ly/v3/shorten?format=txt&login=".$bitly_user."&apiKey=".$bitly_key."&longUrl={$url}";
 		        $shortURL = $this->sendRequest($shortURL, 'GET');
 		    } elseif ($service == "tr.im") {
 		        $shortURL = "http://api.tr.im/api/trim_simple?url={$url}";

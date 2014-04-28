@@ -110,6 +110,8 @@ $cwp_top_fields = array(
 			'options'		=> '',
 	),
 
+
+
 	'url-shortner' => array(
 			'id' 			=> '9',
 			'name'  		=> __('URL Shortner Service', CWP_TEXTDOMAIN), 
@@ -121,7 +123,7 @@ $cwp_top_fields = array(
 				'wp_short_url'		=> __('wp short url', CWP_TEXTDOMAIN),
 				//'t.co'		=> __('t.co', CWP_TEXTDOMAIN),
 				'is.gd'		=> __('is.gd', CWP_TEXTDOMAIN),
-				//'bit.ly'	=> __('bit.ly', CWP_TEXTDOMAIN),
+				'bit.ly'	=> __('bit.ly', CWP_TEXTDOMAIN),
 				//'tr.im'		=> __('tr.im', CWP_TEXTDOMAIN),
 				//'3.ly'		=> __('3.ly', CWP_TEXTDOMAIN),
 				//'u.nu'		=> __('u.nu', CWP_TEXTDOMAIN),
@@ -129,6 +131,26 @@ $cwp_top_fields = array(
 				//'tinyurl'	=> __('TinyUrl', CWP_TEXTDOMAIN)
 
 				)
+	),
+
+	'bitly-key' => array(
+			'id'			=> '22',
+			'name'			=> __('Bitly Key', CWP_TEXTDOMAIN),
+			'type'			=> 'text',
+			'slug'			=> 'bitly-key',
+			'option'		=> 'top_opt_bitly_key',
+			'description'	=> '',
+			'options'		=> '',
+	),
+
+	'bitly-user' => array(
+			'id'			=> '23',
+			'name'			=> __('Bitly User', CWP_TEXTDOMAIN),
+			'type'			=> 'text',
+			'slug'			=> 'bitly-user',
+			'option'		=> 'top_opt_bitly_user',
+			'description'	=> '',
+			'options'		=> '',
 	),
 
 	'custom-hashtag-option' => array(
