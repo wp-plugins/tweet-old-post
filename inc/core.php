@@ -115,8 +115,8 @@ if (!class_exists('CWP_TOP_Core')) {
 			// Generate dynamic query.
 			$query = "
 				SELECT *
-				FROM wp_posts
-				INNER JOIN wp_term_relationships ON (wp_posts.ID = wp_term_relationships.object_id)
+				FROM {$wpdb->prefix}posts
+				INNER JOIN {$wpdb->prefix}term_relationships ON ({$wpdb->prefix}posts.ID = {$wpdb->prefix}term_relationships.object_id)
 				WHERE 1=1
 				  AND ((post_date >= '{$dateQuery['before']}'
 				        AND post_date <= '{$dateQuery['after']}')) ";
@@ -127,19 +127,17 @@ if (!class_exists('CWP_TOP_Core')) {
 		//	}
 
 			if(!empty($postQueryExcludedCategories)) {
-				$query .= "AND ( wp_posts.ID NOT IN (
+				$query .= "AND ( {$wpdb->prefix}posts.ID NOT IN (
 					SELECT object_id
-					FROM wp_term_relationships
+					FROM {$wpdb->prefix}term_relationships
 					WHERE term_taxonomy_id IN ({$postQueryExcludedCategories})))";
 			}
 						  
-			$query .= "AND wp_posts.post_type IN ({$somePostType})
-					  AND (wp_posts.post_status = 'publish')
-					GROUP BY wp_posts.ID
+			$query .= "AND {$wpdb->prefix}posts.post_type IN ({$somePostType})
+					  AND ({$wpdb->prefix}posts.post_status = 'publish')
+					GROUP BY {$wpdb->prefix}posts.ID
 					ORDER BY RAND() DESC LIMIT 0,{$tweetCount}
 			";
-
-			//echo $query;
 
 			// Save the result in a var for future use.
 			$returnedPost = $wpdb->get_results($query);

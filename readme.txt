@@ -36,6 +36,10 @@ For updates follow https://twitter.com/themeisle If you have anything you can le
 
 **Let me know if you have any more ideas**
 
+**New in v5.5**
+
+Fixed the table prefix issue
+
 **New in v5.4**
 
 Fixed the hashtags length issue
