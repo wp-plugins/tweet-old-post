@@ -36,6 +36,10 @@ For updates follow https://twitter.com/themeisle If you have anything you can le
 
 **Let me know if you have any more ideas**
 
+**New in v5.3**
+
+Fixed the custom field issue
+
 **New in v5.2**
 
 Fixed exclude categories error, added wp short url, fixed oauth error, removed broken shorten services.

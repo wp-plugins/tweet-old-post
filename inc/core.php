@@ -259,7 +259,7 @@ if (!class_exists('CWP_TOP_Core')) {
 					break;
 
 				case 'custom-field':
-					$tweetContent = get_post_meta($postQuery->ID, $tweet_content_custom_field);
+					$tweetContent = get_post_meta($postQuery->ID, $tweet_content_custom_field,true);
 					break;
 				default:
 					$tweetContent = $finalTweet;
@@ -278,7 +278,7 @@ if (!class_exists('CWP_TOP_Core')) {
 			// Generate the post link.
 			if($include_link == 'true') {
 				if($fetch_url_from_custom_field == 'on') {
-					$post_url = " " . get_post_meta($postQuery->ID, $custom_field_url) . " ";
+					$post_url = " " . get_post_meta($postQuery->ID, $custom_field_url,true) . " ";
 				} else { 
 					$post_url = " " . get_permalink($postQuery->ID);
 				}
