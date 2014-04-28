@@ -302,7 +302,7 @@ if (!class_exists('CWP_TOP_Core')) {
 						$postCategories = get_the_category($postQuery->ID);
 
 						foreach ($postCategories as $category) {
-							if(strlen($category->cat_name) <= $maximum_hashtag_length || $maximum_hashtag_length == 0) { 
+							if(strlen($category->cat_name.$newHashtags) <= $maximum_hashtag_length || $maximum_hashtag_length == 0) { 
 						 		$newHashtags = $newHashtags . " #" . $category->cat_name; 
 						 	}
 						} 
@@ -312,7 +312,7 @@ if (!class_exists('CWP_TOP_Core')) {
 					case 'tags':
 						$postTags = wp_get_post_tags($postQuery->ID);
 						foreach ($postTags as $postTag) {
-							if(strlen($postTag->slug) <= $maximum_hashtag_length || $maximum_hashtag_length == 0) {
+							if(strlen($postTag->slug.$newHashtags) <= $maximum_hashtag_length || $maximum_hashtag_length == 0) {
 								$newHashtags = $newHashtags . " #" . $postTag->slug;
 							}
 						}

@@ -159,7 +159,7 @@ $cwp_top_fields = array(
 
 	'hashtags-length'		=> array(
 			'id'			=> '12',
-			'name'			=> __('Maximum Hashtag Length', CWP_TEXTDOMAIN),
+			'name'			=> __('Maximum Hashtags Length', CWP_TEXTDOMAIN),
 			'type'			=> 'text',
 			'slug'			=> 'hashtags-length',
 			'option'		=> 'top_opt_hashtag_length',
