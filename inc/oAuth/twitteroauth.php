@@ -12,6 +12,7 @@ require_once('OAuth.php');
 /**
  * Twitter OAuth class
  */
+if (!class_exists('TwitterOAuth')) {
 class TwitterOAuth {
   /* Contains the last HTTP status code returned. */
   public $http_code;
@@ -239,4 +240,5 @@ class TwitterOAuth {
     }
     return strlen($header);
   }
+}
 }

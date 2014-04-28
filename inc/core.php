@@ -107,6 +107,7 @@ if (!class_exists('CWP_TOP_Core')) {
 
 			// Get excluded categories.
 			$postQueryExcludedCategories = $this->getExcludedCategories();			
+			//echo $postQueryExcludedCategories;
 
 			// Get post type set.
 			$somePostType = $this->getTweetPostType();
@@ -121,9 +122,9 @@ if (!class_exists('CWP_TOP_Core')) {
 				        AND post_date <= '{$dateQuery['after']}')) ";
 
 			// If there are no categories set, select the post from all.
-			if(!empty($postQueryCategories)) {
-				$query .= "AND (wp_term_relationships.term_taxonomy_id IN ({$postQueryCategories})) ";
-			}
+			//if(!empty($postQueryCategories)) {
+		//		$query .= "AND (wp_term_relationships.term_taxonomy_id IN ({$postQueryCategories})) ";
+		//	}
 
 			if(!empty($postQueryExcludedCategories)) {
 				$query .= "AND ( wp_posts.ID NOT IN (
@@ -283,7 +284,7 @@ if (!class_exists('CWP_TOP_Core')) {
 				}
 
 				if($use_url_shortner == 'on') {
-					$post_url = " " . $this->shortenURL($post_url, $url_shortner_service);
+					$post_url = " " . $this->shortenURL($post_url, $url_shortner_service, $postQuery->ID);
 				}
 				$post_url = $post_url . " ";
 			} else { $post_url = ""; }
@@ -434,11 +435,11 @@ if (!class_exists('CWP_TOP_Core')) {
 		public function getExcludedCategories()
 		{
 			$postQueryCategories = "";
-			$postsCategories = get_option('top_opt_omit_cats');
+			$postCategories = get_option('top_opt_omit_cats');
 
-			if(!empty($postCategories)&&!is_array($postCategories)) {
-				$lastPostCategory = end($postsCategories);
-				foreach ($postsCategories as $key => $cat) {
+			if(!empty($postCategories) && is_array($postCategories)) {
+				$lastPostCategory = end($postCategories);
+				foreach ($postCategories as $key => $cat) {
 					if($cat == $lastPostCategory) {
 						$postQueryCategories .= $cat;
 					} else { 
@@ -447,7 +448,7 @@ if (!class_exists('CWP_TOP_Core')) {
 				}
 			}
 			else
-				$postsCategories = get_option('top_opt_omit_cats');
+				$postQueryCategories = get_option('top_opt_omit_cats');
 
 			return $postQueryCategories;
 		}
@@ -983,10 +984,10 @@ if (!class_exists('CWP_TOP_Core')) {
 		}
 
 		// Shortens the url.
-		public function shortenURL($url, $service) {
+		public function shortenURL($url, $service, $id) {
 
-			if ($service == "su.pr") {
-		        $shortURL = "http://su.pr/api/simpleshorten?url={$url}";
+			if ($service == "bit.ly") {
+		        $shortURL = "http://api.bit.ly/v3/shorten?format=txt&login=themeisle&apiKey=R_63828fcfb472493582406758bbdbfb7d&longUrl={$url}";
 		        $shortURL = $this->sendRequest($shortURL, 'GET');
 		    } elseif ($service == "tr.im") {
 		        $shortURL = "http://api.tr.im/api/trim_simple?url={$url}";
@@ -1003,9 +1004,14 @@ if (!class_exists('CWP_TOP_Core')) {
 		    } elseif ($service == "1click.at") {
 		        $shortURL = "http://1click.at/api.php?action=shorturl&url={$url}&format=simple";
 		        $shortURL = $this->sendRequest($shortURL, 'GET');
-		    } else {
+		    } elseif ($service == "is.gd") {
 		        $shortURL = "http://is.gd/api.php?longurl={$url}";
 		        $shortURL = $this->sendRequest($shortURL, 'GET');
+		    } elseif ($service == "t.co") {
+		        $shortURL = "http://twitter.com/share?url={$url}";
+		        $shortURL = $this->sendRequest($shortURL, 'GET');
+		    } else {
+		    	$shortURL = wp_get_shortlink($id);
 		    }
 
 		    if($shortURL != ' 400 ') {

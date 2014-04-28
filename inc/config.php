@@ -118,14 +118,15 @@ $cwp_top_fields = array(
 			'option'		=> 'top_opt_url_shortner',
 			'description'	=> __('Shorten the link to your post.', CWP_TEXTDOMAIN),
 			'options'		=> array(
+				'wp_short_url'		=> __('wp short url', CWP_TEXTDOMAIN),
+				//'t.co'		=> __('t.co', CWP_TEXTDOMAIN),
 				'is.gd'		=> __('is.gd', CWP_TEXTDOMAIN),
-				'su.pr'		=> __('su.pr', CWP_TEXTDOMAIN),
-				'bit.ly'	=> __('bit.ly', CWP_TEXTDOMAIN),
-				'tr.im'		=> __('tr.im', CWP_TEXTDOMAIN),
-				'3.ly'		=> __('3.ly', CWP_TEXTDOMAIN),
-				'u.nu'		=> __('u.nu', CWP_TEXTDOMAIN),
-				'1click.at'	=> __('1click.at', CWP_TEXTDOMAIN),
-				'tinyurl'	=> __('TinyUrl', CWP_TEXTDOMAIN)
+				//'bit.ly'	=> __('bit.ly', CWP_TEXTDOMAIN),
+				//'tr.im'		=> __('tr.im', CWP_TEXTDOMAIN),
+				//'3.ly'		=> __('3.ly', CWP_TEXTDOMAIN),
+				//'u.nu'		=> __('u.nu', CWP_TEXTDOMAIN),
+				//'1click.at'	=> __('1click.at', CWP_TEXTDOMAIN),
+				//'tinyurl'	=> __('TinyUrl', CWP_TEXTDOMAIN)
 
 				)
 	),

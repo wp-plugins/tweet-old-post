@@ -36,6 +36,10 @@ For updates follow https://twitter.com/themeisle If you have anything you can le
 
 **Let me know if you have any more ideas**
 
+**New in v5.2**
+
+Fixed exclude categories error, added wp short url, fixed oauth error, removed broken shorten services.
+
 **New in v5.0**
 
 - Whole plugin was rewrote from scratch and a pro version was added, so after 50 hours of work, here we are. This change will allow us to easier fix issues/ release new features and maintain the plugin.
