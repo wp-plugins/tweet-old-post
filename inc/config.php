@@ -2,7 +2,7 @@
 define("CURRENTURL", top_current_page());
 define("CWP_TEXTDOMAIN", "TweetOldPost");
 define("SETTINGSURL", admin_url('admin.php?page=TweetOldPost'));
-
+date_default_timezone_set("GMT");
 // Settings Array
 $cwp_top_settings = array(
 	'name' 				=> __("Tweet Old Post", CWP_TEXTDOMAIN),
@@ -261,6 +261,16 @@ $cwp_top_fields = array(
 			'slug'					=> 'post-type-value',
 			'option'				=> 'top_opt_post_type_value',
 			'description'			=> __('Select which custom post type', CWP_TEXTDOMAIN),
+			'options'				=> array()
+	),
+
+	'use-image' => array(
+			'id' 					=> '24',
+			'name'  				=> __('Post with Image', CWP_TEXTDOMAIN), 
+			'type'					=> 'checkbox',
+			'slug'					=> 'post-with-image',
+			'option'				=> 'top_opt_post_with_image',
+			'description'			=> __('Check if you want to add the post featured image to the tweet', CWP_TEXTDOMAIN),
 			'options'				=> array()
 	),
 

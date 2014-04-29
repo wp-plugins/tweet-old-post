@@ -60,9 +60,10 @@ if (!class_exists('CWP_TOP_Core')) {
 				// Set it to active status
 				update_option('cwp_topnew_active_status', 'true');
 				// Schedule the next tweet
-				$timeNow = date("Y-m-d H:i:s", time());
-				$timeNow = get_date_from_gmt($timeNow);
-				$timeNow= strtotime($timeNow);
+				//$timeNow = date("Y-m-d H:i:s", time());
+				//$timeNow = get_date_from_gmt($timeNow);
+				//$timeNow= strtotime($timeNow);
+				$timeNow = time();
 				$interval = floatval($this->intervalSet) * 60 * 60;
 				$timeNow = $timeNow+$interval;
 				wp_schedule_event($timeNow, 'cwp_top_schedule', 'cwp_top_tweet_cron');
@@ -146,10 +147,15 @@ if (!class_exists('CWP_TOP_Core')) {
 			return $returnedPost;
 		}
 
+		public function isPostWithImageEnabled () {
+			return get_option("top_opt_post_with_image");
+		}
+
 		public function tweetOldPost()
 		
 		{
 			$returnedPost = $this->getTweetsFromDB();
+
 
 			$k = 0; // Iterator
 			
@@ -168,7 +174,10 @@ if (!class_exists('CWP_TOP_Core')) {
 						// Generate a tweet from it based on user settings.
 						$finalTweet = $this->generateTweetFromPost($post);
 						// Tweet the post
-						$this->tweetPost($finalTweet);
+						if ($this->isPostWithImageEnabled()=="on")
+							$this->tweetPostwithImage($finalTweet, $returnedPost[$k]->ID);
+						else
+							$this->tweetPost($finalTweet);
 						// Get already tweeted posts array.
 						$tweetedPosts = get_option("top_opt_already_tweeted_posts");
 						// Push the tweeted post at the end of the array.
@@ -190,7 +199,7 @@ if (!class_exists('CWP_TOP_Core')) {
 			//var_dump($returnedTweets);
 			$finalTweetsPreview = $this->generateTweetFromPost($returnedTweets[0]);
 			echo $finalTweetsPreview;
-
+			
 			die(); // required
 		}
 
@@ -301,10 +310,10 @@ if (!class_exists('CWP_TOP_Core')) {
 					
 					case 'categories':
 						$postCategories = get_the_category($postQuery->ID);
-
+						
 						foreach ($postCategories as $category) {
 							if(strlen($category->cat_name.$newHashtags) <= $maximum_hashtag_length || $maximum_hashtag_length == 0) { 
-						 		$newHashtags = $newHashtags . " #" . $category->cat_name; 
+						 		$newHashtags = $newHashtags . " #" . strtolower($category->cat_name); 
 						 	}
 						} 
 
@@ -312,9 +321,10 @@ if (!class_exists('CWP_TOP_Core')) {
 
 					case 'tags':
 						$postTags = wp_get_post_tags($postQuery->ID);
+						
 						foreach ($postTags as $postTag) {
 							if(strlen($postTag->slug.$newHashtags) <= $maximum_hashtag_length || $maximum_hashtag_length == 0) {
-								$newHashtags = $newHashtags . " #" . $postTag->slug;
+								$newHashtags = $newHashtags . " #" . strtolower($postTag->slug);
 							}
 						}
 						break;
@@ -375,6 +385,17 @@ if (!class_exists('CWP_TOP_Core')) {
 				$connection = new TwitterOAuth($this->consumer, $this->consumerSecret, $user['oauth_token'], $user['oauth_token_secret']);
 				// Post the new tweet
 				$status = $connection->post('statuses/update', array('status' => $finalTweet));				
+			}
+		}
+
+		public function tweetPostwithImage($finalTweet, $id)
+		{	
+			foreach ($this->users as $user) {
+				// Create a new twitter connection using the stored user credentials.
+				$connection = new TwitterOAuth($this->consumer, $this->consumerSecret, $user['oauth_token'], $user['oauth_token_secret']);
+				// Post the new tweet
+				if (function_exists(topProImage)) 
+				topProImage($connection, $finalTweet, $id);				
 			}
 		}
 		
@@ -718,6 +739,9 @@ if (!class_exists('CWP_TOP_Core')) {
 
 			$defaultOptions = array(
 				'top_opt_tweet_type'				=> 'title',
+				'top_opt_post_with_image'			=> 'off',
+				'top_opt_bitly_user'				=>'',
+				'top_opt_bitly_key'					=>'',
 				'top_opt_tweet_type_custom_field'	=> '',
 				'top_opt_add_text'					=> '',
 				'top_opt_add_text_at'				=> 'beginning',
@@ -758,7 +782,8 @@ if (!class_exists('CWP_TOP_Core')) {
 		// Generate all fields based on settings
 		public static function generateFieldType($field)
 		{	
-
+			$disabled = "";
+			$pro = "";
 			switch ($field['type']) {
 
 				case 'text':
@@ -768,7 +793,7 @@ if (!class_exists('CWP_TOP_Core')) {
 				case 'select':
 					$noFieldOptions = intval(count($field['options']));
 					$fieldOptions = array_keys($field['options']);
-					$disabled = "";
+					
 					if ($field['option']=='top_opt_post_type') $disabled = "disabled";
 					print "<select id='".$field['option']."' name='".$field['option']."'".$disabled.">";
 						for ($i=0; $i < $noFieldOptions; $i++) { 
@@ -780,9 +805,13 @@ if (!class_exists('CWP_TOP_Core')) {
 					break;
 
 				case 'checkbox':
-					print "<input id='".$field['option']."' type='checkbox' name='".$field['option']."'";
+					if ($field['option']=='top_opt_post_with_image'&& !function_exists(topProImage)) {
+						$disabled = "disabled='disabled'";
+						$pro = "This is only available in the PRO option";
+					}
+					print "<input id='".$field['option']."' type='checkbox' ".$disabled." name='".$field['option']."'";
 					if($field['option_value'] == 'on') { echo "checked=checked"; }
-					print " />";
+					print " />".$pro;
 					break;
 
 				case 'custom-post-type':
