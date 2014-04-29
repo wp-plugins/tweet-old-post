@@ -939,7 +939,7 @@ if (!class_exists('CWP_TOP_Core')) {
 		public function addAdminMenuPage()
 		{
 			global $cwp_top_settings; // Global Tweet Old Post Settings
-			add_menu_page($cwp_top_settings['name'], $cwp_top_settings['name'], "edit_pages", $cwp_top_settings['slug'], array($this, 'loadMainView'));
+			add_menu_page($cwp_top_settings['name'], $cwp_top_settings['name'], "edit_dashboard", $cwp_top_settings['slug'], array($this, 'loadMainView'));
 		}
 
 		public function loadMainView()

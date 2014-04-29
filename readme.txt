@@ -36,6 +36,14 @@ For updates follow https://twitter.com/themeisle If you have anything you can le
 
 **Let me know if you have any more ideas**
 
+**New in v5.7**
+
+Fixed permissions
+
+**New in v5.6**
+
+Added bit.ly back
+
 **New in v5.5**
 
 Fixed the table prefix issue
