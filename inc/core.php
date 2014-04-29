@@ -199,6 +199,7 @@ if (!class_exists('CWP_TOP_Core')) {
 
 		public function getNotice() {
 			$notice = get_option('cwp_topnew_notice');
+			
 			if ($notice->errors[0]->message)
 				echo "Error for your last tweet was :'".$notice->errors[0]->message."'";
 			else if ($notice->text)
@@ -213,6 +214,7 @@ if (!class_exists('CWP_TOP_Core')) {
 			//var_dump($returnedTweets);
 			$finalTweetsPreview = $this->generateTweetFromPost($returnedTweets[0]);
 			echo $finalTweetsPreview;
+
 			
 			die(); // required
 		}
@@ -734,9 +736,9 @@ if (!class_exists('CWP_TOP_Core')) {
 			global $current_user ;
 		        $user_id = $current_user->ID;
 		        /* Check that the user hasn't already clicked to ignore the message */
-			if ( ! get_user_meta($user_id, 'top_ignore_notice') ) {
+			if ( ! get_user_meta($user_id, 'top_ignore_notice1') ) {
 		        echo '<div class="error"><p>';
-		        printf(__('If you just updated TOP plugin, please make sure you <a href="'.SETTINGSURL.'">re-authentificate</a> your twitter account and make sure that all the <a href="'.SETTINGSURL.'">settings</a> are correct. To be able to maintain it, we rewrote TOP from scratch and some changes were required. | <a href="'.SETTINGSURL.'&top_nag_ignore=0">Hide Notice</a>'));
+		        printf(__('We just fixed the twitter posting issue but unfortunately you need to <a href="'.SETTINGSURL.'">re-authentificate</a> your twitter account. | <a href="'.SETTINGSURL.'&top_nag_ignore=0">Hide Notice</a>'));
 		        echo "</p></div>";
 			}
 		}
@@ -745,7 +747,7 @@ if (!class_exists('CWP_TOP_Core')) {
 		        $user_id = $current_user->ID;
 		        /* If user clicks to ignore the notice, add that to their user meta */
 		        if ( isset($_GET['top_nag_ignore']) && '0' == $_GET['top_nag_ignore'] ) {
-		             add_user_meta($user_id, 'top_ignore_notice', 'true', true);
+		             add_user_meta($user_id, 'top_ignore_notice1', 'true', true);
 			}
 		}
 
@@ -887,21 +889,13 @@ if (!class_exists('CWP_TOP_Core')) {
 		}
 
 		public function top_plugin_action_links($links, $file) {
-		    static $this_plugin;
 
-		    if (!$this_plugin) {
-		        $this_plugin = plugin_basename(__FILE__);
-		    }
+			$mylinks = array(
+			 '<a href="' . admin_url( 'admin.php?page=TweetOldPost' ) . '">Settings</a>',
+			 );
+			return array_merge( $links, $mylinks );
 
-		    if ($file == $this_plugin) {
-		        // The "page" query string value must be equal to the slug
-		        // of the Settings admin page we defined earlier, which in
-		        // this case equals "myplugin-settings".
-		        $settings_link = '<a href="' . get_bloginfo('wpurl') . '/wp-admin/admin.php?page=TweetOldPost">Settings</a>';
-		        array_unshift($links, $settings_link);
-		    }
 
-		    return $links;
 		}
 
 		public function getTime() {
@@ -955,17 +949,13 @@ if (!class_exists('CWP_TOP_Core')) {
 			add_action('wp_ajax_nopriv_stop_tweet_old_post', array($this, 'stopTweetOldPost'));
 			add_action('wp_ajax_stop_tweet_old_post', array($this, 'stopTweetOldPost'));
 
-			//Tweet Old Post initial notice
-
-			add_action('admin_notices', array($this,'top_admin_notice'));
-
-			add_action('admin_init', array($this,'top_nag_ignore'));
-
 			//Settings link
 
 			add_filter('plugin_action_links', array($this,'top_plugin_action_links'), 10, 2);
 
+			add_action('admin_notices', array($this,'top_admin_notice'));
 
+			add_action('admin_init', array($this,'top_nag_ignore'));
 
 			// Filter to add new custom schedule based on user input
 			add_filter('cron_schedules', array($this, 'createCustomSchedule'));
@@ -998,7 +988,7 @@ if (!class_exists('CWP_TOP_Core')) {
 		public function addAdminMenuPage()
 		{
 			global $cwp_top_settings; // Global Tweet Old Post Settings
-			add_menu_page($cwp_top_settings['name'], $cwp_top_settings['name'], "edit_dashboard", $cwp_top_settings['slug'], array($this, 'loadMainView'));
+			add_menu_page($cwp_top_settings['name'], $cwp_top_settings['name'], 'manage_options', $cwp_top_settings['slug'], array($this, 'loadMainView'),'dashicons-twitter','99.87514');
 		}
 
 		public function loadMainView()
