@@ -17,6 +17,7 @@ jQuery(document).ready(function(){
 	jQuery(".cwp_top_wrapper a.reset-settings").click(function(e) {
 		e.preventDefault();
 		startAjaxIntro();
+		//cwpTopUpdateForm();
 
 		jQuery.ajax({
 			type: "POST",
@@ -26,7 +27,8 @@ jQuery(document).ready(function(){
 			},
 			success: function(response) {
 				console.log("Success: " + response);
-				jQuery("#cwp_top_form").cwpTopResetForm();
+				//jQuery("#cwp_top_form").cwpTopUpdateForm();
+				location.reload();
 				endAjaxIntro();
 			},
 			error: function(response) {
@@ -41,7 +43,7 @@ jQuery(document).ready(function(){
 	function cwpTopUpdateForm() {
 		startAjaxIntro();
 		var data = jQuery("#cwp_top_form").serialize();
-		console.log(data);
+		//console.log(data);
 
 		var formData = {
 			action:'updateAllOptions',
@@ -66,6 +68,37 @@ jQuery(document).ready(function(){
 		endAjaxIntro();
 		return false; 
 	}
+
+		function cwpTopUpdateFormWithoIntro() {
+		//startAjaxIntro();
+		var data = jQuery("#cwp_top_form").serialize();
+		//console.log(data);
+
+		var formData = {
+			action:'updateAllOptions',
+			dataSent:data
+		}
+
+		jQuery.ajax({
+			type: "POST", 
+			url: cwp_top_ajaxload.ajaxurl,
+			data: {
+				action: "update_response",
+				dataSent: formData
+			},
+			success: function(response) {
+				console.log(response);
+			},
+			error: function(MLHttpRequest, textStatus, errorThrown) {
+				console.log("There was an error: "+errorThrown);
+			}
+		});
+
+		//endAjaxIntro();
+		return false; 
+	}
+
+
 
 
 	// Add New Twitter Account
@@ -195,7 +228,7 @@ jQuery(document).ready(function(){
 	jQuery("#cwp_top_form a.see-sample-tweet").click(function(e){
 		e.preventDefault();
 		startAjaxIntro();
-		cwpTopUpdateForm();
+		cwpTopUpdateFormWithoIntro();
 
 		jQuery.ajax({
 			type: "POST", 
@@ -209,13 +242,15 @@ jQuery(document).ready(function(){
 					
 					jQuery(".cwp_top_wrapper .cwp_sample_tweet_preview .cwp_sample_tweet_preview_inner .sample_tweet").html(response);
 				}
+				endAjaxIntro();
 			},
 			error: function(MLHttpRequest, textStatus, errorThrown) {
 				console.log("There was an error: "+errorThrown);
+				endAjaxIntro();
 			}
 		});
 
-		endAjaxIntro();
+		
 	});	
 
 	// Stop Tweet Old Post
@@ -267,8 +302,8 @@ jQuery(document).ready(function(){
 
 	// Reset all checkboxes and clear textareas
 	jQuery.fn.cwpTopResetForm = function() {
-		jQuery(this).find("input[type=text], textarea").val("");
-		jQuery(this).find("input[type=radio], input[type=checkbox]").checked = false;
+		//jQuery(this).find("input[type=text], textarea").val("");
+		//jQuery(this).find("input[type=radio], input[type=checkbox]").checked = false;
 	}
 
 	// Select all function
@@ -353,6 +388,8 @@ jQuery(document).ready(function(){
 		jQuery("#top_opt_custom_url_option").parent().parent().show();
 		jQuery("#top_opt_use_url_shortner").parent().parent().show();
 		//jQuery("#top_opt_url_shortner").parent().parent().show();
+		if (jQuery("#top_opt_custom_url_option").is(":checked"))
+			jQuery("#top_opt_custom_url_field").parent().parent().show();
 	} else { 
 		jQuery("#top_opt_use_url_shortner").parent().parent().hide();
 		jQuery("#top_opt_custom_url_option").parent().parent().hide();
