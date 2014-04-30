@@ -1,6 +1,6 @@
 <?php
 
-require_once('/../tweet-old-post.php');
+require_once(plugin_dir_path( __FILE__ ).'../tweet-old-post.php');
 require_once('core.php');
 require_once('xml.php');
 
