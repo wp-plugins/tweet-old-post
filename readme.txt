@@ -33,6 +33,10 @@ For updates follow https://twitter.com/themeisle If you have anything you can le
 - Exclude categories
 - Exclude specific posts.
 
+**New in v6.5**
+
+Fixed 2 words category space, custom field hashtags, better debug messages, fixed not posting issue
+
 **New in v6.2**
 
 After some long working hours excluded posts feature was added back in the free version and integrated in the new version.

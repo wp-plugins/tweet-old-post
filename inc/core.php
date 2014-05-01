@@ -1,8 +1,8 @@
 <?php
 // Basic configuration 
-require_once("config.php");
+require_once(plugin_dir_path( __FILE__ )."config.php");
 // twitteroauth class 
-require_once("oAuth/twitteroauth.php");
+require_once(plugin_dir_path( __FILE__ )."oAuth/twitteroauth.php");
 
 if (!class_exists('CWP_TOP_Core')) {
 	class CWP_TOP_Core {
@@ -176,7 +176,11 @@ if (!class_exists('CWP_TOP_Core')) {
 		}
 
 		public function isPostWithImageEnabled () {
-			return get_option("top_opt_post_with_image");
+
+			if (get_option("top_opt_post_with_image")!='on')
+				return false;
+			else
+				return true;
 		}
 
 		public function tweetOldPost()
@@ -195,6 +199,8 @@ if (!class_exists('CWP_TOP_Core')) {
 				// If the post is not already tweeted
 				$isNotAlreadyTweeted = $this->isNotAlreadyTweeted($returnedPost[$k]->ID);
 
+				if (get_option('top_opt_tweet_multiple_times')=="on") $isNotAlreadyTweeted = true;
+
 				if($isNotAlreadyTweeted) {
 
 					// Foreach returned post
@@ -203,7 +209,7 @@ if (!class_exists('CWP_TOP_Core')) {
 						$finalTweet = $this->generateTweetFromPost($post);
 						// Tweet the post
 						if ($this->isPostWithImageEnabled()=="on") {
-							$this->tweetPostwithImage($finalTweet, $returnedPost[$k]->ID);
+							$resp = $this->tweetPostwithImage($finalTweet, $returnedPost[$k]->ID);
 							update_option('cwp_topnew_notice', $resp);
 						}
 						else {
@@ -212,13 +218,17 @@ if (!class_exists('CWP_TOP_Core')) {
 						}
 						// Get already tweeted posts array.
 						$tweetedPosts = get_option("top_opt_already_tweeted_posts");
+						if ($tweetedPosts=="")	$tweetedPosts = array();
 						// Push the tweeted post at the end of the array.
 						array_push($tweetedPosts, $post->ID);
 						// Update the new already tweeted posts array.
+						add_option("top_opt_already_tweeted_posts");
 						update_option("top_opt_already_tweeted_posts", $tweetedPosts);
 						// Increase
 						$k = $k + 1;
 					}
+				} else {
+					update_option('cwp_topnew_notice', 'Tweet was already tweeted, if you want to tweet your old tweets more than once, select "Tweet old posts more than once" option');
 				}
 			}
 
@@ -229,8 +239,11 @@ if (!class_exists('CWP_TOP_Core')) {
 			
 			if ($notice->errors[0]->message)
 				echo "Error for your last tweet was :'".$notice->errors[0]->message."'";
-			else if ($notice->text)
+			else if ($notice->text) {
 				echo "Congrats! The following tweet was posted successfully: '".$notice->text."' at ".$notice->created_at;
+			} else if ($notice!="") {
+				echo "Error for your last tweet was :".$notice;
+			}
 			die();
 		}
 
@@ -276,6 +289,8 @@ if (!class_exists('CWP_TOP_Core')) {
 				return true;
 			}
 		}
+
+
 
 		/**
 		 * Generates the tweet based on the user settings
@@ -370,7 +385,7 @@ if (!class_exists('CWP_TOP_Core')) {
 						
 						foreach ($postCategories as $category) {
 							if(strlen($category->cat_name.$newHashtags) <= $maximum_hashtag_length || $maximum_hashtag_length == 0) { 
-						 		$newHashtags = $newHashtags . " #" . strtolower($category->cat_name); 
+						 		$newHashtags = $newHashtags . " #" . preg_replace('/-/','',strtolower($category->slug)); 
 						 	}
 						} 
 
@@ -381,13 +396,13 @@ if (!class_exists('CWP_TOP_Core')) {
 						
 						foreach ($postTags as $postTag) {
 							if(strlen($postTag->slug.$newHashtags) <= $maximum_hashtag_length || $maximum_hashtag_length == 0) {
-								$newHashtags = $newHashtags . " #" . strtolower($postTag->slug);
+								$newHashtags = $newHashtags . " #" . preg_replace('/-/','',strtolower($postTag->slug));
 							}
 						}
 						break;
 
 					case 'custom':
-						$newHashtags = get_post_meta($postQuery->ID, $hashtag_custom_field);
+						$newHashtags = get_post_meta($postQuery->ID, $hashtag_custom_field, true);
 						break;	
 					default:
 						break;
@@ -457,7 +472,8 @@ if (!class_exists('CWP_TOP_Core')) {
 				$connection = new TwitterOAuth($this->consumer, $this->consumerSecret, $user['oauth_token'], $user['oauth_token_secret']);
 				// Post the new tweet
 				if (function_exists('topProImage')) 
-				topProImage($connection, $finalTweet, $id);				
+				$status = topProImage($connection, $finalTweet, $id);	
+				return $status;			
 			}
 		}
 		
@@ -767,6 +783,10 @@ if (!class_exists('CWP_TOP_Core')) {
 				update_option('top_opt_post_with_image', 'off');
 			}
 
+			if(!array_key_exists('top_opt_tweet_multiple_times', $options)) {
+				update_option('top_opt_tweet_multiple_times', 'off');
+			}
+
 			//if(!array_key_exists('top_opt_tweet_specific_category', $options)) {
 			//	update_option('top_opt_tweet_specific_category', '');
 			//}
@@ -829,7 +849,8 @@ if (!class_exists('CWP_TOP_Core')) {
 				'top_opt_omit_cats'					=> '',
 				'cwp_topnew_active_status'			=> 'false',
 				'cwp_topnew_notice'					=> '',
-				'top_opt_excluded_post'				=> ''
+				'top_opt_excluded_post'				=> '',
+				'top_opt_tweet-multiple-times'		=> 'off'
 			);
 
 			foreach ($defaultOptions as $option => $defaultValue) {
@@ -999,7 +1020,7 @@ if (!class_exists('CWP_TOP_Core')) {
 
 			//Settings link
 
-			add_filter('plugin_action_links', array($this,'top_plugin_action_links'), 10, 2);
+			//add_filter('plugin_action_links', array($this,'top_plugin_action_links'), 10, 2);
 
 			add_action('admin_notices', array($this,'top_admin_notice'));
 
@@ -1046,7 +1067,7 @@ if (!class_exists('CWP_TOP_Core')) {
 			foreach ($cwp_top_fields as $field => $value) {
 				$cwp_top_fields[$field]['option_value'] = get_option($cwp_top_fields[$field]['option']); 
 			}
-			require_once("view.php");
+			require_once(plugin_dir_path( __FILE__ )."view.php");
 		}
 
 		// Sends a request to the passed URL

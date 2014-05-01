@@ -75,7 +75,7 @@ function top_exclude() {
     }
 
    
-    require_once("view-exclude.php");
+    require_once(plugin_dir_path( __FILE__ )."view-exclude.php");
 
     
     $sql = "SELECT p.ID,p.post_title,p.post_date,u.user_nicename,p.guid,p.post_type FROM $wpdb->posts p join  $wpdb->users u on p.post_author=u.ID WHERE (post_type = 'post') 
@@ -275,7 +275,7 @@ if($excludeList.length >0)
             echo $page_links_text;
             print('</div>');
         }
-        print('</div>');
+        print('</div></div>');
 
 
 
