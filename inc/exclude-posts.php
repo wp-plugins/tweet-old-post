@@ -1,8 +1,7 @@
 <?php
 
-require_once(plugin_dir_path( __FILE__ ).'../tweet-old-post.php');
-require_once('core.php');
-require_once('xml.php');
+require_once(PLUGINPATH.'/tweet-old-post.php');
+require_once(PLUGINPATH.'/inc/xml.php');
 
 if (!function_exists ("mysql_real_escape_string"))
 {
