@@ -135,7 +135,7 @@ if (!class_exists('CWP_TOP_Core')) {
 //			$postQueryCategories =  $this->getTweetCategories();
 			$excludedIds = "";
 			$tweetedPosts = get_option("top_opt_already_tweeted_posts");
-			if (!$tweetedPosts) {
+			if (!$tweetedPosts || get_option('top_opt_tweet_multiple_times')=="on") {
 				$tweetedPosts = array();
 			}
 			$postQueryExcludedPosts = $this->getExcludedPosts();
