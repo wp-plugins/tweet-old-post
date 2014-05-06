@@ -65,9 +65,9 @@ if (!class_exists('CWP_TOP_Core')) {
 				//$timeNow = date("Y-m-d H:i:s", time());
 				//$timeNow = get_date_from_gmt($timeNow);
 				//$timeNow= strtotime($timeNow);
-				$timeNow = time();
+				$timeNow =  current_time('timestamp',1);
 				$interval = floatval($this->intervalSet) * 60 * 60;
-				$timeNow = $timeNow+15;
+				$timeNow = $timeNow+25;
 				wp_schedule_event($timeNow, 'cwp_top_schedule', 'cwp_top_tweet_cron');
 			} else { 
 				
@@ -781,10 +781,10 @@ WHERE {$wpdb->prefix}term_taxonomy.taxonomy =  'category'
 		{
 			$timestamp = wp_next_scheduled( 'cwp_top_tweet_cron' );
 			//echo $timestamp;
-			$timestamp = date("Y-m-d H:i:s", $timestamp);
-			$timeLeft = get_date_from_gmt($timestamp);
-			$timeLeft = strtotime($timeLeft);
-			echo $timeLeft;
+			//$timestamp = date("Y-m-d H:i:s", $timestamp);
+			//$timeLeft = get_date_from_gmt($timestamp);
+			//$timeLeft = strtotime($timeLeft);
+			echo $timestamp;
 		}
 
 		// Checks if the user is logged in/
@@ -871,7 +871,7 @@ WHERE {$wpdb->prefix}term_taxonomy.taxonomy =  'category'
 		        /* Check that the user hasn't already clicked to ignore the message */
 			if ( ! get_user_meta($user_id, 'top_ignore_notice3') ) {
 		        echo '<div class="error"><p>';
-		        printf(__(' We just fixed the interrupted posting issue, if you don\'t see any tweets you need to re-authentificate your twitter accounts. | <a href="'.SETTINGSURL.'&top_nag_ignore=0">Hide Notice</a>'));
+		        printf(__(' We just fixed the interrupted posting issue and scheduling issue, if you don\'t see any tweets you need to re-authentificate your twitter accounts. | <a href="'.SETTINGSURL.'&top_nag_ignore=0">Hide Notice</a>'));
 		        echo "</p></div>";
 			}
 		}
@@ -1034,7 +1034,7 @@ WHERE {$wpdb->prefix}term_taxonomy.taxonomy =  'category'
 
 		public function getTime() {
 		    
-		    echo time();
+		    echo current_time('timestamp',1);
 
 		    die();
 		}
