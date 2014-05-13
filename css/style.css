@@ -37,7 +37,7 @@ html[xmlns] .clearfix { display: block;}
 
 /* Announcement */
 .cwp_top_wrapper .announcement { width: 100%; background: url("../img/reviewgine_announcement.png") no-repeat left -10px top -45px, #f16848; margin-top: 20px;}
-.cwp_top_wrapper .announcement h2 { float: left; font-family: "Helvetica Neue", HelveticaNeue, sans-serif; color:#fff; font-weight: 100; font-size: 17px; line-height: 1; padding-left: 180px; }
+.cwp_top_wrapper .announcement h2 { width:85%; float: left; font-family: "Helvetica Neue", HelveticaNeue, sans-serif; color:#fff; font-weight: 100; font-size: 17px; line-height: 1; padding-left: 180px; }
 .cwp_top_wrapper .announcement h2 b { font-weight: bold; }
 .cwp_top_wrapper .announcement .show-me { float: right; background:#fff; border-radius: 5px; font-family: "Helvetica Neue", HelveticaNeue, sans-serif; color:#5c5c5c; text-decoration: none; text-transform: uppercase;padding: 7px 15px; margin-top: 9px; margin-right: 20px; -webkit-transition: all 0.3s ease-in-out;-moz-transition: all 0.3s ease-in-out;-o-transition: all 0.3s ease-in-out;transition: all 0.3s ease-in-out; line-height: 1;}
 .cwp_top_wrapper .announcement .show-me:hover { cursor: pointer; opacity: 0.8; }
@@ -132,4 +132,24 @@ float: left;}
 
 .twptop_opt_post_type {
 	display: none;
+}
+
+@media all and (max-width:1280px) {
+	.cwp_top_wrapper {
+		width:100%;
+	}
+	.cwp_top_wrapper .cwp_top_container form {
+		width:100%;
+		border-right: none;
+	}
+	.cwp_top_wrapper .cwp_top_container .sidebar {
+		display: none;
+	}
+
+
+}
+@media all and (max-width:970px) {
+.slogan {
+	display: none;
+}
 }
