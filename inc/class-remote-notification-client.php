@@ -71,7 +71,7 @@ class TAV_Remote_Notification_Client {
 
 		/* Content is false at first */
 		$content = get_transient( 'rn_last_notification' );
-
+		$lastcall = get_transient( 'rn_last_notification_time' );
 		/* Set the request response to null */
 		$request = null;
 
@@ -86,7 +86,7 @@ class TAV_Remote_Notification_Client {
 
 			/* Query the server */
 			$request = wp_remote_get( $url, array( 'timeout' => apply_filters( 'rn_http_request_timeout', 5 ) ) );
-
+			set_transient( 'rn_last_notification_time', $content, $this->cache*60*60 );
 			/* If we have a WP_Error object we abort */
 			if( is_wp_error( $request ) )
 				return;
@@ -228,6 +228,10 @@ class TAV_Remote_Notification_Client {
 
 		$args = implode( '&', $args );
 		$url = "?$args";
+		if (get_option("rnc-lastinfo")==$content->message)
+			return;
+		else
+			update_option("rnc-lastinfo",$content->message);
 		?>
 
 		<div class="<?php echo $class; ?>">

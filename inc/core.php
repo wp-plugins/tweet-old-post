@@ -1157,7 +1157,7 @@ WHERE {$wpdb->prefix}term_taxonomy.taxonomy =  'category'
 
 			//add_filter('plugin_action_links', array($this,'top_plugin_action_links'), 10, 2);
 
-			add_action('admin_notices', array($this,'top_admin_notice'));
+			//add_action('admin_notices', array($this,'top_admin_notice'));
 
 			add_action('admin_init', array($this,'top_nag_ignore'));
 
@@ -1292,9 +1292,11 @@ WHERE {$wpdb->prefix}term_taxonomy.taxonomy =  'category'
 		    	$shortURL = wp_get_shortlink($id);
 		    }
 
-		    if($shortURL != ' 400 ') {
+		    if($shortURL != ' 400 '&& $shortURL!="500" && $shortURL!="0") {
 		    	return $shortURL;
 		    }
+		    else
+		    	update_option('cwp_topnew_notice','Looks like is an error with your url shortner');
 		}
 
 	}
