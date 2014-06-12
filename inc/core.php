@@ -318,7 +318,10 @@ WHERE {$wpdb->prefix}term_taxonomy.taxonomy =  'category'
 			$returnedTweets = $this->getTweetsFromDB();
 			$image="";
 			//var_dump($returnedTweets);
-			$finalTweetsPreview = $this->generateTweetFromPost($returnedTweets[0])['message'];
+			$finalTweetsPreview = $this->generateTweetFromPost($returnedTweets[0]);
+			if (is_array($finalTweetsPreview)){
+				$finalTweetPreview = $finalTweetPreview['message'];
+			}
 			$result = $finalTweetsPreview;			
 			update_option( 'top_lastID', $returnedTweets[0]->ID);
 
