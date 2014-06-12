@@ -1,20 +1,21 @@
 <?php   
 #     /* 
-#     Plugin Name: Tweet old post
+#     Plugin Name: Revive Old Post (Former Tweet Old Post)
 #     Plugin URI: http://themeisle.com/plugins/tweet-old-post-lite/
-#     Description: Wordpress plugin that helps you to keeps your old posts alive by tweeting about them and driving more traffic to them from twitter. It also helps you to promote your content. You can set time and no of tweets to post to drive more traffic.For questions, comments, or feature requests, <a href="http://themeisle.com/contact/?utm_source=plugindesc&utm_medium=announce&utm_campaign=top">contact </a> us!
+#     Description: Wordpress plugin that helps you to keeps your old posts alive by sharing them and driving more traffic to them from twitter/facebook or linkedin. It also helps you to promote your content. You can set time and no of posts to share to drive more traffic.For questions, comments, or feature requests, <a href="http://themeisle.com/contact/?utm_source=plugindesc&utm_medium=announce&utm_campaign=top">contact </a> us!
 #     Author: ThemeIsle 
-#     Version: 6.7.6
+#     Version: 6.7.7
 #     Author URI: http://themeisle.com/
 #     */  
 
 // Config Constants
 define("PLUGINPATH", realpath(dirname(__FILE__) ));
 define("CSSFILE", plugins_url('css/style.css',__FILE__ ));
+define("CUSTOMDASHBOARDICON", plugins_url("css/custom_dashboard_icon.css", __FILE__));
 define("JSFILE", plugins_url('js/master.js',__FILE__ ));
 define("JSCOUNTDOWN", plugins_url('js/countdown.js',__FILE__ ));
 define("PLUGINBASENAME", plugin_basename(__FILE__));
-
+define('TOP_FB_API_VERSION','v2.0');
 // Require core.
 require_once(PLUGINPATH."/inc/core.php");
 // Require core.
@@ -29,7 +30,8 @@ else
 
 // Clear scheduled tweets on plugin deactivation
 register_deactivation_hook(__FILE__, array($CWP_TOP_Core, 'deactivationHook'));
+
 // Reset all settings on plugin activation.
 register_activation_hook(__FILE__, array($CWP_TOP_Core, 'resetAllOptions'));
 
-
+add_action("admin_head", array($CWP_TOP_Core, 'rop_load_dashboard_icon'));
