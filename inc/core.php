@@ -54,6 +54,11 @@ if (!class_exists('CWP_TOP_Core')) {
 			self::$noFields = count(self::$fields);
 		}
 
+		public function addLocalization() {
+ 
+ 			load_plugin_textdomain(CWP_TEXTDOMAIN, false, dirname(ROPPLUGINBASENAME).'/languages/');
+ 		}
+
 		public function startTweetOldPost()
 		{
 			// If the plugin is deactivated
@@ -93,7 +98,7 @@ if (!class_exists('CWP_TOP_Core')) {
 				$this->clearScheduledTweets();
 			} else {
 				// Report that is already inactive
-				_e("Tweet Old Post is already inactive!", CWP_TEXTDOMAIN);
+				_e("ROP is already inactive!", CWP_TEXTDOMAIN);
 			}
 
 			die(); // Required for AJAX
@@ -157,7 +162,10 @@ if (!class_exists('CWP_TOP_Core')) {
 			$nrOfExcludedPosts = count($excludedPosts);
 			for ($k=0;$k<$nrOfExcludedPosts-1;$k++)
 				$excludedIds .=$excludedPosts[$k].", ";
-			$excludedIds .=$excludedPosts[$nrOfExcludedPosts-1];
+			if ($nrOfExcludedPosts>0) {
+				$lastId = $nrOfExcludedPosts-1;
+				$excludedIds .=$excludedPosts[$lastId];
+			}
 			//print_r($excludedIds);
 			// Get excluded categories.
 			$postQueryExcludedCategories = $this->getExcludedCategories();			
@@ -170,7 +178,7 @@ if (!class_exists('CWP_TOP_Core')) {
 			$query = "
 				SELECT *
 				FROM {$wpdb->prefix}posts
-				INNER JOIN {$wpdb->prefix}term_relationships ON ({$wpdb->prefix}posts.ID = {$wpdb->prefix}term_relationships.object_id)
+				LEFT JOIN {$wpdb->prefix}term_relationships ON ({$wpdb->prefix}posts.ID = {$wpdb->prefix}term_relationships.object_id)
 				WHERE 1=1
 				  AND ((post_date >= '{$dateQuery['before']}'
 				        AND post_date <= '{$dateQuery['after']}')) ";
@@ -282,7 +290,7 @@ WHERE {$wpdb->prefix}term_taxonomy.taxonomy =  'category'
 		}
 
 		public function findInString($where,$what) {
-			if (is_string($notice)) {
+			if (!is_string($where)) {
 				return false;
 			}
 			else
@@ -536,7 +544,7 @@ WHERE {$wpdb->prefix}term_taxonomy.taxonomy =  'category'
 			}
 
 			if(!empty($post_url)) {
-
+				$post_url = htmlentities($post_url);
 				$postURLLength = strlen($post_url); 
 				if ($postURLLength > 21) $postURLLength = 22;
 				$finalTweetLength += intval($postURLLength);
@@ -609,20 +617,21 @@ WHERE {$wpdb->prefix}term_taxonomy.taxonomy =  'category'
 						$visibility="anyone";
 						$content_xml.="<content><title>".$finalTweet['message']."</title><submitted-url>".$finalTweet['link']."</submitted-url></content>";
 						$url = 'https://api.linkedin.com/v1/people/~/shares?oauth2_access_token='.$user["oauth_token"];
-		
+
 
 						$xml       = '<?xml version="1.0" encoding="UTF-8"?><share>
-                         ' . $content_xml . '
-                         <visibility>
-                           <code>' . $visibility . '</code>
-                         </visibility>
-                       </share>';
-                       				$headers = array(
+			             ' . $content_xml . '
+			             <visibility>
+			               <code>' . $visibility . '</code>
+			             </visibility>
+			           </share>';
+			           				$headers = array(
 						    "Content-type: text/xml",
 						    "Content-length: " . strlen($xml),
 						    "Connection: close",
 						);
-
+			           	if (!function_exists('curl_version'))
+       						update_option('cwp_topnew_notice',"You host does not support CURL");       				
 						$ch = curl_init(); 
 						curl_setopt($ch, CURLOPT_URL,$url);
 						curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -631,7 +640,8 @@ WHERE {$wpdb->prefix}term_taxonomy.taxonomy =  'category'
 						curl_setopt($ch, CURLOPT_POSTFIELDS, $xml);
 						curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 
-						$data = curl_exec($ch); 
+						$data = curl_exec($ch);
+
 						if ($nrOfUsers == $k)
 							return $data;
 						else
@@ -655,6 +665,8 @@ WHERE {$wpdb->prefix}term_taxonomy.taxonomy =  'category'
 						else
 							$k++;
 						break;
+
+
 				}
 								
 				
@@ -662,10 +674,12 @@ WHERE {$wpdb->prefix}term_taxonomy.taxonomy =  'category'
 			}
 		}
 
+
 		public function tweetPostwithImage($finalTweet, $id)
 		{	
 
 			$k=1;
+			$tw=0;
 			$nrOfUsers = count($this->users);
 
 			foreach ($this->users as $user) {
@@ -677,6 +691,12 @@ WHERE {$wpdb->prefix}term_taxonomy.taxonomy =  'category'
 						// Post the new tweet
 						if (function_exists('topProImage')) 
 							$status = topProImage($connection, $finalTweet['message'], $id);
+							//$tw++;
+						//} else {
+						///	//$connection = new RopTwitterOAuth($this->consumer, $this->consumerSecret, $user['oauth_token'], $user['oauth_token_secret']);
+							//$status = $connection->post('statuses/update', array('status' => "acesta e un tweet"));	
+							//$tw++;
+						//}
 
 						if ($nrOfUsers == $k)
 							return $status;
@@ -703,20 +723,21 @@ WHERE {$wpdb->prefix}term_taxonomy.taxonomy =  'category'
 						$visibility="anyone";
 						$content_xml.="<content><title>".$finalTweet['message']."</title><submitted-url>".$finalTweet['link']."</submitted-url></content>";
 						$url = 'https://api.linkedin.com/v1/people/~/shares?oauth2_access_token='.$user["oauth_token"];
-		
+
 
 						$xml       = '<?xml version="1.0" encoding="UTF-8"?><share>
-                         ' . $content_xml . '
-                         <visibility>
-                           <code>' . $visibility . '</code>
-                         </visibility>
-                       </share>';
-                       				$headers = array(
+			             ' . $content_xml . '
+			             <visibility>
+			               <code>' . $visibility . '</code>
+			             </visibility>
+			           </share>';
+			           				$headers = array(
 						    "Content-type: text/xml",
 						    "Content-length: " . strlen($xml),
 						    "Connection: close",
 						);
-
+			           	if (!function_exists('curl_version'))
+       						update_option('cwp_topnew_notice',"You host does not support CURL");       					
 						$ch = curl_init(); 
 						curl_setopt($ch, CURLOPT_URL,$url);
 						curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -725,12 +746,13 @@ WHERE {$wpdb->prefix}term_taxonomy.taxonomy =  'category'
 						curl_setopt($ch, CURLOPT_POSTFIELDS, $xml);
 						curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 
-						$data = curl_exec($ch); 
+						$data = curl_exec($ch);
+
 						if ($nrOfUsers == $k)
 							return $data;
 						else
 							$k++;
-						
+
 						if(curl_errno($ch))
 						    print curl_error($ch);
 						else
@@ -747,20 +769,32 @@ WHERE {$wpdb->prefix}term_taxonomy.taxonomy =  'category'
 							return $status;
 						else
 							$k++;	
+
+					
 				}	
+				//sleep(100);
 			}
 		}
 		
 		// Generates the tweet date range based on the user input.
 		public function getTweetPostDateRange()
 		{
-			$minAgeLimit = "-" . get_option('top_opt_age_limit') . " days";
-			if (get_option('top_opt_max_age_limit')==0) $maxAgeLimit = "- 9999 days";
+			if (get_option('top_opt_max_age_limit')==0 )
+				$limit = 9999;
 			else
-			$maxAgeLimit = "-" . get_option('top_opt_max_age_limit') . " days";
+				$limit = get_option('top_opt_max_age_limit');
+				
+			$minAgeLimit = "-" . get_option('top_opt_age_limit') . " days";
+			
+			$maxAgeLimit = "-" . $limit . " days";
+			
+			
+			
+			$minLimit = current_time('timestamp') - get_option('top_opt_age_limit')*24*60*60;
+			$maxLimit = current_time('timestamp') - $limit*24*60*60;
 
-			$minAgeLimit = date("Y-m-d H:i:s", strtotime($minAgeLimit));
-			$maxAgeLimit = date("Y-m-d H:i:s", strtotime($maxAgeLimit));
+			$minAgeLimit = date("Y-m-d H:i:s", $minLimit);
+			$maxAgeLimit = date("Y-m-d H:i:s", $maxLimit);
 	
 			if(isset($minAgeLimit) || isset($maxAgeLimit)) {
 
@@ -782,27 +816,8 @@ WHERE {$wpdb->prefix}term_taxonomy.taxonomy =  'category'
 				return $dateQuery;
 			}
 
+
 		}
-
-		// Gets the tweet categories.
-/*		public function getTweetCategories()
-		{
-			$postQueryCategories = "";
-			$postsCategories = get_option('top_opt_tweet_specific_category');
-
-			if(!empty($postCategories)) {
-				$lastPostCategory = end($postsCategories);
-				foreach ($postsCategories as $key => $cat) {
-					if($cat == $lastPostCategory) {
-						$postQueryCategories .= $cat;
-					} else { 
-						$postQueryCategories .= $cat . ", ";
-					}
-				}
-			}
-
-			return $postQueryCategories;
-		}*/
 
 		// Gets the omited tweet categories
 		
@@ -830,30 +845,23 @@ WHERE {$wpdb->prefix}term_taxonomy.taxonomy =  'category'
 		// Gets the tweet post type.
 		public function getTweetPostType()
 		{
+			$postQueryPostTypes = "";
 			$top_opt_post_type = get_option('top_opt_post_type');
 
-		/*	switch ($top_opt_post_type) {
-				case 'post':
-					return "'post'";
-					break;
-				
-				case 'page':
-					return "'page'";
-					break;
-
-				case 'custom-post-type':
-					return "'" . get_option('top_opt_post_type_value') . "'";
-					break;
-
-				case 'both':
-					return "'post', 'page'";
-					break;
-
-				default:
-					break;
+			if(!empty($top_opt_post_type) && is_array($top_opt_post_type)) {
+				$lastPostCategory = end($top_opt_post_type);
+				foreach ($top_opt_post_type as $key => $cat) {
+					if($cat == $lastPostCategory) {
+						$postQueryPostTypes .= "'".$cat."'";
+					} else { 
+						$postQueryPostTypes .= "'".$cat."'" . ", ";
+					}
+				}
 			}
-		*/
-			return "'post'";
+			else
+				$postQueryPostTypes = get_option('top_opt_post_type');
+
+			return $postQueryPostTypes;
 
 		}
 
@@ -1300,7 +1308,7 @@ WHERE {$wpdb->prefix}term_taxonomy.taxonomy =  'category'
 				update_option($option, $newValue);
 			}
 
-			update_option('top_opt_post_type', 'post');
+			//update_option('top_opt_post_type', 'post');
 
 			if(!array_key_exists('top_opt_custom_url_option', $options)) {
 				update_option('top_opt_custom_url_option', 'off');
@@ -1330,6 +1338,10 @@ WHERE {$wpdb->prefix}term_taxonomy.taxonomy =  'category'
 				update_option('top_opt_omit_cats', '');
 			}
 
+			if(!array_key_exists('top_opt_post_type', $options)) {
+				update_option('top_opt_post_type', 'post');
+			}
+
 			//update_option("top_opt_already_tweeted_posts", array());
 
 			die();
@@ -1340,9 +1352,9 @@ WHERE {$wpdb->prefix}term_taxonomy.taxonomy =  'category'
 		        $user_id = $current_user->ID;
 		        /* Check that the user hasn't already clicked to ignore the message */
 			if ( ! get_user_meta($user_id, 'top_ignore_notice3') ) {
-		        echo '<div class="error"><p>';
-		        printf(__(' We just fixed the interrupted posting issue and scheduling issue, if you don\'t see any tweets you need to re-authentificate your twitter accounts. | <a href="'.SETTINGSURL.'&top_nag_ignore=0">Hide Notice</a>'));
-		        echo "</p></div>";
+		      //  echo '<div class="error"><p>';
+		      //  printf(__(' We just fixed the interrupted posting issue and scheduling issue, if you don\'t see any tweets you need to re-authentificate your twitter accounts. | <a href="'.SETTINGSURL.'&top_nag_ignore=0">Hide Notice</a>'));
+		       // echo "</p></div>";
 			}
 		}
 		public function top_nag_ignore() {
@@ -1413,19 +1425,19 @@ WHERE {$wpdb->prefix}term_taxonomy.taxonomy =  'category'
 			switch ($field['type']) {
 
 				case 'text':
-					print "<input type='text' placeholder='".$field['description']."' value='".$field['option_value']."' name='".$field['option']."' id='".$field['option']."'>";
+					echo "<input type='text' placeholder='".__($field['description'],CWP_TEXTDOMAIN)."' value='".$field['option_value']."' name='".$field['option']."' id='".$field['option']."'>";
 					break;
 			
 				case 'select':
 					$noFieldOptions = intval(count($field['options']));
 					$fieldOptions = array_keys($field['options']);
 					
-					if ($field['option']=='top_opt_post_type') $disabled = "disabled";
+					//if ($field['option']=='top_opt_post_type') $disabled = "disabled";
 					print "<select id='".$field['option']."' name='".$field['option']."'".$disabled.">";
 						for ($i=0; $i < $noFieldOptions; $i++) { 
 							print "<option value=".$fieldOptions[$i];
 							if($field['option_value'] == $fieldOptions[$i]) { echo " selected='selected'"; }
-							print ">".$field['options'][$fieldOptions[$i]]."</option>";
+							print ">".__($field['options'][$fieldOptions[$i]],CWP_TEXTDOMAIN)."</option>";
 						}
 					print "</select>";
 					break;
@@ -1433,22 +1445,13 @@ WHERE {$wpdb->prefix}term_taxonomy.taxonomy =  'category'
 				case 'checkbox':
 					if ($field['option']=='top_opt_post_with_image'&& !function_exists('topProImage')) {
 						$disabled = "disabled='disabled'";
-						$pro = "This is only available in the <a href='http://themeisle.com/plugins/tweet-old-post-pro/?utm_source=imagepro&utm_medium=link&utm_campaign=top&upgrade=true' target='_blank'>PRO version</a>";
+						$pro = __("This is only available in the",CWP_TEXTDOMAIN)."<a href='http://themeisle.com/plugins/tweet-old-post-pro/?utm_source=imagepro&utm_medium=link&utm_campaign=top&upgrade=true' target='_blank'> ".__("PRO version")."</a>";
 					}
 					print "<input id='".$field['option']."' type='checkbox' ".$disabled." name='".$field['option']."'";
 					if($field['option_value'] == 'on') { echo "checked=checked"; }
 					print " />".$pro;
-					break;
-
-				case 'custom-post-type':
-					print "<select id='".$field['option']."' name='".$field['option']."' >";
-						$post_types = get_post_types(array('_builtin' => false));
-						foreach ($post_types as $post_type) {
-							print "<option value='".$post_type."'";
-							if($field['option_value'] == $post_type) { print "selected=selected"; }
-							print ">" . $post_type . "</option>";
-						}
-					print "</select>";
+          
+         
 					break;
 
 				case 'categories-list':
@@ -1466,15 +1469,7 @@ WHERE {$wpdb->prefix}term_taxonomy.taxonomy =  'category'
 
 						print "<div class='cwp-cat'>";
 								print "<input type='checkbox' name='".$field['option']."[]' value='".$category->cat_ID."' id='".$field['option']."_cat_".$category->cat_ID."'";
-						/*	
-								if($field['option'] == 'top_opt_tweet_specific_category' ) {
-									if(is_array($top_opt_tweet_specific_category)) {
-										if(in_array($category->cat_ID, $top_opt_tweet_specific_category)) {
-											print "checked=checked";
-										}
-									}
-								}
-						*/
+
 								if($field['option'] == 'top_opt_omit_cats') {
 									if(is_array($top_opt_omit_specific_cats)) {
 										if(in_array($category->cat_ID, $top_opt_omit_specific_cats)) {
@@ -1486,6 +1481,46 @@ WHERE {$wpdb->prefix}term_taxonomy.taxonomy =  'category'
 
 								print ">";
 								print "<label for='".$field['option']."_cat_".$category->cat_ID."'>".$category->name."</label>";							
+							print "</div>";
+						}
+					print "</div>";
+					break;
+
+					case 'custom-post-type':
+						print "<div class='post-type-list'>";
+						$args = array(
+						   'public'   => true,
+						   '_builtin' => false
+						);
+
+						$output = 'names'; // names or objects, note names is the default
+						$operator = 'and'; // 'and' or 'or'
+
+						$post_types = get_post_types( $args, $output, $operator ); 
+						array_push($post_types,"post","page");
+						foreach ($post_types as $post_type) {
+
+							//$top_opt_tweet_specific_category = get_option('top_opt_tweet_specific_category');
+
+							if (!is_array(get_option('top_opt_post_type')))
+								$top_opt_post_types = explode(',',get_option('top_opt_post_type'));
+							else
+								$top_opt_post_types = get_option('top_opt_post_type');
+
+						print "<div class='cwp-cat'>";
+								print "<input type='checkbox' name='".$field['option']."[]' value='".$post_type."' id='".$field['option']."_cat_".$post_type."'";
+
+								if($field['option'] == 'top_opt_post_type') {
+									if(is_array($top_opt_post_types)) {
+										if(in_array($post_type, $top_opt_post_types)) {
+											print "checked=checked";
+										}
+									}					
+								}
+
+
+								print ">";
+								print "<label for='".$field['option']."_cat_".$post_type."'>".$post_type."</label>";							
 							print "</div>";
 						}
 					print "</div>";
@@ -1624,6 +1659,7 @@ WHERE {$wpdb->prefix}term_taxonomy.taxonomy =  'category'
 			add_filter('plugin_action_links',array($this,'top_plugin_action_links'), 10, 2);
 
 			add_action('cwp_top_tweet_cron', array($this, 'tweetOldPost'));
+			add_action( 'plugins_loaded', array($this, 'addLocalization') );
 		}
 
 		public function loadAllScriptsAndStyles()
@@ -1668,7 +1704,7 @@ WHERE {$wpdb->prefix}term_taxonomy.taxonomy =  'category'
 			else
 				$cap='manage_options';
 			add_menu_page($cwp_top_settings['name'], $cwp_top_settings['name'], $cap, $cwp_top_settings['slug'], array($this, 'loadMainView'), '','99.87514');
-			add_submenu_page($cwp_top_settings['slug'], __('Exclude Posts',CWP_TEXTDOMAIN), __('Exclude Posts',CWP_TEXTDOMAIN), 'manage_options', __('ExcludePosts',CWP_TEXTDOMAIN), 'top_exclude');
+			add_submenu_page($cwp_top_settings['slug'], __('Exclude Posts',CWP_TEXTDOMAIN), __('Exclude Posts',CWP_TEXTDOMAIN), 'manage_options', 'ExcludePosts', 'top_exclude');
 		}
 
 		public function loadMainView()

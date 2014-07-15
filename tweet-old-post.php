@@ -6,6 +6,8 @@
 #     Author: ThemeIsle 
 #     Version: 6.8
 #     Author URI: http://themeisle.com/
+#	  Text Domain: tweet-old-post
+#	  Domain Path: /languages
 #     */  
 
 // Config Constants
