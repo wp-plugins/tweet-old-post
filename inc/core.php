@@ -448,6 +448,9 @@ WHERE {$wpdb->prefix}term_taxonomy.taxonomy =  'category'
 			}
 
 			// Trim new empty lines.
+			
+			$tweetContent = strip_tags($tweetContent);
+			$tweetContent = esc_html($tweetContent);
 			$tweetContent = trim(preg_replace('/\s+/', ' ', $tweetContent));
 
 			// Remove html entinies.
@@ -1219,8 +1222,8 @@ WHERE {$wpdb->prefix}term_taxonomy.taxonomy =  'category'
 						echo $url;	    	
 					}
 					else{
-						update_option('cwp_topnew_notice',"You need to <a target='_blank' href='http://themeisle.com/plugins/tweet-old-post-pro/?utm_source=topplusacc&utm_medium=announce&utm_campaign=top&upgrade=true'>upgrade to the PRO version</a> in order to add a Linkedin account, fellow pirate!");
-						echo "You need to <a target='_blank' href='http://themeisle.com/plugins/tweet-old-post-pro/?utm_source=topplusacc&utm_medium=announce&utm_campaign=top&upgrade=true'>upgrade to the PRO version</a> in order to add more accounts, fellow pirate!";
+						update_option('cwp_topnew_notice',"You need to <a target='_blank' href='https://themeisle.com/plugins/tweet-old-post-pro/?utm_source=topplusacc&utm_medium=announce&utm_campaign=top&upgrade=true'>upgrade to the PRO version</a> in order to add a Linkedin account, fellow pirate!");
+						echo "You need to <a target='_blank' href='https://themeisle.com/plugins/tweet-old-post-pro/?utm_source=topplusacc&utm_medium=announce&utm_campaign=top&upgrade=true'>upgrade to the PRO version</a> in order to add more accounts, fellow pirate!";
 
 					}
 					
@@ -1243,8 +1246,8 @@ WHERE {$wpdb->prefix}term_taxonomy.taxonomy =  'category'
 				topProAddNewAccount($_POST['social_network']);
 			}
 			else{
-				update_option('cwp_topnew_notice',"You need to <a target='_blank' href='http://themeisle.com/plugins/tweet-old-post-pro/?utm_source=topplusacc&utm_medium=announce&utm_campaign=top&upgrade=true'>upgrade to the PRO version</a> in order to add more accounts, fellow pirate!");
-				echo "You need to <a target='_blank' href='http://themeisle.com/plugins/tweet-old-post-pro/?utm_source=topplusacc&utm_medium=announce&utm_campaign=top&upgrade=true'>upgrade to the PRO version</a> in order to add more accounts, fellow pirate!";
+				update_option('cwp_topnew_notice',"You need to <a target='_blank' href='https://themeisle.com/plugins/tweet-old-post-pro/?utm_source=topplusacc&utm_medium=announce&utm_campaign=top&upgrade=true'>upgrade to the PRO version</a> in order to add more accounts, fellow pirate!");
+				echo "You need to <a target='_blank' href='https://themeisle.com/plugins/tweet-old-post-pro/?utm_source=topplusacc&utm_medium=announce&utm_campaign=top&upgrade=true'>upgrade to the PRO version</a> in order to add more accounts, fellow pirate!";
 
 			}
 			die(); // Required
@@ -1445,7 +1448,7 @@ WHERE {$wpdb->prefix}term_taxonomy.taxonomy =  'category'
 				case 'checkbox':
 					if ($field['option']=='top_opt_post_with_image'&& !function_exists('topProImage')) {
 						$disabled = "disabled='disabled'";
-						$pro = __("This is only available in the",CWP_TEXTDOMAIN)."<a href='http://themeisle.com/plugins/tweet-old-post-pro/?utm_source=imagepro&utm_medium=link&utm_campaign=top&upgrade=true' target='_blank'> ".__("PRO version")."</a>";
+						$pro = __("This is only available in the",CWP_TEXTDOMAIN)."<a href='https://themeisle.com/plugins/tweet-old-post-pro/?utm_source=imagepro&utm_medium=link&utm_campaign=top&upgrade=true' target='_blank'> ".__("PRO version")."</a>";
 					}
 					print "<input id='".$field['option']."' type='checkbox' ".$disabled." name='".$field['option']."'";
 					if($field['option_value'] == 'on') { echo "checked=checked"; }
@@ -1495,7 +1498,10 @@ WHERE {$wpdb->prefix}term_taxonomy.taxonomy =  'category'
 
 						$output = 'names'; // names or objects, note names is the default
 						$operator = 'and'; // 'and' or 'or'
-
+						if (!function_exists('topProImage')) {
+							$disabled = "disabled='disabled'";
+							$pro = __("This is only available in the",CWP_TEXTDOMAIN)."<a href='https://themeisle.com/plugins/tweet-old-post-pro/?utm_source=imagepro&utm_medium=link&utm_campaign=top&upgrade=true' target='_blank'> ".__("PRO version")."</a>";
+						}
 						$post_types = get_post_types( $args, $output, $operator ); 
 						array_push($post_types,"post","page");
 						foreach ($post_types as $post_type) {
@@ -1508,7 +1514,7 @@ WHERE {$wpdb->prefix}term_taxonomy.taxonomy =  'category'
 								$top_opt_post_types = get_option('top_opt_post_type');
 
 						print "<div class='cwp-cat'>";
-								print "<input type='checkbox' name='".$field['option']."[]' value='".$post_type."' id='".$field['option']."_cat_".$post_type."'";
+								print "<input ".$disabled." type='checkbox' name='".$field['option']."[]' value='".$post_type."' id='".$field['option']."_cat_".$post_type."'";
 
 								if($field['option'] == 'top_opt_post_type') {
 									if(is_array($top_opt_post_types)) {
@@ -1522,8 +1528,9 @@ WHERE {$wpdb->prefix}term_taxonomy.taxonomy =  'category'
 								print ">";
 								print "<label for='".$field['option']."_cat_".$post_type."'>".$post_type."</label>";							
 							print "</div>";
+							
 						}
-					print "</div>";
+					print "</div>.$pro";
 					break;
 
 			}
