@@ -449,16 +449,17 @@ WHERE {$wpdb->prefix}term_taxonomy.taxonomy =  'category'
 
 			// Trim new empty lines.
 			
-			$tweetContent = strip_tags($tweetContent);
-			$tweetContent = esc_html($tweetContent);
-			$tweetContent = trim(preg_replace('/\s+/', ' ', $tweetContent));
+			$tweetContent = strip_tags(html_entity_decode($tweetContent));
+			//$tweetContent = esc_html($tweetContent);
+			//$tweetContent = esc_html($tweetContent);	
+			//$tweetContent = trim(preg_replace('/\s+/', ' ', $tweetContent));
 
 			// Remove html entinies.
-			$tweetContent = preg_replace("/&#?[a-z0-9]+;/i","", $tweetContent);
+			//$tweetContent = preg_replace("/&#?[a-z0-9]+;/i","", $tweetContent);
 
 			// Strip all shortcodes from content.
 			$tweetContent = strip_shortcodes($tweetContent);
-
+					
 			// Generate the post link.
 			if($include_link == 'true') {
 				if($fetch_url_from_custom_field == 'on') {
@@ -543,18 +544,18 @@ WHERE {$wpdb->prefix}term_taxonomy.taxonomy =  'category'
 			$finalTweetLength = 0;
 
 			if(!empty($additional_text)) {
-				$additionalTextLength = strlen($additional_text); $finalTweetLength += intval($additionalTextLength);
+				$additionalTextLength = mb_strlen($additional_text); $finalTweetLength += intval($additionalTextLength);
 			}
 
 			if(!empty($post_url)) {
 				$post_url = htmlentities($post_url);
-				$postURLLength = strlen($post_url); 
+				$postURLLength = mb_strlen($post_url); 
 				if ($postURLLength > 21) $postURLLength = 22;
 				$finalTweetLength += intval($postURLLength);
 			}
 
 			if(!empty($newHashtags)) {
-				$hashtagsLength = strlen($newHashtags); 
+				$hashtagsLength = mb_strlen($newHashtags); 
 				$finalTweetLength += intval($hashtagsLength);
 			}
 
@@ -565,9 +566,9 @@ WHERE {$wpdb->prefix}term_taxonomy.taxonomy =  'category'
 
 			$tweetContent = mb_substr($tweetContent,0, $finalTweetLength) . " ";
 
-			$finalTweet = $additionalTextBeginning . $tweetContent . "%short_urlshort_urlurl%" . $newHashtags . $additionalTextEnd;
-			$finalTweet = substr($finalTweet,0, 139);
-			$finalTweet = str_replace("%short_urlshort_urlurl%",$post_url,$finalTweet);
+			$finalTweet = $additionalTextBeginning . $tweetContent . "%short_urlshort_urlur%" . $newHashtags . $additionalTextEnd;
+			$finalTweet = mb_substr($finalTweet,0, 139);
+			$finalTweet = str_replace("%short_urlshort_urlur%",$post_url,$finalTweet);
 			$fTweet = array();
 			$fTweet['message'] = strip_tags($finalTweet);
 			$fTweet['link'] = $post_url;
