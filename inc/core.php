@@ -463,13 +463,13 @@ WHERE {$wpdb->prefix}term_taxonomy.taxonomy =  'category'
 			// Generate the post link.
 			if($include_link == 'true') {
 				if($fetch_url_from_custom_field == 'on') {
-					$post_url = " " . get_post_meta($postQuery->ID, $custom_field_url,true);
+					$post_url = "" . get_post_meta($postQuery->ID, $custom_field_url,true);
 				} else { 
-					$post_url = " " . get_permalink($postQuery->ID);
+					$post_url = "" . get_permalink($postQuery->ID);
 				}
 
-				if ($post_url==" ")
-					$post_url = " " . get_permalink($postQuery->ID);
+				if ($post_url=="")
+					$post_url = "" . get_permalink($postQuery->ID);
 
 				if ($ga_tracking=="on") {
 					$param = 'utm_source=ReviveOldPost&utm_medium=social&utm_campaign=ReviveOldPost';
@@ -481,13 +481,13 @@ WHERE {$wpdb->prefix}term_taxonomy.taxonomy =  'category'
 				}
 
 				if($use_url_shortner == 'on') {
-					$post_url = " " . $this->shortenURL($post_url, $url_shortner_service, $postQuery->ID, $bitly_key, $bitly_user);
+					$post_url = "" . $this->shortenURL($post_url, $url_shortner_service, $postQuery->ID, $bitly_key, $bitly_user);
 				}
 
-				if ($post_url==" ")
-					$post_url = " " . get_permalink($postQuery->ID);
+				if ($post_url=="")
+					$post_url = "" . get_permalink($postQuery->ID);
 
-				$post_url = $post_url . " ";
+				$post_url = $post_url . "";
 
 
 			} else { $post_url = ""; }
@@ -502,13 +502,20 @@ WHERE {$wpdb->prefix}term_taxonomy.taxonomy =  'category'
 						break;
 					
 					case 'categories':
-						$postCategories = get_the_category($postQuery->ID);
-						
-						foreach ($postCategories as $category) {
-							if(strlen($category->cat_name.$newHashtags) <= $maximum_hashtag_length || $maximum_hashtag_length == 0) { 
-						 		$newHashtags = $newHashtags . " #" . preg_replace('/-/','',strtolower($category->slug)); 
-						 	}
-						} 
+
+						if ($postQuery->post_type =="post") {
+							$postCategories = get_the_category($postQuery->ID);
+							
+							foreach ($postCategories as $category) {
+								if(strlen($category->cat_name.$newHashtags) <= $maximum_hashtag_length || $maximum_hashtag_length == 0) { 
+							 		$newHashtags = $newHashtags . " #" . preg_replace('/-/','',strtolower($category->slug)); 
+							 	}
+							}
+						}
+						else {
+							if (function_exists('topProGetCustomCategories')) 
+								$newHashtags = topProGetCustomCategories($postQuery,$maximum_hashtag_length);
+							}
 
 						break;
 
@@ -548,8 +555,9 @@ WHERE {$wpdb->prefix}term_taxonomy.taxonomy =  'category'
 			}
 
 			if(!empty($post_url)) {
-				$post_url = htmlentities($post_url);
+				
 				$postURLLength = mb_strlen($post_url); 
+				//$post_url = urlencode($post_url);
 				if ($postURLLength > 21) $postURLLength = 22;
 				$finalTweetLength += intval($postURLLength);
 			}
@@ -566,14 +574,17 @@ WHERE {$wpdb->prefix}term_taxonomy.taxonomy =  'category'
 
 			$tweetContent = mb_substr($tweetContent,0, $finalTweetLength) . " ";
 
-			$finalTweet = $additionalTextBeginning . $tweetContent . "%short_urlshort_urlur%" . $newHashtags . $additionalTextEnd;
+			$finalTweet = $additionalTextBeginning . $tweetContent . " %short_urlshort_urlur% " . $newHashtags . $additionalTextEnd;
 			$finalTweet = mb_substr($finalTweet,0, 139);
 			$finalTweet = str_replace("%short_urlshort_urlur%",$post_url,$finalTweet);
 			$fTweet = array();
 			$fTweet['message'] = strip_tags($finalTweet);
-			$fTweet['link'] = $post_url;
+			$fTweet['link'] = urlencode($post_url);
 			// Strip any tags and return the final tweet
-			return $fTweet; 
+			return $fTweet;
+
+ 			//var_dump(get_object_taxonomies( $postQuery->post_type, 'objects' ));
+ 			//var_dump(get_the_terms($postQuery->ID,'download_category'));
 		}
 
 		/**
@@ -1531,7 +1542,7 @@ WHERE {$wpdb->prefix}term_taxonomy.taxonomy =  'category'
 							print "</div>";
 							
 						}
-					print "</div>.$pro";
+					print "</div>".$pro;
 					break;
 
 			}
