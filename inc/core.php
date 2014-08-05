@@ -579,7 +579,7 @@ WHERE {$wpdb->prefix}term_taxonomy.taxonomy =  'category'
 			$finalTweet = str_replace("%short_urlshort_urlur%",$post_url,$finalTweet);
 			$fTweet = array();
 			$fTweet['message'] = strip_tags($finalTweet);
-			$fTweet['link'] = urlencode($post_url);
+			$fTweet['link'] = $post_url;
 			// Strip any tags and return the final tweet
 			return $fTweet;
 
@@ -620,6 +620,7 @@ WHERE {$wpdb->prefix}term_taxonomy.taxonomy =  'category'
 										);
 
 						$pp=wp_remote_post("https://graph.facebook.com/".ROP_TOP_FB_API_VERSION."/$user[id]/feed?access_token=$user[oauth_token]",$args);
+						//var_dump($finalTweet['link']);
 						if ($nrOfUsers == $k)
 							return $pp['response']['message'];
 						else
@@ -628,9 +629,12 @@ WHERE {$wpdb->prefix}term_taxonomy.taxonomy =  'category'
 						break;
 
 					case 'linkedin':
-
+						
+						$lk_message = str_replace("&", "&amp;",$finalTweet['message']);
+						$sharedLink = str_replace("&", "&amp;",$finalTweet['link']);
+						
 						$visibility="anyone";
-						$content_xml.="<content><title>".$finalTweet['message']."</title><submitted-url>".$finalTweet['link']."</submitted-url></content>";
+						$content_xml.="<content><title>".$lk_message."</title><submitted-url>".$sharedLink."</submitted-url></content>";
 						$url = 'https://api.linkedin.com/v1/people/~/shares?oauth2_access_token='.$user["oauth_token"];
 
 
@@ -645,6 +649,7 @@ WHERE {$wpdb->prefix}term_taxonomy.taxonomy =  'category'
 						    "Content-length: " . strlen($xml),
 						    "Connection: close",
 						);
+			          
 			           	if (!function_exists('curl_version'))
        						update_option('cwp_topnew_notice',"You host does not support CURL");       				
 						$ch = curl_init(); 
@@ -735,8 +740,11 @@ WHERE {$wpdb->prefix}term_taxonomy.taxonomy =  'category'
 
 					case 'linkedin':
 
+						$lk_message = str_replace("&", "&amp;",$finalTweet['message']);
+						$sharedLink = str_replace("&", "&amp;",$finalTweet['link']);
+						
 						$visibility="anyone";
-						$content_xml.="<content><title>".$finalTweet['message']."</title><submitted-url>".$finalTweet['link']."</submitted-url></content>";
+						$content_xml.="<content><title>".$lk_message."</title><submitted-url>".$sharedLink."</submitted-url></content>";
 						$url = 'https://api.linkedin.com/v1/people/~/shares?oauth2_access_token='.$user["oauth_token"];
 
 
