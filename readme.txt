@@ -18,6 +18,10 @@ For updates follow https://twitter.com/themeisle If you have anything you can le
 
 ThemeIsle is a <a href="https://www.codeinwp.com">Codeinwp</a> product.
 
+= Translations =
+
+* sk_SK translation by Patrik Žec (PATWIST) of http://patwist.com
+
 
 **Fortcoming**
 
@@ -104,9 +108,7 @@ Please note: Despite the fact that error is saying "might be automated", it does
 
 - Contact us at https://themeisle.com/contact/ 
 
-= Translations =
 
-* sk_SK translation by Patrik Žec (PATWIST) of http://patwist.com
 
 == Screenshots ==
 
