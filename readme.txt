@@ -14,7 +14,9 @@ Revive Old Posts is a plugin designed to tweet your older posts to get more traf
 
 This plugin helps you to keeps your old posts alive by sharing them and driving more traffic to them from social networks. It also helps you to promote your content. You can set time and no of posts to share to drive more traffic.For questions, comments, or feature requests, <a href="https://themeisle.com/contact/?utm_source=readmetop&utm_medium=announce&utm_campaign=top">contact us</a>!
 
-For updates follow https://twitter.com/themeisle If you have anything you can let us know at <a href="https://themeisle.com/contact/?utm_source=readmetop&utm_medium=announce&utm_campaign=top">here</a>
+For updates follow https://twitter.com/themeisle If you have anything you can let us know <a href="https://themeisle.com/contact/?utm_source=readmetop&utm_medium=announce&utm_campaign=top">here</a>.
+
+ThemeIsle is a <a href="https://www.codeinwp.com">Codeinwp</a> product.
 
 
 **Fortcoming**
@@ -102,6 +104,9 @@ Please note: Despite the fact that error is saying "might be automated", it does
 
 - Contact us at https://themeisle.com/contact/ 
 
+= Translations =
+
+* sk_SK translation by Patrik Žec (PATWIST) of http://patwist.com
 
 == Screenshots ==
 

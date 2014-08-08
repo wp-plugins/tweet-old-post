@@ -387,7 +387,21 @@ WHERE {$wpdb->prefix}term_taxonomy.taxonomy =  'category'
 			}
 		}
 
+		public function getStrLen($string) {
+			
+			if (function_exists("mb_strlen"))
+				return mb_strlen($string);
+			else
+				return strlen($string);
+		}
 
+		public function ropSubstr($string,$nr1,$nr2	) {
+			if (function_exists("mb_substr")) {
+				return mb_substr($string,$nr1,$nr2);
+			}
+			else
+				return substr($string,$nr1, $nr2);
+		}
 
 		/**
 		 * Generates the tweet based on the user settings
@@ -459,7 +473,8 @@ WHERE {$wpdb->prefix}term_taxonomy.taxonomy =  'category'
 
 			// Strip all shortcodes from content.
 			$tweetContent = strip_shortcodes($tweetContent);
-					
+			$fTweet = array();
+			$fTweet['link'] = get_permalink($postQuery->ID);
 			// Generate the post link.
 			if($include_link == 'true') {
 				if($fetch_url_from_custom_field == 'on') {
@@ -551,19 +566,19 @@ WHERE {$wpdb->prefix}term_taxonomy.taxonomy =  'category'
 			$finalTweetLength = 0;
 
 			if(!empty($additional_text)) {
-				$additionalTextLength = mb_strlen($additional_text); $finalTweetLength += intval($additionalTextLength);
+				$additionalTextLength = $this->getStrLen($additional_text); $finalTweetLength += intval($additionalTextLength);
 			}
 
 			if(!empty($post_url)) {
 				
-				$postURLLength = mb_strlen($post_url); 
+				$postURLLength = $this->getStrLen($post_url); 
 				//$post_url = urlencode($post_url);
-				if ($postURLLength > 21) $postURLLength = 22;
+				if ($postURLLength > 21) $postURLLength = 25;
 				$finalTweetLength += intval($postURLLength);
 			}
 
 			if(!empty($newHashtags)) {
-				$hashtagsLength = mb_strlen($newHashtags); 
+				$hashtagsLength = $this->getStrLen($newHashtags); 
 				$finalTweetLength += intval($hashtagsLength);
 			}
 
@@ -572,14 +587,16 @@ WHERE {$wpdb->prefix}term_taxonomy.taxonomy =  'category'
 
 			$finalTweetLength = 139 - $finalTweetLength - 5;
 
-			$tweetContent = mb_substr($tweetContent,0, $finalTweetLength) . " ";
+			$tweetContent = $this->ropSubstr($tweetContent,0, $finalTweetLength) . " ";
 
 			$finalTweet = $additionalTextBeginning . $tweetContent . " %short_urlshort_urlur% " . $newHashtags . $additionalTextEnd;
-			$finalTweet = mb_substr($finalTweet,0, 139);
+			$finalTweet = $this->ropSubstr($finalTweet,0, 139);
 			$finalTweet = str_replace("%short_urlshort_urlur%",$post_url,$finalTweet);
-			$fTweet = array();
+			
 			$fTweet['message'] = strip_tags($finalTweet);
-			$fTweet['link'] = $post_url;
+			if ($post_url!="")
+				$fTweet['link'] = $post_url;
+			//var_dump($fTweet['link']);
 			// Strip any tags and return the final tweet
 			return $fTweet;
 
@@ -711,6 +728,7 @@ WHERE {$wpdb->prefix}term_taxonomy.taxonomy =  'category'
 						// Post the new tweet
 						if (function_exists('topProImage')) 
 							$status = topProImage($connection, $finalTweet['message'], $id);
+						//var_dump($status);
 							//$tw++;
 						//} else {
 						///	//$connection = new RopTwitterOAuth($this->consumer, $this->consumerSecret, $user['oauth_token'], $user['oauth_token_secret']);
