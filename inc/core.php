@@ -209,7 +209,7 @@ WHERE {$wpdb->prefix}term_taxonomy.taxonomy =  'category'
 
 			// Save the result in a var for future use.
 			$returnedPost = $wpdb->get_results($query);
-			//echo $query;
+			
 			return $returnedPost;
 		}
 
@@ -301,17 +301,16 @@ WHERE {$wpdb->prefix}term_taxonomy.taxonomy =  'category'
 			$notice = get_option('cwp_topnew_notice');
 				
 			//$notice = strpos($notice,'UPDAT');
-			if (is_object($notice) && $notice->errors[0]->message)
+			if (is_object($notice) && isset($notice->errors) &&  $notice->errors[0]->message)
 				echo "Error for your last tweet was :'".$notice->errors[0]->message."'";
 			else if ( $notice !== "OK" && !is_object($notice) && $this->findInString($notice,'UPDAT')===false && $notice!=="")
 				echo "Error for your last post was :'".$notice."'";
 			else
-				if (is_object($notice) && $notice->text || $notice=="OK" || strpos($notice,'UPDAT')!==false) {
+				if (is_object($notice) && isset($notice->text) || $notice=="OK" || strpos($notice,'UPDAT')!==false) {
 				echo "Congrats! Your last post was revived successfully";
 			} else if ($notice!="") {
 				echo "Error for your last post was : ".$notice;
 			}
-
 			
 			die();
 		}
