@@ -2,29 +2,15 @@
 Contributors: codeinwp
 Tags: admin, ajax, plugin, twitter, facebook, linkedin, automatic, tweet, share, wordpress, marketing, sharing, Tweet old post, Tweets,evergreen,  Promote old post by tweeting about them, Twitter, Auto Tweet, Hashtags, Twitter Hashtags, Tweet Posts, Tweet, Post Tweets, Wordpress Twitter Plugin, Twitter Plugin, Tweet Selected Posts, Twitter, Promote Posts, Tweet Random Post, Share Post, Promote Post, Post Tweets, Wordpress Twitter, Drive Traffic, Tweet Selected Posts
 Requires at least: 2.7
-Author URI: https://themeisle.com 
-Tested up to: 4.0
+Tested up to: 4.1
 Stable tag: trunk
 
 
-Plugin to share about your old posts on twitter, facebook, linkedin to get more hits for them and keep them alive.
+Plugin to share about your old posts to get more hits for them and keep them alive.
 
 == Description ==
 
-> If you want to see a live demo of the plugin you can check <a href="http://www.youtube.com/watch?v=YOnlWmyO3VU">http://www.youtube.com/watch?v=YOnlWmyO3VU</a>.
-
-### Why to upgrade to PRO ?
-
-Using the <a href="https://themeisle.com/plugins/tweet-old-post-pro/?ref=1">PRO version</a> of the plugin you will unleash the most important functionality : images in tweets . Using those your RT/CTR will go crazy.
-
-Other notable features : 
-
-* Multiple Social Accounts
-* Custom Post Types support
-* Linkedin support
-* Post with image
-
-### What the plugin can do ?
+Revive Old Posts is a plugin designed to tweet your older posts to get more traffic. 
 
 This plugin helps you to keeps your old posts alive by sharing them and driving more traffic to them from social networks. It also helps you to promote your content. You can set time and no of posts to share to drive more traffic.For questions, comments, or feature requests, <a href="https://themeisle.com/contact/?utm_source=readmetop&utm_medium=announce&utm_campaign=top">contact us</a>!
 
@@ -32,13 +18,15 @@ For updates follow https://twitter.com/themeisle If you have anything you can le
 
 ThemeIsle is a <a href="https://www.codeinwp.com">Codeinwp</a> product.
 
+= Translations =
+
+* sk_SK translation by Patrik Žec (PATWIST) of http://patwist.com
 
 
 **Fortcoming**
 
 - Custom Schedule
 - Posts queue 
-- Different post content for each account
 
 
 **Revive Old Post provides following features**
@@ -51,9 +39,7 @@ ThemeIsle is a <a href="https://www.codeinwp.com">Codeinwp</a> product.
 - Exclude categories
 - Exclude specific posts.
 
-= Translations =
 
-* sk_SK translation by Patrik Žec (PATWIST) of http://patwist.com
 
 == Installation ==
 
@@ -135,6 +121,13 @@ https://themeisle.com/plugins/tweet-old-post-lite/
 
 
 == Changelog ==
+
+**New in v6.8.5**
+
+Completely reworked how cron is working
+Separated post format by network
+Added support for custom schedule
+Added remote cron trigger feature
 
 **New in v6.8.2**
 
