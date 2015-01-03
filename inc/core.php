@@ -64,9 +64,7 @@ if (!class_exists('CWP_TOP_Core')) {
 		function checkUsers(){
 			if(count($this->users) == 0){
 				update_option('cwp_topnew_notice', 'You have no account set to post !');
-
 				die();
-
 			}
 
 		}
@@ -375,7 +373,20 @@ WHERE {$wpdb->prefix}term_taxonomy.taxonomy =  'category'
 
 			}
 		}
+		public function getAvailableNetworks(){
+			$networks = array();
+			$users = is_array($this->users) ? $this->users : array();
+			foreach($users  as $u){
+				if($u['service'] == 'twitter' && !in_array("twitter",$networks))
+					$networks[] = "twitter";
+				if($u['service'] == 'facebook' && !in_array("facebook",$networks))
+					$networks[] = "facebook";
+				if($u['service'] == 'linkedin' && !in_array("linkedin",$networks))
+					$networks[] = "linkedin";
+			}
 
+			return $networks;
+		}
 		public function findInString($where,$what) {
 			if (!is_string($where)) {
 				return false;
@@ -1242,7 +1253,7 @@ WHERE {$wpdb->prefix}term_taxonomy.taxonomy =  'category'
 						update_option('cwp_top_logged_in_users', $loggedInUsers);
 					}
 
-					header("Location: " . SETTINGSURL);
+					header("Location: " . top_settings_url());
 					exit;
 				}
 			}
@@ -1250,7 +1261,7 @@ WHERE {$wpdb->prefix}term_taxonomy.taxonomy =  'category'
 			if(isset($_REQUEST['state']) && (get_option('top_fb_session_state') === $_REQUEST['state'])) {
 
 				$token_url = "https://graph.facebook.com/".ROP_TOP_FB_API_VERSION."/oauth/access_token?"
-				             . "client_id=" . get_option('cwp_top_app_id') . "&redirect_uri=" . SETTINGSURL
+				             . "client_id=" . get_option('cwp_top_app_id') . "&redirect_uri=" . top_settings_url()
 				             . "&client_secret=" . get_option('cwp_top_app_secret') . "&code=" . $code;
 
 				$params = null;$access_token="";
@@ -1271,7 +1282,7 @@ WHERE {$wpdb->prefix}term_taxonomy.taxonomy =  'category'
 					update_option('top_fb_token',$access_token);
 
 				}
-				header("Location: " . SETTINGSURL.'#fbadd');
+				header("Location: " . top_settings_url().'#fbadd');
 			}
 
 			if (isset($_GET['code'])&&isset($_GET['state'])&&get_option('top_lk_session_state') == $_GET['state']) {
@@ -1282,7 +1293,7 @@ WHERE {$wpdb->prefix}term_taxonomy.taxonomy =  'category'
 				                'client_id' => $lk_auth_token,
 				                'client_secret' => $lk_auth_secret,
 				                'code' => $_GET['code'],
-				                'redirect_uri' => SETTINGSURL,
+				                'redirect_uri' => top_settings_url(),
 				);
 
 				$url = 'https://www.linkedin.com/uas/oauth2/accessToken?' . http_build_query($params);
@@ -1331,7 +1342,7 @@ WHERE {$wpdb->prefix}term_taxonomy.taxonomy =  'category'
 						update_option('cwp_top_logged_in_users', $loggedInUsers);
 					}
 				}
-				header("Location: " . SETTINGSURL);
+				header("Location: " . top_settings_url());
 			}
 
 
@@ -1360,7 +1371,7 @@ WHERE {$wpdb->prefix}term_taxonomy.taxonomy =  'category'
 			foreach ($loggedInUsers as $key=>$user) {
 				if ($user['service'] === "linkedin"&&$lk===0) {
 					$lk++;
-					$url = 'https://www.linkedin.com/uas/oauth2/authorization?response_type=code&client_id='.get_option("cwp_top_lk_app_id").'&scope=rw_nus&state='.$top_session_state.'&redirect_uri='.SETTINGSURL;
+					$url = 'https://www.linkedin.com/uas/oauth2/authorization?response_type=code&client_id='.get_option("cwp_top_lk_app_id").'&scope=rw_nus&state='.$top_session_state.'&redirect_uri='.top_settings_url();
 					header("Location: " . $url);
 
 					update_option('top_lk_session_state',$top_session_state);
@@ -1372,7 +1383,7 @@ WHERE {$wpdb->prefix}term_taxonomy.taxonomy =  'category'
 					$fb++;
 					update_option('top_fb_session_state',$top_session_state_fb);
 					$dialog_url = "https://www.facebook.com/".ROP_TOP_FB_API_VERSION."/dialog/oauth?client_id="
-					              . get_option("cwp_top_app_id") . "&redirect_uri=" . SETTINGSURL . "&state="
+					              . get_option("cwp_top_app_id") . "&redirect_uri=" . top_settings_url() . "&state="
 					              . $top_session_state_fb . "&scope=publish_stream,publish_actions,manage_pages";
 
 					header("Location: " . $dialog_url);
@@ -1418,6 +1429,7 @@ WHERE {$wpdb->prefix}term_taxonomy.taxonomy =  'category'
 		}
 		public function adminNotice(){
 			if(is_array($this->notices)){
+
 				foreach($this->notices as $n){
 					?>
 					<div class="error">
@@ -1460,7 +1472,7 @@ WHERE {$wpdb->prefix}term_taxonomy.taxonomy =  'category'
 					} else {
 						array_push($loggedInUsers, $newUser);
 						update_option('cwp_top_logged_in_users', $loggedInUsers);
-						echo SETTINGSURL;
+						echo top_settings_url();
 					}
 
 
@@ -1503,7 +1515,7 @@ WHERE {$wpdb->prefix}term_taxonomy.taxonomy =  'category'
 
 						update_option('top_fb_session_state',$top_session_state);
 						$dialog_url = "https://www.facebook.com/".ROP_TOP_FB_API_VERSION."/dialog/oauth?client_id="
-						              . $_POST['app_id'] . "&redirect_uri=" . SETTINGSURL . "&state="
+						              . $_POST['app_id'] . "&redirect_uri=" . top_settings_url() . "&state="
 						              . $top_session_state . "&scope=publish_stream,publish_actions,manage_pages";
 						echo $dialog_url;
 					}
@@ -1511,7 +1523,7 @@ WHERE {$wpdb->prefix}term_taxonomy.taxonomy =  'category'
 				case 'linkedin':
 					$top_session_state = uniqid('', true);
 
-					$url = 'https://www.linkedin.com/uas/oauth2/authorization?response_type=code&client_id='.$_POST["app_id"].'&scope=rw_nus&state='.$top_session_state.'&redirect_uri='.SETTINGSURL;
+					$url = 'https://www.linkedin.com/uas/oauth2/authorization?response_type=code&client_id='.$_POST["app_id"].'&scope=rw_nus&state='.$top_session_state.'&redirect_uri='.top_settings_url();
 
 					update_option('top_lk_session_state',$top_session_state);
 					if (isset($_POST['app_id'])){
@@ -2039,41 +2051,58 @@ WHERE {$wpdb->prefix}term_taxonomy.taxonomy =  'category'
 				}
 
 
-				$timestamp = wp_next_scheduled( 'cwptoptweetcronnew' );
-				$timenow = $this->getTime();
 
-				if ($this->pluginStatus == 'true' && $timenow > $timestamp && !CWP_TOP_PRO) {
-
-					$this->startTweetOldPost(true);
-					//update_option('cwp_topnew_notice', "Looks like there is an issue with your WP Cron, read more <a href='http://wordpress.org/plugins/tweet-old-post/faq/'>here</a>");
-
-				}
 			}
 		}
 		public function clearOldCron(){
 
-			if(CWP_TOP_PRO){
-				$prov = get_plugin_data(ROPPROPLUGINPATH."/tweet-old-post-pro.php");
-				if(version_compare($prov['Version'],"1.4.4","<=")){
-
+			if(!defined("VERSION_CHECK") && function_exists('topProImage')){
 					$this->notices[] = "You need to have the latest version of the Revive Old Post Pro addon in order to use it. Please download it from the themeisle.com account";
-				}
-			}
-			if(wp_next_scheduled( 'cwptoptweetcron' ) !== false) {
-				$timestamp = wp_next_scheduled( 'cwptoptweetcron' );
-				wp_clear_scheduled_hook('cwptoptweetcron');
-				wp_schedule_single_event($timestamp,'cwptoptweetcronnew');
 
 			}
-			if(CWP_TOP_PRO){
+			if(wp_next_scheduled( 'cwp_top_tweet_cron' ) !== false) {
 
-				if(wp_next_scheduled( 'cwptoptweetcronnew' ) !== false) {
-					$timestamp = wp_next_scheduled( 'cwptoptweetcronnew');
-					wp_clear_scheduled_hook('cwptoptweetcronnew');
+				$timestamp = wp_next_scheduled( 'cwp_top_tweet_cron' );
+				wp_clear_scheduled_hook('cwp_top_tweet_cron');
+				if(CWP_TOP_PRO) {
 					wp_schedule_single_event($timestamp,  'twittercwptoptweetcron',array('twitter')) ;
 					wp_schedule_single_event($timestamp, 'facebookcwptoptweetcron',array('facebook')) ;
 					wp_schedule_single_event($timestamp,  'linkedincwptoptweetcron',array('linkedin')) ;
+				}else{
+					wp_schedule_single_event($timestamp,'cwptoptweetcronnew');
+
 				}
+
+			}else{
+				if(CWP_TOP_PRO){
+
+					$networks = $this->getAvailableNetworks();
+					if(wp_next_scheduled( 'cwptoptweetcronnew' ) !== false) {
+
+						$timestamp = wp_next_scheduled( 'cwptoptweetcronnew' );
+						wp_clear_scheduled_hook('cwptoptweetcronnew');
+						if(in_array("twitter",$networks))
+							wp_schedule_single_event($timestamp,  'twittercwptoptweetcron',array('twitter')) ;
+						if(in_array("facebook",$networks))
+							wp_schedule_single_event($timestamp, 'facebookcwptoptweetcron',array('facebook')) ;
+						if(in_array("linkedin",$networks))
+							wp_schedule_single_event($timestamp,  'linkedincwptoptweetcron',array('linkedin')) ;
+
+					}else{
+						if(!in_array("twitter",$networks)){
+
+							wp_clear_scheduled_hook('twittercwptoptweetcron',array('twitter'));
+						}
+						if(!in_array("facebook",$networks)){
+							wp_clear_scheduled_hook('facebookcwptoptweetcron',array('facebook'));
+						}
+						if(!in_array("linkedin",$networks)){
+							wp_clear_scheduled_hook('linkedincwptoptweetcron',array('linkedin'));
+						}
+
+					}
+				}
+
 			}
 		}
 		public function loadAllHooks()
@@ -2195,12 +2224,12 @@ WHERE {$wpdb->prefix}term_taxonomy.taxonomy =  'category'
 				if ($_GET['page'] == $cwp_top_settings['slug'] || $_GET['page'] == "ExcludePosts") {
 
 					// Enqueue and Register Main CSS File
-					wp_register_style( 'cwp_top_stylesheet', ROPCSSFILE, false, '1.0.0' );
+					wp_register_style( 'cwp_top_stylesheet', ROPCSSFILE, false, '2.0.0' );
 					wp_enqueue_style( 'cwp_top_stylesheet' );
 
 					// Register Main JS File
-					wp_enqueue_script( 'cwp_top_js_countdown', ROPJSCOUNTDOWN, array(), '1.0.0', true );
-					wp_enqueue_script( 'cwp_top_javascript', ROPJSFILE, array(), '1.0.0', true );
+					wp_enqueue_script( 'cwp_top_js_countdown', ROPJSCOUNTDOWN, array(), '2.0.0', true );
+					wp_enqueue_script( 'cwp_top_javascript', ROPJSFILE, array(), '2.0.0', true );
 					wp_localize_script( 'cwp_top_javascript', 'cwp_top_ajaxload', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
 				}
 			}
