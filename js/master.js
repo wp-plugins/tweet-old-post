@@ -427,9 +427,11 @@ jQuery(document).ready(function(){
 					//jQuery(".cwp_top_wrapper .cwp_sample_tweet_preview").css("top", ( jQuery(window).height() - this.height() ) / 2+jQuery(window).scrollTop() + "px");
     				//jQuery(".cwp_top_wrapper .cwp_sample_tweet_preview").css("left", ( jQuery(window).width() - this.width() ) / 2+jQuery(window).scrollLeft() + "px");
    					var elem = jQuery(".cwp_top_wrapper .cwp_sample_tweet_preview");
-   					var scrollhere = elem.offset().top+(jQuery(window).height()+elem.height())/2;
-					jQuery('html, body').scrollTop(scrollhere);
+
+					jQuery(window).scrollTop(0);
+
                     $json = JSON.parse(response);
+
 					if($json .twitter)
 						jQuery(".cwp_top_wrapper .cwp_sample_tweet_preview .cwp_sample_tweet_preview_inner .sample_tweet.sample_tweet_twitter").html($json .twitter);
 					else
@@ -795,7 +797,8 @@ function cwpDependeField(field,second){
     var tmpvalues;
     jQuery.each(json,function(k,v){
         item = field.parent().find(".twp"+k);
-        if(v == value && !second){
+		v = v.split(',');
+        if(jQuery.inArray(value,v) > -1 && !second){
             item.slideDown('fast');
             cwpDependeField(item);
         }else{
@@ -861,7 +864,7 @@ function getCwpTopTimeHTML(network){
                 <option value="22">22</option>\
                 <option value="23">23</option>\
                 <option value="24">24</option>\
-                <option value="25">24</option>\
+                <option value="25">25</option>\
                 <option value="26">26</option>\
                 <option value="27">27</option>\
                 <option value="28">28</option>\
@@ -872,9 +875,9 @@ function getCwpTopTimeHTML(network){
                 <option value="33">33</option>\
                 <option value="34">34</option>\
                 <option value="35">35</option>\
-                <option value="36">38</option>\
+                <option value="36">36</option>\
                 <option value="37">37</option>\
-                <option value="38">40</option>\
+                <option value="38">38</option>\
                 <option value="39">39</option>\
                 <option value="40">40</option>\
                 <option value="41">41</option>\
