@@ -134,6 +134,10 @@ https://themeisle.com/plugins/tweet-old-post-lite/
 
 == Changelog ==
 
+**New in v6.9.6.2**
+
+* Fixed issue with the is.gd shortner refresh
+
 **New in v6.9.6**
 
 * Fixed issue cron stop
