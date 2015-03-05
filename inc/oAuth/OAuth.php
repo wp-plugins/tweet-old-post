@@ -309,7 +309,7 @@ class RopOAuthRequest {
       $defaults['oauth_token'] = $token->key;
 
     $parameters = array_merge($defaults, $parameters);
-
+   // print_r($parameters);
     return new RopOAuthRequest($http_method, $http_url, $parameters);
   }
 
@@ -490,10 +490,17 @@ class RopOAuthRequest {
       curl_setopt($ci, CURLOPT_URL, "http://api.twitter.com/1.1/");
 
       $response = curl_exec($ci);
+
       $header_size = curl_getinfo($ci, CURLINFO_HEADER_SIZE);
       $header = substr($response, 0, $header_size);
       $headers = self::get_headers_from_curl_response($header);
-      return strtotime($headers[0]['date']);
+      $date = time();
+      if(isset($headers[0]['date'])){
+          $date = strtotime($headers[0]['date']);
+      }else if($headers[0]['Date']){
+          $date = strtotime($headers[0]['Date']);
+      }
+      return $date;
   }
     static function get_headers_from_curl_response($headerContent)
     {
@@ -524,7 +531,7 @@ class RopOAuthRequest {
   /**
    * util function: current nonce
    */
-  private static function generate_nonce() {
+  public static function generate_nonce() {
     $mt = microtime();
     $rand = mt_rand();
 
