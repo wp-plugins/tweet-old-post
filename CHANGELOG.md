@@ -1,4 +1,13 @@
+  
+### 7.0.5 - 25/05/2015
 
+ Changes: 
+
+
+ *  fixed issue with tweet length
+ *  fixed issue with facebook hashtag
+ *  added bussines version
+ *  added support for new linkedin api
 
 ### 7.0.4 - 16/04/2015
 
