@@ -1,13 +1,24 @@
-  
-### 7.0.5 - 25/05/2015
+
+
+### 7.0.6 - 28/05/2015
 
  Changes: 
 
 
- *  fixed issue with tweet length
- *  fixed issue with facebook hashtag
- *  added bussines version
- *  added support for new linkedin api
+ * * removed redundant code
+ * * added compatibility for wordpress 4.2.2
+ * * fixed compatibility with pro version
+
+
+### 7.0.4 - 25/05/2015
+
+ Changes: 
+
+
+ * * fixed issue with tweet length
+* fixed issue with facebook hashtag
+ * * added bussines version
+
 
 ### 7.0.4 - 16/04/2015
 
